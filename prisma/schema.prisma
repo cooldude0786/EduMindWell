@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model BulkEmail {
+  id String @id @default(cuid())
+  subject   String
+  body      String
+  status    EmailStatus @default(PENDING)
+  createdAt DateTime    @default(now())
+  sentAt    DateTime?
+  EmailLog  EmailLog[]
+
+  emailQueues EmailQueue[]
+}
+
+model EmailLog {
+  id String @id @default(cuid())
+  bulkEmailId    String
+  recipientId    String
+  status         EmailStatus
+  messageId      String?
+  error          String?
+  createdAt      DateTime       @default(now())
+  BulkEmail      BulkEmail      @relation(fields: [bulkEmailId], references: [id])
+  EmailRecipient EmailRecipient @relation(fields: [recipientId], references: [id])
+}
+
+model EmailRecipient {
+ id String @id @default(cuid())
+  email     String     @unique
+  name      String?
+  createdAt DateTime   @default(now())
+  EmailLog  EmailLog[]
+
+  emailQueues EmailQueue[]
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum EmailStatus {
+  PENDING
+  PROCESSING
+  SENT
+  FAILED
+}
+
+model EmailQueue {
+  id            String   @id
+  campaignId    String
+  recipientId   String
+  email         String
+  subject       String
+  body          String
+  status        QueueStatus @default(PENDING)
+  attempts      Int      @default(0)
+  error         String?
+  createdAt     DateTime @default(now())
+  processedAt   DateTime?
+
+  BulkEmail     BulkEmail      @relation(fields: [campaignId], references: [id])
+  EmailRecipient EmailRecipient @relation(fields: [recipientId], references: [id])
+}
+
+enum QueueStatus {
+  PENDING
+  PROCESSING
+  SENT
+  FAILED
+}
