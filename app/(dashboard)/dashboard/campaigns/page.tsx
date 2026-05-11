@@ -140,6 +140,41 @@ export default function CampaignsPage() {
         // refresh UI
         await loadCampaigns();
     };
+
+    const resetCampaignQueue = async (id: string) => {
+        const confirmed = window.confirm(
+            "Reset this campaign queue? This only clears stuck pending or processing jobs that have not been sent."
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        const res = await fetch("/api/campaigns/reset", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ campaignId: id }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            alert(`Failed to reset queue: ${data.error || "Unknown error"}`);
+            return;
+        }
+
+        setProgressMap((prev) => {
+            const next = { ...prev };
+            delete next[id];
+            return next;
+        });
+
+        alert(`Queue reset successfully. Removed ${data.deleted ?? 0} job(s).`);
+        await loadCampaigns();
+    };
+
     return (
         <div className="space-y-8">
             {/* HEADER */}
@@ -192,11 +227,12 @@ export default function CampaignsPage() {
                     campaigns.map((c) => {
                         const progress = progressMap[c.id];
                         const canSend = c.status === "PENDING";
+                        const canReset = c.status === "PENDING" || c.status === "PROCESSING";
 
                         return (
                             <div key={c.id} className="border p-4 rounded">
                                 {/* TOP ROW */}
-                                <div className="flex justify-between items-center">
+                                <div className="flex justify-between items-center gap-4">
                                     <div>
                                         <h2 className="font-bold">{c.subject}</h2>
 
@@ -225,26 +261,45 @@ export default function CampaignsPage() {
                                     </div>
 
                                     {/* SEND BUTTON */}
-                                    <button
-                                        onClick={() => sendCampaign(c.id)}
-                                        disabled={!canSend}
-                                        title={
-                                            canSend
-                                                ? "Click to queue this campaign"
-                                                : `Campaign is ${c.status}. Cannot send.`
-                                        }
-                                        className={`px-4 py-1 text-white rounded ${
-                                            canSend
-                                                ? "bg-green-600 hover:bg-green-700 cursor-pointer"
-                                                : "bg-gray-400 cursor-not-allowed"
-                                        }`}
-                                    >
-                                        {c.status === "SENT"
-                                            ? "Sent"
-                                            : c.status === "PROCESSING"
-                                                ? "Sending..."
-                                                : "Send Now"}
-                                    </button>
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            onClick={() => resetCampaignQueue(c.id)}
+                                            disabled={!canReset}
+                                            title={
+                                                canReset
+                                                    ? "Clear stuck pending jobs for this campaign"
+                                                    : `Campaign is ${c.status}. Reset not available.`
+                                            }
+                                            className={`px-4 py-1 rounded border ${
+                                                canReset
+                                                    ? "border-amber-500 text-amber-700 hover:bg-amber-50"
+                                                    : "border-gray-300 text-gray-400 cursor-not-allowed"
+                                            }`}
+                                        >
+                                            Reset Queue
+                                        </button>
+
+                                        <button
+                                            onClick={() => sendCampaign(c.id)}
+                                            disabled={!canSend}
+                                            title={
+                                                canSend
+                                                    ? "Click to queue this campaign"
+                                                    : `Campaign is ${c.status}. Cannot send.`
+                                            }
+                                            className={`px-4 py-1 text-white rounded ${
+                                                canSend
+                                                    ? "bg-green-600 hover:bg-green-700 cursor-pointer"
+                                                    : "bg-gray-400 cursor-not-allowed"
+                                            }`}
+                                        >
+                                            {c.status === "SENT"
+                                                ? "Sent"
+                                                : c.status === "PROCESSING"
+                                                    ? "Sending..."
+                                                    : "Send Now"}
+                                        </button>
+                                    </div>
                                 </div>
 
                                 {/* BODY */}

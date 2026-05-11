@@ -72,6 +72,7 @@ export async function POST(req: Request) {
   });
 
   const jobs: PublishJob[] = queueData.map((job) => ({ id: job.id }));
+  const createdJobIds = queueData.map((job) => job.id);
 
   if (jobs.length === 0) {
     return Response.json({
@@ -122,16 +123,26 @@ export async function POST(req: Request) {
       });
     }
   } catch (error: any) {
+    await prisma.emailQueue.deleteMany({
+      where: {
+        id: {
+          in: createdJobIds,
+        },
+      },
+    });
+
     console.error("QStash publish failed", {
       url: destinationUrl,
       tokenPresent: Boolean(process.env.QSTASH_TOKEN),
       baseUrl: process.env.QSTASH_URL || process.env.QSTASH_REGION,
+      cleanedUpJobs: createdJobIds.length,
       error,
     });
 
     return Response.json(
       {
         error: "QStash publish failed",
+        cleanedUpJobs: createdJobIds.length,
         details: error?.message || String(error),
       },
       { status: 500 }
