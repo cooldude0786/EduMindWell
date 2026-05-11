@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>EduMindWell | Career. Mind. Wellbeing. All Aligned.</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Lexend:wght@300;400;500&family=Inter:wght@500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-surface": "#303036",
+            "primary-fixed": "#dfe0ff",
+            "primary-container": "#1e2a78",
+            "secondary": "#006a62",
+            "primary-fixed-dim": "#bcc3ff",
+            "on-tertiary-container": "#dc845b",
+            "on-tertiary": "#ffffff",
+            "surface-tint": "#4c58a6",
+            "surface-variant": "#e4e1e9",
+            "secondary-fixed-dim": "#4fdbcc",
+            "on-secondary": "#ffffff",
+            "on-background": "#1b1b20",
+            "outline": "#767682",
+            "surface": "#fbf8ff",
+            "inverse-on-surface": "#f2eff7",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "surface-bright": "#fbf8ff",
+            "on-primary-container": "#8a95e9",
+            "surface-container-lowest": "#ffffff",
+            "on-surface-variant": "#454651",
+            "tertiary-fixed": "#ffdbcc",
+            "on-surface": "#1b1b20",
+            "on-tertiary-fixed": "#351000",
+            "secondary-container": "#70f8e8",
+            "on-secondary-fixed": "#00201d",
+            "on-tertiary-fixed-variant": "#753311",
+            "primary": "#021064",
+            "surface-container-high": "#e9e7ee",
+            "tertiary-fixed-dim": "#ffb595",
+            "surface-container": "#efedf4",
+            "surface-dim": "#dbd9e0",
+            "background": "#fbf8ff",
+            "outline-variant": "#c6c5d3",
+            "surface-container-highest": "#e4e1e9",
+            "on-primary-fixed-variant": "#343f8d",
+            "inverse-primary": "#bcc3ff",
+            "surface-container-low": "#f5f2fa",
+            "secondary-fixed": "#70f8e8",
+            "error": "#ba1a1a",
+            "on-primary-fixed": "#000d60",
+            "on-secondary-container": "#007168",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-secondary-fixed-variant": "#005049",
+            "tertiary": "#391100",
+            "tertiary-container": "#5b2000"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "base": "8px",
+            "sm": "12px",
+            "gutter": "24px",
+            "md": "24px",
+            "xl": "80px",
+            "xs": "4px",
+            "container-max": "1280px",
+            "lg": "48px"
+          },
+          "fontFamily": {
+            "body-lg": ["Lexend"],
+            "h2": ["Manrope"],
+            "body-md": ["Lexend"],
+            "h1": ["Manrope"],
+            "body-sm": ["Lexend"],
+            "h3": ["Manrope"],
+            "label-bold": ["Inter"],
+            "button": ["Inter"]
+          },
+          "fontSize": {
+            "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "300"}],
+            "h2": ["36px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+            "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "300"}],
+            "h1": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "300"}],
+            "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0em", "fontWeight": "600"}],
+            "label-bold": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+            "button": ["16px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}]
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fade-up {
+      animation: fadeInUp 0.6s ease-out;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md">
+
+<!-- SECTION 1: NAVBAR -->
+<nav id="navbar" class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-indigo-50 transition-shadow duration-300">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+    <!-- Brand -->
+    <div class="flex flex-col">
+      <span class="text-xl font-bold text-primary leading-none">EduMindWell</span>
+      <span class="text-[10px] uppercase tracking-widest text-secondary font-label-bold">Academic & Mental Harmony</span>
+    </div>
+    
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex space-x-8 items-center font-h3 font-medium text-sm">
+      <a href="#hero" class="text-primary border-b-2 border-primary pb-1">Home</a>
+      <a href="#approach" class="text-slate-600 hover:text-primary transition-colors">Approach</a>
+      <a href="#career" class="text-slate-600 hover:text-primary transition-colors">Career</a>
+      <a href="#workshops" class="text-slate-600 hover:text-primary transition-colors">Workshops</a>
+      <a href="#wellness" class="text-slate-600 hover:text-primary transition-colors">Wellness</a>
+      <a href="#stories" class="text-slate-600 hover:text-primary transition-colors">Stories</a>
+      <a href="#contact" class="text-slate-600 hover:text-primary transition-colors">Contact</a>
+    </div>
+    
+    <!-- CTA Button -->
+    <button onclick="window.location.href='#cta'" class="bg-tertiary-container text-on-tertiary-container px-6 py-2.5 rounded-full font-button text-button shadow-sm hover:scale-95 transition-transform duration-150">
+      Book a Free Session
+    </button>
+  </div>
+</nav>
+
+<!-- SECTION 2: HERO SECTION -->
+<header id="hero" class="pt-32 pb-20 px-6 overflow-hidden bg-surface">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+    <!-- Left Column -->
+    <div class="space-y-8">
+      <!-- Trust Badge -->
+      <div class="inline-flex items-center space-x-2 px-3 py-1 bg-secondary-container/30 rounded-full animate-fade-up">
+        <span class="material-symbols-outlined text-on-secondary-container text-sm">verified_user</span>
+        <span class="text-label-bold text-on-secondary-container uppercase">Trusted by 5000+ Students</span>
+      </div>
+      
+      <!-- H1 Headline -->
+      <h1 class="font-h1 text-h1 text-primary max-w-lg">
+        Career. Mind. Wellbeing. <span class="text-secondary">All Aligned.</span>
+      </h1>
+      
+      <!-- Body Text -->
+      <p class="text-body-lg text-on-surface-variant max-w-md">
+        Empowering students from Class 8 to 12 to build confident careers without sacrificing their mental wellbeing. Structured. Scientific. Personal.
+      </p>
+      
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 pt-4">
+        <button class="bg-primary text-on-primary px-8 py-4 rounded-xl font-button shadow-lg shadow-primary/20 hover:shadow-xl transition-shadow">
+          Start Your Journey
+        </button>
+        <button class="border border-primary text-primary bg-transparent px-8 py-4 rounded-xl font-button hover:bg-primary/5 transition-colors">
+          Watch a Student Story
+        </button>
+      </div>
+      
+      <!-- Stats -->
+      <div class="grid grid-cols-3 gap-6 pt-8 border-t border-outline-variant">
+        <div>
+          <div class="text-2xl font-bold text-primary">5000+</div>
+          <div class="text-xs text-on-surface-variant">Students Guided</div>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-primary">30+</div>
+          <div class="text-xs text-on-surface-variant">Page Reports</div>
+        </div>
+        <div>
+          <div class="text-2xl font-bold text-primary">7L+</div>
+          <div class="text-xs text-on-surface-variant">Colleges Listed</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Column: Animated Circles + Cards -->
+    <div class="relative flex justify-center h-[500px]">
+      <!-- Background Glow -->
+      <div class="absolute inset-0 bg-primary/5 rounded-full blur-3xl"></div>
+      
+      <!-- Three Animated Circles -->
+      <div class="absolute top-0 left-1/4 w-48 h-48 border-4 border-primary rounded-full flex items-center justify-center bg-white shadow-xl animate-bounce" style="animation-duration: 4s;">
+        <span class="text-primary font-bold">Career</span>
+      </div>
+      <div class="absolute bottom-0 right-1/4 w-48 h-48 border-4 border-secondary rounded-full flex items-center justify-center bg-white shadow-xl animate-bounce" style="animation-duration: 5s;">
+        <span class="text-secondary font-bold">Mind</span>
+      </div>
+      <div class="absolute top-1/3 right-0 w-48 h-48 border-4 border-on-tertiary-container rounded-full flex items-center justify-center bg-white shadow-xl animate-bounce" style="animation-duration: 6s;">
+        <span class="text-on-tertiary-container font-bold">Wellbeing</span>
+      </div>
+      
+      <!-- SVG Connector Lines -->
+      <svg class="absolute inset-0 w-full h-full opacity-20" viewbox="0 0 400 400">
+        <path class="text-primary" d="M150,100 Q200,200 300,150" fill="none" stroke="currentColor" stroke-width="2"></path>
+        <path class="text-secondary" d="M300,150 Q250,300 200,350" fill="none" stroke="currentColor" stroke-width="2"></path>
+        <path class="text-on-tertiary-container" d="M200,350 Q100,250 150,100" fill="none" stroke="currentColor" stroke-width="2"></path>
+      </svg>
+      
+      <!-- Floating Card 1 -->
+      <div class="absolute bottom-20 left-0 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-2xl border border-white/30 w-56 z-20 hover:shadow-xl transition-shadow">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="material-symbols-outlined text-secondary">description</span>
+          <span class="font-label-bold text-on-surface">30-Page Roadmap</span>
+        </div>
+        <p class="text-body-sm text-on-surface-variant">Personalized career path with action steps</p>
+      </div>
+      
+      <!-- Floating Card 2 -->
+      <div class="absolute top-32 right-0 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-2xl border border-white/30 w-56 z-20 hover:shadow-xl transition-shadow">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="material-symbols-outlined text-secondary">favorite</span>
+          <span class="font-label-bold text-on-surface">Wellness Tracker</span>
+        </div>
+        <p class="text-body-sm text-on-surface-variant">Daily mental health & focus metrics</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION 3: PROBLEM SECTION -->
+<section id="approach" class="py-xl px-6 bg-surface-container-lowest">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="font-h2 text-h2 text-primary mb-4">
+        You're not confused.
+      </h2>
+      <p class="text-body-lg text-on-surface-variant font-normal italic max-w-2xl mx-auto">
+        You just don't have the right guidance yet.
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-12">
+      <!-- Student Column -->
+      <div class="space-y-6">
+        <div class="flex items-start gap-4">
+          <div class="bg-primary/10 p-3 rounded-full flex-shrink-0">
+            <span class="material-symbols-outlined text-primary">school</span>
+          </div>
+          <div class="glass-card p-6 rounded-2xl rounded-tl-none flex-1">
+            <p class="text-body-md text-on-surface">
+              "I have so many interests, but I don't know which one translates into a secure future."
+            </p>
+            <span class="block mt-2 text-xs font-label-bold text-primary">— Class 11 Student</span>
+          </div>
+        </div>
+        
+        <div class="flex items-start gap-4 justify-end">
+          <div class="bg-primary text-white glass-card p-6 rounded-2xl rounded-tr-none flex-1 shadow-lg">
+            <p class="text-body-md italic opacity-90">
+              "We map your innate strengths to high-growth industries before you pick a stream or college."
+            </p>
+            <span class="block mt-2 text-xs font-label-bold">— EduMindWell Guide</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Parent Column -->
+      <div class="space-y-6">
+        <div class="flex items-start gap-4">
+          <div class="bg-secondary/10 p-3 rounded-full flex-shrink-0">
+            <span class="material-symbols-outlined text-secondary">family_restroom</span>
+          </div>
+          <div class="glass-card p-6 rounded-2xl rounded-tl-none flex-1">
+            <p class="text-body-md text-on-surface">
+              "I want them to succeed, but I'm worried about their stress levels and burnout."
+            </p>
+            <span class="block mt-2 text-xs font-label-bold text-secondary">— Concerned Parent</span>
+          </div>
+        </div>
+        
+        <div class="flex items-start gap-4 justify-end">
+          <div class="bg-secondary text-white glass-card p-6 rounded-2xl rounded-tr-none flex-1 shadow-lg">
+            <p class="text-body-md italic opacity-90">
+              "Our emotional resilience training ensures high performance without the psychological cost."
+            </p>
+            <span class="block mt-2 text-xs font-label-bold">— Wellness Coach</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: THREE PILLARS -->
+<section id="pillars" class="py-xl px-6 bg-surface">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="font-h2 text-h2 text-primary mb-4">One Platform. Three Pillars. Complete Transformation.</h2>
+      <p class="text-body-lg text-on-surface-variant">Most guidance stops at career advice. We go further.</p>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Career Guidance Card -->
+      <div class="bg-white p-10 rounded-[32px] shadow-sm border border-indigo-50 hover:shadow-xl transition-all group">
+        <div class="w-16 h-16 bg-primary/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-primary group-hover:text-white transition-all">
+          <span class="material-symbols-outlined text-3xl">route</span>
+        </div>
+        <h3 class="font-h3 text-h3 text-primary mb-4">Career Guidance</h3>
+        <p class="text-body-md text-on-surface-variant mb-6">
+          AI-powered psychometric assessments, personalized 30+ page career reports, one-on-one counselling, and 7 lakh+ college database access.
+        </p>
+        <a href="#" class="text-primary font-bold inline-flex items-center gap-2 hover:gap-3 transition-all">
+          Explore Career Guidance <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+      </div>
+      
+      <!-- Workshops Card -->
+      <div class="bg-white p-10 rounded-[32px] shadow-sm border border-indigo-50 hover:shadow-xl transition-all group">
+        <div class="w-16 h-16 bg-secondary/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-secondary group-hover:text-white transition-all">
+          <span class="material-symbols-outlined text-3xl">groups</span>
+        </div>
+        <h3 class="font-h3 text-h3 text-secondary mb-4">Workshops</h3>
+        <p class="text-body-md text-on-surface-variant mb-6">
+          Mindset, emotional intelligence and wellness workshops for students, parents and professionals. Online and in-person.
+        </p>
+        <a href="#" class="text-secondary font-bold inline-flex items-center gap-2 hover:gap-3 transition-all">
+          See Workshops <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+      </div>
+      
+      <!-- Wellness Card -->
+      <div class="bg-white p-10 rounded-[32px] shadow-sm border border-indigo-50 hover:shadow-xl transition-all group">
+        <div class="w-16 h-16 bg-on-tertiary-container/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-on-tertiary-container group-hover:text-white transition-all">
+          <span class="material-symbols-outlined text-3xl">spa</span>
+        </div>
+        <h3 class="font-h3 text-h3 text-on-tertiary-container mb-4">Wellness & MiraclesX</h3>
+        <p class="text-body-md text-on-surface-variant mb-6">
+          Holistic wellness programs and the MiraclesX App — your daily companion for focus, calm, and subconscious transformation.
+        </p>
+        <a href="#" class="text-on-tertiary-container font-bold inline-flex items-center gap-2 hover:gap-3 transition-all">
+          Discover MiraclesX <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: CAREER GUIDANCE SUMMARY -->
+<section id="career" class="py-xl px-6 bg-primary text-white">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+      <div>
+        <h2 class="font-h2 text-h2 mb-4">
+          Most platforms give a result.
+          <br/>
+          <span class="text-secondary">We give a 30-page roadmap.</span>
+        </h2>
+        <p class="text-body-lg text-primary-fixed-dim max-w-xl">
+          A data-driven journey from uncertainty to clarity through 6 structured milestones.
+        </p>
+      </div>
+      <button class="bg-white text-primary px-8 py-4 rounded-xl font-button hover:bg-slate-100 transition-colors whitespace-nowrap">
+        Start Your Roadmap
+      </button>
+    </div>
+    
+    <!-- 6 Steps Timeline -->
+    <div class="grid md:grid-cols-6 gap-8 relative">
+      <!-- Connector Line -->
+      <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-white/10 z-0"></div>
+      
+      <!-- Step 1 -->
+      <div class="relative z-10 space-y-4">
+        <div class="w-12 h-12 bg-white text-primary font-bold rounded-full flex items-center justify-center shadow-lg">01</div>
+        <h4 class="font-bold text-sm">5D Assessment</h4>
+        <p class="text-xs text-primary-fixed-dim">AI psychometric evaluation</p>
+      </div>
+      
+      <!-- Step 2 -->
+      <div class="relative z-10 space-y-4">
+        <div class="w-12 h-12 bg-white/20 text-white font-bold rounded-full flex items-center justify-center">02</div>
+        <h4 class="font-bold text-sm">Career Report</h4>
+        <p class="text-xs text-primary-fixed-dim">30+ page personal roadmap</p>
+      </div>
+      
+      <!-- Step 3 -->
+      <div class="relative z-10 space-y-4">
+        <div class="w-12 h-12 bg-white/20 text-white font-bold rounded-full flex items-center justify-center">03</div>
+        <h4 class="font-bold text-sm">1-on-1 Session</h4>
+        <p class="text-xs text-primary-fixed-dim">30 min counsellor call</p>
+      </div>
+      
+      <!-- Step 4 -->
+      <div class="relative z-10 space-y-4">
+        <div class="w-12 h-12 bg-white/20 text-white font-bold rounded-full flex items-center justify-center">04</div>
+        <h4 class="font-bold text-sm">Stream Guidance</h4>
+        <p class="text-xs text-primary-fixed-dim">For Class 8, 9 and 10</p>
+      </div>
+      
+      <!-- Step 5 -->
+      <div class="relative z-10 space-y-4">
+        <div class="w-12 h-12 bg-white/20 text-white font-bold rounded-full flex items-center justify-center">05</div>
+        <h4 class="font-bold text-sm">Roadmapping</h4>
+        <p class="text-xs text-primary-fixed-dim">For Class 11 and 12</p>
+      </div>
+      
+      <!-- Step 6 -->
+      <div class="relative z-10 space-y-4">
+        <div class="w-12 h-12 bg-secondary-container text-primary font-bold rounded-full flex items-center justify-center">06</div>
+        <h4 class="font-bold text-sm">Dashboard Access</h4>
+        <p class="text-xs text-primary-fixed-dim">7L+ colleges, career library</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: WHO IS THIS FOR -->
+<section id="workshops" class="py-xl px-6 bg-surface-container">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="font-h2 text-h2 text-primary">Built for Every Stage of the Journey</h2>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Students Card -->
+      <div class="group cursor-pointer">
+        <div class="relative h-64 rounded-3xl overflow-hidden mb-6 bg-gradient-to-br from-blue-400 to-indigo-600">
+          <div class="w-full h-full bg-cover bg-center" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 800%22><rect fill=%22%2321c4d2%22 width=%221200%22 height=%22800%22/><circle cx=%22300%22 cy=%22200%22 r=%22100%22 fill=%22%2352b788%22 opacity=%220.5%22/><circle cx=%22900%22 cy=%22600%22 r=%22150%22 fill=%22%2321b4d4%22 opacity=%220.3%22/></svg>')"></div>
+          <div class="absolute inset-0 bg-primary/40 flex items-end p-8 group-hover:bg-primary/50 transition-colors">
+            <h4 class="text-white text-2xl font-bold">Students</h4>
+          </div>
+        </div>
+        <p class="text-body-md text-on-surface-variant px-2">
+          Navigate streams, entrance exams, and college selection without losing your peace of mind.
+        </p>
+        <a href="#" class="text-primary font-bold inline-flex items-center gap-2 mt-4">I'm a Student <span class="material-symbols-outlined">arrow_forward</span></a>
+      </div>
+      
+      <!-- Parents Card -->
+      <div class="group cursor-pointer">
+        <div class="relative h-64 rounded-3xl overflow-hidden mb-6 bg-gradient-to-br from-emerald-400 to-teal-600">
+          <div class="w-full h-full bg-cover bg-center" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 800%22><rect fill=%22%2354a574%22 width=%221200%22 height=%22800%22/><circle cx=%22400%22 cy=%22300%22 r=%22120%22 fill=%2283e9a7%22 opacity=%220.5%22/><circle cx=%22800%22 cy=%22500%22 r=%22140%22 fill=%2276c893%22 opacity=%220.3%22/></svg>')"></div>
+          <div class="absolute inset-0 bg-secondary/40 flex items-end p-8 group-hover:bg-secondary/50 transition-colors">
+            <h4 class="text-white text-2xl font-bold">Parents</h4>
+          </div>
+        </div>
+        <p class="text-body-md text-on-surface-variant px-2">
+          Understand today's career landscape and become your child's biggest advantage, not their biggest pressure.
+        </p>
+        <a href="#" class="text-secondary font-bold inline-flex items-center gap-2 mt-4">I'm a Parent <span class="material-symbols-outlined">arrow_forward</span></a>
+      </div>
+      
+      <!-- Professionals Card -->
+      <div class="group cursor-pointer">
+        <div class="relative h-64 rounded-3xl overflow-hidden mb-6 bg-gradient-to-br from-orange-400 to-red-600">
+          <div class="w-full h-full bg-cover bg-center" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1200 800%22><rect fill=%22%23e8a52f%22 width=%221200%22 height=%22800%22/><circle cx=%22350%22 cy=%22250%22 r=%22110%22 fill=%22%23f5b76a%22 opacity=%220.5%22/><circle cx=%22850%22 cy=%22550%22 r=%22130%22 fill=%22%23f08c3d%22 opacity=%220.3%22/></svg>')"></div>
+          <div class="absolute inset-0 bg-on-tertiary-container/40 flex items-end p-8 group-hover:bg-on-tertiary-container/50 transition-colors">
+            <h4 class="text-white text-2xl font-bold">Professionals</h4>
+          </div>
+        </div>
+        <p class="text-body-md text-on-surface-variant px-2">
+          Mid-career pivot or feeling stuck? Align your reality with your inner purpose.
+        </p>
+        <a href="#" class="text-on-tertiary-container font-bold inline-flex items-center gap-2 mt-4">I'm a Professional <span class="material-symbols-outlined">arrow_forward</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: SUCCESS STORIES -->
+<section id="stories" class="py-xl px-6 bg-primary text-white">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="font-h2 text-h2 mb-16 text-center">Real Students. Real Decisions. Real Results.</h2>
+    
+    <!-- Stories Scroll Container -->
+    <div class="relative">
+      <div id="stories-container" class="flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4" style="scroll-behavior: smooth;">
+        <!-- Story 1 -->
+        <div class="flex-shrink-0 w-full md:w-96 bg-white/5 p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors snap-center">
+          <div class="flex gap-4 mb-6">
+            <div class="flex-1 p-4 bg-error-container/10 border border-red-300/20 rounded-xl">
+              <p class="text-[10px] font-bold uppercase text-red-300 mb-1">Before</p>
+              <p class="text-sm text-white/90">About to choose Science by default because all friends were</p>
+            </div>
+            <div class="flex-1 p-4 bg-secondary-container/10 border border-secondary-fixed/20 rounded-xl">
+              <p class="text-[10px] font-bold uppercase text-secondary-fixed mb-1">After</p>
+              <p class="text-sm text-white/90">Discovered Commerce + Law fit. Now preparing for CLAT, top of class</p>
+            </div>
+          </div>
+          <p class="italic text-primary-fixed-dim text-sm mb-4">"I had no idea Law was even an option for me. The report changed everything."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-white/20"></div>
+            <span class="text-sm font-bold">— Rohan V., Class 12</span>
+          </div>
+        </div>
+        
+        <!-- Story 2 -->
+        <div class="flex-shrink-0 w-full md:w-96 bg-white/5 p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors snap-center">
+          <div class="flex gap-4 mb-6">
+            <div class="flex-1 p-4 bg-error-container/10 border border-red-300/20 rounded-xl">
+              <p class="text-[10px] font-bold uppercase text-red-300 mb-1">Before</p>
+              <p class="text-sm text-white/90">Loved psychology but thought it wasn't a real career option</p>
+            </div>
+            <div class="flex-1 p-4 bg-secondary-container/10 border border-secondary-fixed/20 rounded-xl">
+              <p class="text-[10px] font-bold uppercase text-secondary-fixed mb-1">After</p>
+              <p class="text-sm text-white/90">Mapped to 12 psychology career paths. Targeting clinical psychology</p>
+            </div>
+          </div>
+          <p class="italic text-primary-fixed-dim text-sm mb-4">"Seeing salary data and real career paths for psychology made my parents finally say yes."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-white/20"></div>
+            <span class="text-sm font-bold">— Ananya S., Class 11</span>
+          </div>
+        </div>
+        
+        <!-- Story 3 -->
+        <div class="flex-shrink-0 w-full md:w-96 bg-white/5 p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors snap-center">
+          <div class="flex gap-4 mb-6">
+            <div class="flex-1 p-4 bg-error-container/10 border border-red-300/20 rounded-xl">
+              <p class="text-[10px] font-bold uppercase text-red-300 mb-1">Before</p>
+              <p class="text-sm text-white/90">Pushing child toward engineering despite resistance</p>
+            </div>
+            <div class="flex-1 p-4 bg-secondary-container/10 border border-secondary-fixed/20 rounded-xl">
+              <p class="text-[10px] font-bold uppercase text-secondary-fixed mb-1">After</p>
+              <p class="text-sm text-white/90">Parent session revealed Design as stronger match. Family aligned</p>
+            </div>
+          </div>
+          <p class="italic text-primary-fixed-dim text-sm mb-4">"We were the obstacle. EduMindWell helped us become our daughter's support system."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-white/20"></div>
+            <span class="text-sm font-bold">— Parent, Mumbai</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Story Nav Arrows -->
+      <button onclick="scrollStories(-1)" class="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <button onclick="scrollStories(1)" class="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors">
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 8: FAQ -->
+<section id="faq" class="py-xl px-6 bg-surface">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="font-h2 text-h2 text-primary text-center mb-12">Questions We Hear Every Day</h2>
+    
+    <div class="space-y-4">
+      <!-- FAQ Item 1 -->
+      <div class="border-b border-indigo-100 pb-4">
+        <button class="faq-button flex justify-between items-center w-full text-left font-bold text-primary py-4 group" onclick="toggleFaq(this)">
+          <span>How is EduMindWell different from my school counselor?</span>
+          <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+        </button>
+        <p class="faq-answer text-on-surface-variant text-sm pr-12 hidden max-w-md">
+          School counselors advise based on marks and general options. We use a 5-dimensional AI psychometric assessment to map your personality, aptitude, interests, emotional quotient, and learning style — then build a 30-page execution plan specific to you.
+        </p>
+      </div>
+      
+      <!-- FAQ Item 2 -->
+      <div class="border-b border-indigo-100 pb-4">
+        <button class="faq-button flex justify-between items-center w-full text-left font-bold text-primary py-4 group" onclick="toggleFaq(this)">
+          <span>What exactly is the 5-Dimensional Assessment?</span>
+          <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+        </button>
+        <p class="faq-answer text-on-surface-variant text-sm pr-12 hidden max-w-md">
+          It measures five areas — personality type, academic aptitude, career interest, emotional quotient, and learning style. Together these give a complete picture of who you are and which careers you will genuinely thrive in.
+        </p>
+      </div>
+      
+      <!-- FAQ Item 3 -->
+      <div class="border-b border-indigo-100 pb-4">
+        <button class="faq-button flex justify-between items-center w-full text-left font-bold text-primary py-4 group" onclick="toggleFaq(this)">
+          <span>My child is in Class 8. Is it too early?</span>
+          <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+        </button>
+        <p class="faq-answer text-on-surface-variant text-sm pr-12 hidden max-w-md">
+          Not at all. Class 8 and 9 are the ideal time for stream awareness. Early guidance prevents the most common mistake — choosing a stream by default rather than by fit.
+        </p>
+      </div>
+      
+      <!-- FAQ Item 4 -->
+      <div class="border-b border-indigo-100 pb-4">
+        <button class="faq-button flex justify-between items-center w-full text-left font-bold text-primary py-4 group" onclick="toggleFaq(this)">
+          <span>My child is already in Class 12. Is it too late?</span>
+          <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+        </button>
+        <p class="faq-answer text-on-surface-variant text-sm pr-12 hidden max-w-md">
+          Never too late. For Class 12 students we focus on college selection, entrance exam strategy, profile building, and application support — everything needed for the next step.
+        </p>
+      </div>
+      
+      <!-- FAQ Item 5 -->
+      <div class="border-b border-indigo-100 pb-4">
+        <button class="faq-button flex justify-between items-center w-full text-left font-bold text-primary py-4 group" onclick="toggleFaq(this)">
+          <span>What is the MiraclesX App and is it free?</span>
+          <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+        </button>
+        <p class="faq-answer text-on-surface-variant text-sm pr-12 hidden max-w-md">
+          MiraclesX is our proprietary daily wellness app with guided practices for focus, calm, and habit formation. It is included in the Roadmap and Full Journey plans.
+        </p>
+      </div>
+      
+      <!-- FAQ Item 6 -->
+      <div class="border-b border-indigo-100 pb-4">
+        <button class="faq-button flex justify-between items-center w-full text-left font-bold text-primary py-4 group" onclick="toggleFaq(this)">
+          <span>Are sessions online or in-person?</span>
+          <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+        </button>
+        <p class="faq-answer text-on-surface-variant text-sm pr-12 hidden max-w-md">
+          Both options are available. Most students prefer online for convenience. In-person sessions can be arranged in select cities.
+        </p>
+      </div>
+      
+      <!-- FAQ Item 7 -->
+      <div class="border-b border-indigo-100 pb-4">
+        <button class="faq-button flex justify-between items-center w-full text-left font-bold text-primary py-4 group" onclick="toggleFaq(this)">
+          <span>Will my parents be involved in my sessions?</span>
+          <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+        </button>
+        <p class="faq-answer text-on-surface-variant text-sm pr-12 hidden max-w-md">
+          You choose. We offer student-only sessions, parent-only sessions, and joint family sessions depending on what works best for your situation.
+        </p>
+      </div>
+      
+      <!-- FAQ Item 8 -->
+      <div class="border-b border-indigo-100 pb-4">
+        <button class="faq-button flex justify-between items-center w-full text-left font-bold text-primary py-4 group" onclick="toggleFaq(this)">
+          <span>Is the first session really free?</span>
+          <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+        </button>
+        <p class="faq-answer text-on-surface-variant text-sm pr-12 hidden max-w-md">
+          Yes. The first 30-minute discovery call is completely free with no commitment required. It is simply a conversation to understand your situation and see if EduMindWell is the right fit.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 9: FINAL CTA BANNER -->
+<section id="cta" class="py-xl px-6 bg-surface-container-lowest">
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-primary rounded-[48px] p-12 md:p-24 text-center overflow-hidden relative">
+      <!-- Radial Gradient Overlay -->
+      <div class="absolute inset-0 opacity-10" style="background: radial-gradient(circle at 50% 50%, #006a62 0%, transparent 100%);"></div>
+      
+      <div class="relative z-10">
+        <h1 class="font-h1 text-h1 text-white mb-2">
+          Your Future Deserves More
+        </h1>
+        <p class="text-h2 text-secondary font-h1 mb-6">
+          Than Guesswork.
+        </p>
+        <p class="text-body-lg text-primary-fixed-dim max-w-2xl mx-auto mb-8">
+          Stop worrying about what's next. Let's build it together — with precision and peace.
+        </p>
+        
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+          <button class="bg-tertiary-container text-on-tertiary-container px-10 py-5 rounded-2xl font-button shadow-xl hover:shadow-2xl transition-shadow">
+            Book My Free Session
+          </button>
+          <button class="border border-white text-white bg-white/5 backdrop-blur px-10 py-5 rounded-2xl font-button hover:bg-white/10 transition-colors">
+            Download Brochure
+          </button>
+        </div>
+        
+        <!-- Trust Signals -->
+        <div class="border-t border-white/10 pt-8 opacity-60 flex flex-col sm:flex-row justify-center gap-6 text-sm text-white/80">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">verified_user</span>
+            Certified Counsellors
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">lock</span>
+            Secure & Confidential
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">star</span>
+            No Commitment Required
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 10: FOOTER -->
+<footer id="contact" class="bg-slate-50 border-t border-indigo-100 pt-20 pb-8 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <!-- Column 1: Brand -->
+      <div>
+        <div class="mb-2">
+          <span class="text-xl font-bold text-primary">EduMindWell</span>
+        </div>
+        <p class="text-[10px] uppercase tracking-widest text-secondary font-label-bold mb-6">Academic & Mental Harmony</p>
+        <p class="text-body-sm text-slate-500 mb-6">
+          Empowering students to align their career, mind, and wellbeing for sustainable success.
+        </p>
+        <div class="flex gap-3">
+          <button class="w-10 h-10 bg-primary/5 hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
+            <span class="material-symbols-outlined text-sm text-primary hover:text-white">facebook</span>
+          </button>
+          <button class="w-10 h-10 bg-primary/5 hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
+            <span class="material-symbols-outlined text-sm text-primary hover:text-white">mail</span>
+          </button>
+          <button class="w-10 h-10 bg-primary/5 hover:bg-primary hover:text-white rounded-full flex items-center justify-center transition-all">
+            <span class="material-symbols-outlined text-sm text-primary hover:text-white">link</span>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Column 2: Resources -->
+      <div>
+        <h4 class="font-bold text-primary mb-4">Resources</h4>
+        <ul class="space-y-3 text-body-sm text-slate-500">
+          <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Terms of Service</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Contact Us</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Career Library</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Blog</a></li>
+        </ul>
+      </div>
+      
+      <!-- Column 3: Support -->
+      <div>
+        <h4 class="font-bold text-primary mb-4">Support</h4>
+        <ul class="space-y-3 text-body-sm text-slate-500">
+          <li><a href="#" class="hover:text-primary transition-colors">WhatsApp Support</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Parent Sessions</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">School Partnerships</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Scholarship Program</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Affiliate Program</a></li>
+        </ul>
+      </div>
+      
+      <!-- Column 4: App -->
+      <div>
+        <h4 class="font-bold text-primary mb-4">MiraclesX App</h4>
+        <p class="text-body-sm text-slate-500 mb-4">Daily wellness in your pocket.</p>
+        <div class="flex flex-col gap-3">
+          <button class="bg-slate-900 text-white px-4 py-3 rounded-xl text-button flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-sm">ios</span> App Store
+          </button>
+          <button class="bg-slate-900 text-white px-4 py-3 rounded-xl text-button flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors">
+            <span class="material-symbols-outlined text-sm">play_store</span> Play Store
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Footer Bottom -->
+    <div class="border-t border-indigo-100 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-400 text-xs font-label-bold">
+      <p>&copy; 2025 EduMindWell. All rights reserved.</p>
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <span>MADE WITH PURPOSE & CARE</span>
+        <span>GDPR COMPLIANT</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JAVASCRIPT -->
+<script>
+  // Navbar shadow on scroll
+  window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('shadow-md');
+    } else {
+      navbar.classList.remove('shadow-md');
+    }
+  });
+
+  // FAQ Accordion
+  function toggleFaq(button) {
+    // Close all other open answers
+    document.querySelectorAll('.faq-button').forEach(btn => {
+      if (btn !== button) {
+        btn.classList.remove('open');
+        btn.nextElementSibling.classList.add('hidden');
+      }
+    });
+    
+    // Toggle current
+    button.classList.toggle('open');
+    const answer = button.nextElementSibling;
+    answer.classList.toggle('hidden');
+  }
+
+  // Stories horizontal scroll
+  function scrollStories(direction) {
+    const container = document.getElementById('stories-container');
+    const cardWidth = container.querySelector('div').offsetWidth + 32; // width + gap
+    container.scrollBy({
+      left: direction * cardWidth,
+      behavior: 'smooth'
+    });
+  }
+
+  // Smooth scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduMindWell | Career. Mind. Wellbeing. All Aligned.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Lexend:wght@300;400;500&amp;family=Inter:wght@500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-surface": "#303036",
+                      "primary-fixed": "#dfe0ff",
+                      "primary-container": "#1e2a78",
+                      "secondary": "#006a62",
+                      "primary-fixed-dim": "#bcc3ff",
+                      "on-tertiary-container": "#dc845b",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#4c58a6",
+                      "surface-variant": "#e4e1e9",
+                      "secondary-fixed-dim": "#4fdbcc",
+                      "on-secondary": "#ffffff",
+                      "on-background": "#1b1b20",
+                      "outline": "#767682",
+                      "surface": "#fbf8ff",
+                      "inverse-on-surface": "#f2eff7",
+                      "on-primary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "surface-bright": "#fbf8ff",
+                      "on-primary-container": "#8a95e9",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface-variant": "#454651",
+                      "tertiary-fixed": "#ffdbcc",
+                      "on-surface": "#1b1b20",
+                      "on-tertiary-fixed": "#351000",
+                      "secondary-container": "#70f8e8",
+                      "on-secondary-fixed": "#00201d",
+                      "on-tertiary-fixed-variant": "#753311",
+                      "primary": "#021064",
+                      "surface-container-high": "#e9e7ee",
+                      "tertiary-fixed-dim": "#ffb595",
+                      "surface-container": "#efedf4",
+                      "surface-dim": "#dbd9e0",
+                      "background": "#fbf8ff",
+                      "outline-variant": "#c6c5d3",
+                      "surface-container-highest": "#e4e1e9",
+                      "on-primary-fixed-variant": "#343f8d",
+                      "inverse-primary": "#bcc3ff",
+                      "surface-container-low": "#f5f2fa",
+                      "secondary-fixed": "#70f8e8",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed": "#000d60",
+                      "on-secondary-container": "#007168",
+                      "on-error": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "on-secondary-fixed-variant": "#005049",
+                      "tertiary": "#391100",
+                      "tertiary-container": "#5b2000"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "sm": "12px",
+                      "gutter": "24px",
+                      "md": "24px",
+                      "xl": "80px",
+                      "xs": "4px",
+                      "container-max": "1280px",
+                      "lg": "48px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Lexend"],
+                      "h2": ["Manrope"],
+                      "body-md": ["Lexend"],
+                      "h1": ["Manrope"],
+                      "body-sm": ["Lexend"],
+                      "h3": ["Manrope"],
+                      "label-bold": ["Inter"],
+                      "button": ["Inter"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "300"}],
+                      "h2": ["36px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "300"}],
+                      "h1": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "300"}],
+                      "h3": ["24px", {"lineHeight": "1.4", "letterSpacing": "0em", "fontWeight": "600"}],
+                      "label-bold": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "button": ["16px", {"lineHeight": "1", "letterSpacing": "0.01em", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background font-body-md">
+<!-- 1. Navbar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-indigo-50 shadow-sm">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+<div class="flex flex-col">
+<span class="text-xl font-bold text-primary leading-none">EduMindWell</span>
+<span class="text-[10px] uppercase tracking-widest text-secondary font-label-bold">Academic &amp; Mental Harmony</span>
+</div>
+<div class="hidden md:flex space-x-8 items-center font-manrope font-medium text-sm">
+<a class="text-primary-container border-b-2 border-primary pb-1" href="#">Home</a>
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Approach</a>
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Career</a>
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Workshops</a>
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Wellness</a>
+<a class="text-slate-600 hover:text-primary transition-colors" href="#">Stories</a>
+</div>
+<button class="bg-tertiary-container text-on-tertiary-container px-6 py-2.5 rounded-full font-button text-button shadow-sm hover:scale-95 transition-transform duration-150">
+                Book a Free Session
+            </button>
+</div>
+</nav>
+<!-- 2. Hero Section -->
+<header class="pt-32 pb-20 px-6 overflow-hidden">
+<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center space-x-2 px-3 py-1 bg-secondary-container/30 rounded-full">
+<span class="material-symbols-outlined text-on-secondary-container text-sm">verified_user</span>
+<span class="text-label-bold text-on-secondary-container uppercase">Trusted by 5000+ Students</span>
+</div>
+<h1 class="font-h1 text-h1 text-primary max-w-lg">
+                    Career. Mind. Wellbeing. <span class="text-secondary">All Aligned.</span>
+</h1>
+<p class="text-body-lg text-on-surface-variant max-w-md">
+                    Empowering the next generation to excel academically while maintaining emotional equilibrium. We don't just build careers; we nurture minds.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-xl font-button shadow-lg shadow-primary/20">Explore Our Path</button>
+<div class="flex -space-x-3 items-center">
+<img class="w-10 h-10 rounded-full border-2 border-white object-cover" data-alt="professional portrait of a confident young female student smiling warmly" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgyLcXd4tV1DNxxRJbf6K1LqzJhYQuW6aiEedW40wv9SwTIaCPNqsZLV-qtek1-pcf5rYI_PtRH3ZRN8b0siBNIjdK2PRpHwLHaiQ7BnVnp2Olh_JjOnMTdyzNkBn8QWixcOjyJaAxBrOTM45XMtA0LTajXaeHGxUeR8PJZ5kw6uh0BygI1R-L-_forH0p2J9M3pe_L14z_XqDVLiFvrpy_vz8oo5sVj_FaA91O-9Y_pcltsjUavY1vnpxjHiqPndvZzYUSS4q5P4X"/>
+<img class="w-10 h-10 rounded-full border-2 border-white object-cover" data-alt="portrait of a young male professional in a clean white shirt against a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc0JyDpz4yKB3Y9vQigvGJvZ-LIAALk1qCML7UxkE57TXDK3mCQVTCBlVSmjbidy-6QqfOhXxEoJgFltBF6AXCIYZoZFsgyHhXh9LU_ftzOm3dkLoG2KhJo9ykW8bkIYdEMpix2T6lsg6NSoa8m7H7opYaYHClzYt7w9OO5mrrlnc2exMb7kcXk6W2qFZ_dLSnK3uTRqvgHIxXGP3UB3Iml91_Ts-RtI3PWM5GQitBmSOKlocHkRltnVjwVO7-JObQs0MTC1VjDTlQ"/>
+<div class="w-10 h-10 rounded-full bg-surface-container-high border-2 border-white flex items-center justify-center text-[10px] font-bold text-primary">+12k</div>
+<span class="ml-6 text-sm text-on-surface-variant font-medium">Join our growing community</span>
+</div>
+</div>
+</div>
+<div class="relative flex justify-center">
+<!-- Abstract Interconnected Circles -->
+<div class="w-[400px] h-[400px] relative">
+<div class="absolute inset-0 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute top-0 left-1/4 w-48 h-48 border-4 border-primary rounded-full flex items-center justify-center bg-white shadow-xl animate-bounce" style="animation-duration: 4s;">
+<span class="text-primary font-bold">Career</span>
+</div>
+<div class="absolute bottom-0 right-1/4 w-48 h-48 border-4 border-secondary rounded-full flex items-center justify-center bg-white shadow-xl animate-bounce" style="animation-duration: 5s;">
+<span class="text-secondary font-bold">Mind</span>
+</div>
+<div class="absolute top-1/3 right-0 w-48 h-48 border-4 border-on-tertiary-container rounded-full flex items-center justify-center bg-white shadow-xl animate-bounce" style="animation-duration: 6s;">
+<span class="text-on-tertiary-container font-bold">Wellbeing</span>
+</div>
+<svg class="absolute inset-0 w-full h-full opacity-20" viewbox="0 0 400 400">
+<path class="text-primary" d="M150,100 Q200,200 300,150" fill="none" stroke="currentColor" stroke-width="2"></path>
+<path class="text-secondary" d="M300,150 Q250,300 200,350" fill="none" stroke="currentColor" stroke-width="2"></path>
+<path class="text-on-tertiary-container" d="M200,350 Q100,250 150,100" fill="none" stroke="currentColor" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</div>
+</header>
+<!-- 3. Problem Section -->
+<section class="py-xl px-6 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-h2 text-h2 text-primary mb-4">You’re not confused. <br/><span class="text-on-surface-variant font-normal italic">You just don’t have the right guidance yet.</span></h2>
+</div>
+<div class="grid md:grid-cols-2 gap-12">
+<!-- Students side -->
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="bg-primary/10 p-3 rounded-full">
+<span class="material-symbols-outlined text-primary">school</span>
+</div>
+<div class="glass-card p-6 rounded-2xl rounded-tl-none shadow-sm flex-1">
+<p class="text-body-md text-on-surface">"I have so many interests, but I don't know which one translates into a secure future."</p>
+<span class="block mt-2 text-xs font-label-bold text-primary">— High School Student</span>
+</div>
+</div>
+<div class="flex items-start gap-4 justify-end">
+<div class="glass-card p-6 rounded-2xl rounded-tr-none shadow-sm flex-1 bg-primary text-white">
+<p class="text-body-md italic opacity-90">"We map your innate strengths to high-growth industries before you pick a major."</p>
+<span class="block mt-2 text-xs font-label-bold">— EduMindWell Guide</span>
+</div>
+</div>
+</div>
+<!-- Parents side -->
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="bg-secondary/10 p-3 rounded-full">
+<span class="material-symbols-outlined text-secondary">family_restroom</span>
+</div>
+<div class="glass-card p-6 rounded-2xl rounded-tl-none shadow-sm flex-1">
+<p class="text-body-md text-on-surface">"I want them to succeed, but I'm worried about their stress levels and burnout."</p>
+<span class="block mt-2 text-xs font-label-bold text-secondary">— Concerned Parent</span>
+</div>
+</div>
+<div class="flex items-start gap-4 justify-end">
+<div class="glass-card p-6 rounded-2xl rounded-tr-none shadow-sm flex-1 bg-secondary text-white">
+<p class="text-body-md italic opacity-90">"Our emotional resilience training ensures high performance without the psychological cost."</p>
+<span class="block mt-2 text-xs font-label-bold">— Wellness Coach</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Three Pillars -->
+<section class="py-xl px-6 bg-surface">
+<div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+<div class="bg-white p-10 rounded-[32px] shadow-sm border border-indigo-50 hover:shadow-xl transition-shadow group">
+<div class="w-16 h-16 bg-primary/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-3xl">route</span>
+</div>
+<h3 class="font-h3 text-h3 text-primary mb-4">Career Guidance</h3>
+<p class="text-on-surface-variant mb-6">Scientific psychometric assessments paired with industry-expert mentoring to find your perfect path.</p>
+<a class="text-primary font-bold inline-flex items-center gap-2" href="#">Learn more <span class="material-symbols-outlined">arrow_forward</span></a>
+</div>
+<div class="bg-white p-10 rounded-[32px] shadow-sm border border-indigo-50 hover:shadow-xl transition-shadow group">
+<div class="w-16 h-16 bg-secondary/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-secondary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-3xl">groups</span>
+</div>
+<h3 class="font-h3 text-h3 text-secondary mb-4">Workshops</h3>
+<p class="text-on-surface-variant mb-6">Interactive group sessions focusing on soft skills, exam anxiety, and emotional intelligence.</p>
+<a class="text-secondary font-bold inline-flex items-center gap-2" href="#">Learn more <span class="material-symbols-outlined">arrow_forward</span></a>
+</div>
+<div class="bg-white p-10 rounded-[32px] shadow-sm border border-indigo-50 hover:shadow-xl transition-shadow group">
+<div class="w-16 h-16 bg-on-tertiary-container/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-on-tertiary-container group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-3xl">spa</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-tertiary-container mb-4">Wellness</h3>
+<p class="text-on-surface-variant mb-6">Powered by the MiraclesX app, providing daily micro-habits for sustained mental clarity.</p>
+<a class="text-on-tertiary-container font-bold inline-flex items-center gap-2" href="#">Learn more <span class="material-symbols-outlined">arrow_forward</span></a>
+</div>
+</div>
+</section>
+<!-- 5. Career Deep Dive -->
+<section class="py-xl px-6 bg-primary text-white">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<div>
+<h2 class="font-h2 text-h2 mb-4">"Most platforms give a result. <br/><span class="text-primary-container">We give a roadmap.</span>"</h2>
+<p class="text-body-lg text-primary-fixed-dim max-w-xl">A data-driven transition from uncertainty to professional dominance through 6 strategic milestones.</p>
+</div>
+<button class="bg-white text-primary px-8 py-4 rounded-xl font-button">Start Your Roadmap</button>
+</div>
+<div class="grid md:grid-cols-6 gap-8 relative">
+<div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-white/10 z-0"></div>
+<!-- Steps -->
+<div class="relative z-10 space-y-4">
+<div class="w-12 h-12 bg-white text-primary font-bold rounded-full flex items-center justify-center shadow-lg">01</div>
+<h4 class="font-bold text-sm">Inner Audit</h4>
+<p class="text-xs text-primary-fixed-dim">Strength &amp; passion discovery.</p>
+</div>
+<div class="relative z-10 space-y-4">
+<div class="w-12 h-12 bg-white/20 text-white font-bold rounded-full flex items-center justify-center">02</div>
+<h4 class="font-bold text-sm">Industry Fit</h4>
+<p class="text-xs text-primary-fixed-dim">Mapping to global trends.</p>
+</div>
+<div class="relative z-10 space-y-4">
+<div class="w-12 h-12 bg-white/20 text-white font-bold rounded-full flex items-center justify-center">03</div>
+<h4 class="font-bold text-sm">Course Matrix</h4>
+<p class="text-xs text-primary-fixed-dim">Curated degree selections.</p>
+</div>
+<div class="relative z-10 space-y-4">
+<div class="w-12 h-12 bg-white/20 text-white font-bold rounded-full flex items-center justify-center">04</div>
+<h4 class="font-bold text-sm">Skill Gap</h4>
+<p class="text-xs text-primary-fixed-dim">What you need to learn.</p>
+</div>
+<div class="relative z-10 space-y-4">
+<div class="w-12 h-12 bg-white/20 text-white font-bold rounded-full flex items-center justify-center">05</div>
+<h4 class="font-bold text-sm">Mentorship</h4>
+<p class="text-xs text-primary-fixed-dim">1-on-1 expert sessions.</p>
+</div>
+<div class="relative z-10 space-y-4">
+<div class="w-12 h-12 bg-secondary-container text-primary font-bold rounded-full flex items-center justify-center">06</div>
+<h4 class="font-bold text-sm">Placement</h4>
+<p class="text-xs text-primary-fixed-dim">Network &amp; Opportunity.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. Workshops Grid -->
+<section class="py-xl px-6 bg-surface-container-low">
+<div class="max-w-7xl mx-auto">
+<div class="mb-12 text-center">
+<span class="text-label-bold text-secondary tracking-widest uppercase">Skill Expansion</span>
+<h2 class="font-h2 text-h2 text-primary mt-2">Specialized Workshops</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+<div class="bg-white p-6 rounded-2xl flex flex-col items-center text-center shadow-sm hover:shadow-md transition-all">
+<div class="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-4"><span class="material-symbols-outlined">bolt</span></div>
+<span class="font-bold text-primary text-sm">Exam Stress</span>
+</div>
+<div class="bg-white p-6 rounded-2xl flex flex-col items-center text-center shadow-sm hover:shadow-md transition-all">
+<div class="w-12 h-12 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-4"><span class="material-symbols-outlined">psychology</span></div>
+<span class="font-bold text-primary text-sm">Emotional IQ</span>
+</div>
+<div class="bg-white p-6 rounded-2xl flex flex-col items-center text-center shadow-sm hover:shadow-md transition-all">
+<div class="w-12 h-12 bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-4"><span class="material-symbols-outlined">forum</span></div>
+<span class="font-bold text-primary text-sm">Communication</span>
+</div>
+<div class="bg-white p-6 rounded-2xl flex flex-col items-center text-center shadow-sm hover:shadow-md transition-all">
+<div class="w-12 h-12 bg-purple-50 text-purple-500 rounded-full flex items-center justify-center mb-4"><span class="material-symbols-outlined">timer</span></div>
+<span class="font-bold text-primary text-sm">Productivity</span>
+</div>
+<div class="bg-white p-6 rounded-2xl flex flex-col items-center text-center shadow-sm hover:shadow-md transition-all">
+<div class="w-12 h-12 bg-yellow-50 text-yellow-500 rounded-full flex items-center justify-center mb-4"><span class="material-symbols-outlined">shield</span></div>
+<span class="font-bold text-primary text-sm">Confidence</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Wellness/App Section -->
+<section class="py-xl px-6 bg-white overflow-hidden">
+<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+<div class="relative">
+<div class="absolute -top-10 -left-10 w-64 h-64 bg-secondary/10 rounded-full blur-3xl"></div>
+<div class="relative bg-slate-900 rounded-[40px] p-4 border-[8px] border-slate-800 shadow-2xl w-[280px] mx-auto">
+<div class="bg-white rounded-[32px] overflow-hidden aspect-[9/19]">
+<div class="p-6 bg-secondary text-white h-full space-y-4">
+<div class="flex justify-between items-center">
+<span class="material-symbols-outlined">menu</span>
+<div class="w-8 h-8 rounded-full bg-white/20"></div>
+</div>
+<h4 class="text-xl font-bold">Good morning, Arjun</h4>
+<div class="bg-white/10 p-4 rounded-2xl">
+<p class="text-[10px] uppercase font-bold tracking-widest opacity-80">Daily Focus</p>
+<p class="text-sm">Deep Breathing (5 mins)</p>
+</div>
+<div class="space-y-2">
+<div class="w-full h-2 bg-white/20 rounded-full">
+<div class="w-3/4 h-full bg-secondary-container rounded-full"></div>
+</div>
+<p class="text-[10px] text-right">75% Streak</p>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-4">
+<div class="aspect-square bg-white/5 rounded-xl flex items-center justify-center"><span class="material-symbols-outlined">self_improvement</span></div>
+<div class="aspect-square bg-white/5 rounded-xl flex items-center justify-center"><span class="material-symbols-outlined">audio_file</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<div class="text-on-tertiary-container bg-tertiary-fixed font-label-bold px-3 py-1 rounded-full w-fit">ECOSYSTEM</div>
+<h2 class="font-h2 text-h2 text-primary">MiraclesX App: Your Mental Gym</h2>
+<p class="text-body-lg text-on-surface-variant">Wellness shouldn't be an afterthought. Our proprietary app integrates daily mental resilience exercises into your study routine.</p>
+<ul class="space-y-4">
+<li class="flex items-center gap-3 text-on-surface">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>AI-driven mood tracking</span>
+</li>
+<li class="flex items-center gap-3 text-on-surface">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Curated sleep &amp; focus soundtracks</span>
+</li>
+<li class="flex items-center gap-3 text-on-surface">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Expert-led quick meditation bursts</span>
+</li>
+</ul>
+<div class="flex gap-4 pt-4">
+<button class="bg-slate-900 text-white px-6 py-3 rounded-xl flex items-center gap-2">
+<span class="material-symbols-outlined">ios</span> App Store
+                    </button>
+<button class="bg-slate-900 text-white px-6 py-3 rounded-xl flex items-center gap-2">
+<span class="material-symbols-outlined">play_store_installed</span> Play Store
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. Audience Segment -->
+<section class="py-xl px-6 bg-surface-container">
+<div class="max-w-7xl mx-auto text-center mb-16">
+<h2 class="font-h2 text-h2 text-primary">Tailored for Every Need</h2>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="group cursor-pointer">
+<div class="relative h-64 rounded-3xl overflow-hidden mb-6">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="group of ethnically diverse students studying together in a modern bright campus environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjdUSvYTXRPEKxmvW8o6cmQ7fXHfuKCrKAzQ1mculuPRMe4eyu59HdpjCq-N9VRVy29p0ywGmu2gHrTmuSppZVGjDd0jEcWQ9ZUhrW0hvJ6U3QjS2QAqL2obbLpnvlXku20GgYp5ZbgYlkEFIeK2fQKQTi6GA1pOugwwZVcvW1hXZj4ai1DJn3sm1SeiQ38VxJ0vRnHAyVMrFrmdcpMAychO8JCLDozNx5pwsBfbMp5waAH-tr3g5InuGwzzDwfSBI09PB9yboIDjM"/>
+<div class="absolute inset-0 bg-primary/40 flex items-end p-8">
+<h4 class="text-white text-2xl font-bold">Students</h4>
+</div>
+</div>
+<p class="text-on-surface-variant px-2">Navigate the complexity of entrance exams and college selection without losing your peace of mind.</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative h-64 rounded-3xl overflow-hidden mb-6">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="joyful diverse team of young professionals collaborating in a contemporary office space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4p5GOiGmuwH1okz3jkf2gtbWmhH3mDwEpB5OjMIbtnd02m2QtZeLHVsStLwusBTQVpSbcAtL2Wdz5eQKw29IEvYy8U4v8Xu3GIs_-ozG_EYlrHEE0WY2-Sz4ceyeUP9FROJbPlV-FBY0uYFqkZKZ2BRqzZ4IY9bQME_PzAtlHExHN1sH51t97qt_lDhLQ0AUZNVgXm6GSeuOlBrwkZF1EcTv5IDbFZkTpzxL2Y862mx4I-vHHu9m5kGrwEFPdzbG4DwZdftmNBoAe"/>
+<div class="absolute inset-0 bg-secondary/40 flex items-end p-8">
+<h4 class="text-white text-2xl font-bold">Professionals</h4>
+</div>
+</div>
+<p class="text-on-surface-variant px-2">Mid-career pivot or upskilling? Align your current professional reality with your inner purpose.</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative h-64 rounded-3xl overflow-hidden mb-6">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="supportive parents talking with their teenage daughter in a sunlit living room at home" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwgXFnapOWLNoZghlORAxh_EeaV52mqEPYefqT5hiWd1u6fks6y4YTZwBhvHDULgwPHLxisZ3VHvq2wpp_pg4IU8dA-cyaMqjaO08k__qgkcup2YN31BdJ3lfxuLD7-MHp3BZqR6ZLIdJKmxR7snj3kKAnec8pmrhvL16nQINuygyrKK3-b12oX7Q89IU1_WrhcDpEJTTsO94IKIxyb0TtU_Pkn7-DHfUM6uPXc3hF4n5FoxS0sY82RmmY2kknonMEvcpo1naNAvs3h"/>
+<div class="absolute inset-0 bg-tertiary-container/40 flex items-end p-8">
+<h4 class="text-white text-2xl font-bold">Parents</h4>
+</div>
+</div>
+<p class="text-on-surface-variant px-2">Learn how to be the anchor your child needs during high-stakes academic transitions.</p>
+</div>
+</div>
+</section>
+<!-- 9. Team/About -->
+<section class="py-xl px-6 bg-white">
+<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+<div class="order-2 md:order-1">
+<span class="text-label-bold text-on-tertiary-container tracking-widest uppercase mb-4 block">Our Founder</span>
+<h2 class="font-h2 text-h2 text-primary mb-6">Built on Academic Excellence &amp; Empathy</h2>
+<p class="text-body-lg text-on-surface-variant mb-6">Founded by Dr. Elena Vance, a neuro-psychologist and career architect who saw the devastating effects of burnout on high-performing students. EduMindWell was born to bridge the gap between "being successful" and "being well."</p>
+<div class="grid grid-cols-2 gap-8">
+<div>
+<span class="text-3xl font-bold text-primary block">15+</span>
+<span class="text-sm text-on-surface-variant">Years Experience</span>
+</div>
+<div>
+<span class="text-3xl font-bold text-primary block">500+</span>
+<span class="text-sm text-on-surface-variant">Expert Partners</span>
+</div>
+</div>
+</div>
+<div class="order-1 md:order-2">
+<div class="aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl relative">
+<img class="w-full h-full object-cover" data-alt="professional portrait of a confident female leader with glasses in a modern office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4iIpeWpck9S6dUkj9QWNZHgGtOQ0FO7l6ABDO6a3v2wbBTVZMvncQB0Cw4dj7rX2oG5DxfzlMC6h0wUveKvKRmxTW1AQMaBWLIF2zw9AkcD5zYMcPzb0NKXGRib1iS7TE7sO0xnn509B5nYh1sSM7tY-0C3fX47rdAGaqlU_sT8ekmuXQ45pwWiDw7kenyMPqINF8jRbgOYN7Xj1sdYBHq6O9-Tf60yV-hLGiq5IMRCPy-wo1pcOYZG5G1o09xWlCjnHsEer0Lviy"/>
+<div class="absolute bottom-8 left-8 bg-white p-6 rounded-2xl shadow-xl">
+<p class="font-bold text-primary">Dr. Elena Vance</p>
+<p class="text-xs text-on-surface-variant">Founder &amp; Chief Visionary</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 10. Success Stories -->
+<section class="py-xl px-6 bg-primary text-white">
+<div class="max-w-7xl mx-auto">
+<h2 class="font-h2 text-h2 mb-16 text-center">Transformations that Speak</h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
+<div class="flex gap-4 mb-6">
+<div class="flex-1 p-4 bg-error-container/10 border border-error/20 rounded-xl">
+<p class="text-[10px] font-bold uppercase text-red-300 mb-1">Before</p>
+<p class="text-sm">Severely stressed, preparing for Medical but failing mocks, 4 hours sleep.</p>
+</div>
+<div class="flex-1 p-4 bg-secondary-container/10 border border-secondary/20 rounded-xl">
+<p class="text-[10px] font-bold uppercase text-secondary-fixed mb-1">After</p>
+<p class="text-sm">Pursuing Bio-Tech Research, Top 10% of class, balanced lifestyle.</p>
+</div>
+</div>
+<p class="italic text-primary-fixed-dim">"I was chasing a dream that wasn't mine. EduMindWell helped me find MY lane and gave me the mental tools to thrive there."</p>
+<div class="mt-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant"></div>
+<span class="text-sm font-bold">— Kabir S., IIT Kharagpur</span>
+</div>
+</div>
+<div class="bg-white/5 p-8 rounded-3xl border border-white/10 hover:bg-white/10 transition-colors">
+<div class="flex gap-4 mb-6">
+<div class="flex-1 p-4 bg-error-container/10 border border-error/20 rounded-xl">
+<p class="text-[10px] font-bold uppercase text-red-300 mb-1">Before</p>
+<p class="text-sm">Burnt out Tech Lead, feeling stuck, constant anxiety about performance.</p>
+</div>
+<div class="flex-1 p-4 bg-secondary-container/10 border border-secondary/20 rounded-xl">
+<p class="text-[10px] font-bold uppercase text-secondary-fixed mb-1">After</p>
+<p class="text-sm">Product Strategist at Tier-1 Startup, using MiraclesX daily.</p>
+</div>
+</div>
+<p class="italic text-primary-fixed-dim">"The shift from competitive anxiety to creative flow changed my career trajectory. It’s not just coaching; it’s a life upgrade."</p>
+<div class="mt-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-variant"></div>
+<span class="text-sm font-bold">— Sarah T., Lead Architect</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 11. Dashboard Feature -->
+<section class="py-xl px-6 bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto">
+<div class="grid md:grid-cols-2 gap-16 items-center">
+<div class="space-y-6">
+<h2 class="font-h2 text-h2 text-primary">Your Command Center</h2>
+<p class="text-body-lg text-on-surface-variant">Every student gets access to a personalized dashboard featuring a massive global college database and a comprehensive career library.</p>
+<div class="space-y-4">
+<div class="flex gap-4 items-center bg-white p-4 rounded-2xl shadow-sm border border-indigo-50">
+<span class="material-symbols-outlined text-primary bg-primary/5 p-2 rounded-lg">search</span>
+<div>
+<h4 class="font-bold text-primary text-sm">College Database</h4>
+<p class="text-xs text-on-surface-variant">15,000+ accredited institutions worldwide.</p>
+</div>
+</div>
+<div class="flex gap-4 items-center bg-white p-4 rounded-2xl shadow-sm border border-indigo-50">
+<span class="material-symbols-outlined text-secondary bg-secondary/5 p-2 rounded-lg">library_books</span>
+<div>
+<h4 class="font-bold text-primary text-sm">Career Library</h4>
+<p class="text-xs text-on-surface-variant">500+ detailed career paths and skill maps.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-3xl shadow-2xl p-6 border border-indigo-50 overflow-hidden relative">
+<!-- Dashboard UI Mockup -->
+<div class="flex gap-4 mb-8">
+<div class="w-8 h-8 rounded bg-primary/10"></div>
+<div class="flex-1 space-y-2">
+<div class="h-4 w-1/3 bg-slate-100 rounded"></div>
+<div class="h-2 w-1/4 bg-slate-50 rounded"></div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4">
+<div class="aspect-square rounded-2xl bg-secondary-container/20 flex flex-col items-center justify-center p-4">
+<span class="material-symbols-outlined text-secondary mb-2">trending_up</span>
+<div class="h-2 w-full bg-white rounded-full"></div>
+</div>
+<div class="aspect-square rounded-2xl bg-primary-fixed/20 flex flex-col items-center justify-center p-4">
+<span class="material-symbols-outlined text-primary mb-2">pie_chart</span>
+<div class="h-2 w-full bg-white rounded-full"></div>
+</div>
+<div class="aspect-square rounded-2xl bg-tertiary-fixed/20 flex flex-col items-center justify-center p-4">
+<span class="material-symbols-outlined text-on-tertiary-container mb-2">map</span>
+<div class="h-2 w-full bg-white rounded-full"></div>
+</div>
+</div>
+<div class="mt-8 h-32 w-full bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200 flex items-center justify-center text-slate-400 text-xs">
+                        Activity Visualization Heatmap
+                    </div>
+</div>
+</div>
+</div>
+</section>
+<!-- 12. FAQ Section -->
+<section class="py-xl px-6 bg-white">
+<div class="max-w-3xl mx-auto">
+<h2 class="font-h2 text-h2 text-primary text-center mb-12">Common Questions</h2>
+<div class="space-y-4">
+<div class="border-b border-indigo-100 pb-4">
+<button class="flex justify-between items-center w-full text-left font-bold text-primary py-4 group">
+                        How is this different from standard career counseling?
+                        <span class="material-symbols-outlined group-hover:rotate-180 transition-transform">expand_more</span>
+</button>
+<p class="text-on-surface-variant text-sm pr-12 hidden">We integrate psychological wellbeing with career strategy. Most counselors only look at grades; we look at the whole person.</p>
+</div>
+<div class="border-b border-indigo-100 pb-4">
+<button class="flex justify-between items-center w-full text-left font-bold text-primary py-4 group">
+                        Is the MiraclesX app included in all plans?
+                        <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+<div class="border-b border-indigo-100 pb-4">
+<button class="flex justify-between items-center w-full text-left font-bold text-primary py-4 group">
+                        Do you offer international university admissions support?
+                        <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 13. Pricing Section -->
+<section class="py-xl px-6 bg-surface-container-low">
+<div class="max-w-7xl mx-auto text-center mb-16">
+<h2 class="font-h2 text-h2 text-primary">Choose Your Growth Path</h2>
+<p class="text-on-surface-variant mt-4">Transparent investment for a lifetime of clarity.</p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="bg-white p-8 rounded-3xl border border-indigo-50 flex flex-col">
+<h3 class="font-bold text-xl text-primary mb-2">Discovery</h3>
+<p class="text-slate-500 text-sm mb-6">Initial psychometric audit and 1 coaching call.</p>
+<div class="text-4xl font-extrabold text-primary mb-8">$199<span class="text-sm font-normal text-slate-400">/one-time</span></div>
+<ul class="space-y-4 mb-auto">
+<li class="flex items-center gap-3 text-sm text-on-surface-variant"><span class="material-symbols-outlined text-secondary text-base">check</span> Personality Assessment</li>
+<li class="flex items-center gap-3 text-sm text-on-surface-variant"><span class="material-symbols-outlined text-secondary text-base">check</span> Career Aptitude Report</li>
+<li class="flex items-center gap-3 text-sm text-on-surface-variant"><span class="material-symbols-outlined text-secondary text-base">check</span> 1-on-1 Strategy Session</li>
+</ul>
+<button class="w-full mt-8 border-2 border-primary text-primary py-3 rounded-xl font-bold hover:bg-primary hover:text-white transition-colors">Start Discovery</button>
+</div>
+<div class="bg-primary text-white p-8 rounded-3xl shadow-xl scale-105 relative z-10 flex flex-col">
+<div class="absolute -top-4 right-8 bg-on-tertiary-container text-on-tertiary px-3 py-1 rounded-full text-[10px] font-bold uppercase">Popular</div>
+<h3 class="font-bold text-xl mb-2">Roadmap</h3>
+<p class="text-primary-fixed-dim text-sm mb-6">Comprehensive mapping and skill strategy.</p>
+<div class="text-4xl font-extrabold mb-8">$499<span class="text-sm font-normal text-primary-fixed-dim">/one-time</span></div>
+<ul class="space-y-4 mb-auto">
+<li class="flex items-center gap-3 text-sm text-primary-fixed-dim"><span class="material-symbols-outlined text-secondary-fixed text-base">check</span> Everything in Discovery</li>
+<li class="flex items-center gap-3 text-sm text-primary-fixed-dim"><span class="material-symbols-outlined text-secondary-fixed text-base">check</span> MiraclesX App (1 Year)</li>
+<li class="flex items-center gap-3 text-sm text-primary-fixed-dim"><span class="material-symbols-outlined text-secondary-fixed text-base">check</span> 5 Mentorship Sessions</li>
+<li class="flex items-center gap-3 text-sm text-primary-fixed-dim"><span class="material-symbols-outlined text-secondary-fixed text-base">check</span> College List Curation</li>
+</ul>
+<button class="w-full mt-8 bg-white text-primary py-3 rounded-xl font-bold hover:bg-secondary-container transition-colors">Choose Roadmap</button>
+<p class="text-[10px] text-center mt-4 opacity-60">No-interest EMIs starting at $45/mo</p>
+</div>
+<div class="bg-white p-8 rounded-3xl border border-indigo-50 flex flex-col">
+<h3 class="font-bold text-xl text-primary mb-2">Full Journey</h3>
+<p class="text-slate-500 text-sm mb-6">End-to-end support until university/job placement.</p>
+<div class="text-4xl font-extrabold text-primary mb-8">$999<span class="text-sm font-normal text-slate-400">/one-time</span></div>
+<ul class="space-y-4 mb-auto">
+<li class="flex items-center gap-3 text-sm text-on-surface-variant"><span class="material-symbols-outlined text-secondary text-base">check</span> Everything in Roadmap</li>
+<li class="flex items-center gap-3 text-sm text-on-surface-variant"><span class="material-symbols-outlined text-secondary text-base">check</span> Unlimited Coaching</li>
+<li class="flex items-center gap-3 text-sm text-on-surface-variant"><span class="material-symbols-outlined text-secondary text-base">check</span> Admission Essay Support</li>
+<li class="flex items-center gap-3 text-sm text-on-surface-variant"><span class="material-symbols-outlined text-secondary text-base">check</span> Lifetime Community Access</li>
+</ul>
+<button class="w-full mt-8 border-2 border-primary text-primary py-3 rounded-xl font-bold hover:bg-primary hover:text-white transition-colors">Get Full Journey</button>
+</div>
+</div>
+</section>
+<!-- 14. Final CTA -->
+<section class="py-xl px-6">
+<div class="max-w-7xl mx-auto bg-primary rounded-[48px] p-12 md:p-24 text-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-secondary to-transparent"></div>
+<div class="relative z-10 space-y-8">
+<h2 class="font-h1 text-h1 text-white">Your Future Deserves More <br/><span class="text-secondary-fixed">Than Guesswork.</span></h2>
+<p class="text-primary-fixed-dim text-body-lg max-w-2xl mx-auto">Stop worrying about what’s next. Let’s build it together with precision and peace.</p>
+<div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+<button class="bg-tertiary-container text-on-tertiary-container px-10 py-5 rounded-2xl font-button text-lg shadow-xl shadow-tertiary/20">Book a Free 20-Min Session</button>
+<button class="text-white border border-white/20 px-10 py-5 rounded-2xl font-button text-lg bg-white/5 backdrop-blur-sm">Download Brochure</button>
+</div>
+<div class="flex flex-wrap justify-center gap-8 pt-8 border-t border-white/10 opacity-60">
+<span class="text-sm text-white font-label-bold flex items-center gap-2"><span class="material-symbols-outlined text-base">verified</span> Certified Psychologists</span>
+<span class="text-sm text-white font-label-bold flex items-center gap-2"><span class="material-symbols-outlined text-base">lock</span> Secure &amp; Confidential</span>
+<span class="text-sm text-white font-label-bold flex items-center gap-2"><span class="material-symbols-outlined text-base">star</span> 4.9/5 User Rating</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 15. Footer -->
+<footer class="bg-slate-50 pt-20 pb-8 px-6 border-t border-indigo-100">
+<div class="max-w-7xl mx-auto">
+<div class="grid md:grid-cols-4 gap-12 mb-16">
+<div class="space-y-6">
+<div class="flex flex-col">
+<span class="text-xl font-bold text-primary">EduMindWell</span>
+<span class="text-[10px] uppercase tracking-widest text-secondary font-label-bold">Academic &amp; Mental Harmony</span>
+</div>
+<p class="text-sm text-on-surface-variant leading-relaxed">Pioneering the alignment of career success and psychological wellbeing for the next generation of global leaders.</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">social_leaderboard</span></a>
+<a class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">share</span></a>
+<a class="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">camera</span></a>
+</div>
+</div>
+<div>
+<h5 class="font-bold text-primary mb-6">Resources</h5>
+<ul class="space-y-4 text-sm text-slate-500">
+<li><a class="hover:text-tertiary-container transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-tertiary-container transition-colors" href="#">Terms of Service</a></li>
+<li><a class="hover:text-tertiary-container transition-colors" href="#">Contact Us</a></li>
+<li><a class="hover:text-tertiary-container transition-colors" href="#">Career Library</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold text-primary mb-6">Support</h5>
+<ul class="space-y-4 text-sm text-slate-500">
+<li><a class="hover:text-tertiary-container transition-colors" href="#">WhatsApp Support</a></li>
+<li><a class="hover:text-tertiary-container transition-colors" href="#">Scholarship Program</a></li>
+<li><a class="hover:text-tertiary-container transition-colors" href="#">Affiliate Program</a></li>
+<li><a class="hover:text-tertiary-container transition-colors" href="#">Partner with Schools</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold text-primary mb-6">Mobile App</h5>
+<p class="text-xs text-slate-400 mb-4">Daily wellness in your pocket.</p>
+<div class="space-y-3">
+<button class="w-full bg-slate-900 text-white p-3 rounded-xl text-xs flex items-center gap-3">
+<span class="material-symbols-outlined">ios</span> Download App Store
+                        </button>
+<button class="w-full bg-slate-900 text-white p-3 rounded-xl text-xs flex items-center gap-3">
+<span class="material-symbols-outlined">play_store_installed</span> Download Play Store
+                        </button>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-indigo-100 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-slate-400 font-label-bold">
+<p>© 2024 EduMindWell. All rights reserved.</p>
+<div class="flex gap-6">
+<span>MADE WITH FOCUS &amp; CALM</span>
+<span>GDPR COMPLIANT</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduMindWell | Empowering Student Growth</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#005236",
+                    "surface-tint": "#0053db",
+                    "surface-container-highest": "#d9e3f6",
+                    "secondary-fixed-dim": "#4edea3",
+                    "secondary-container": "#6cf8bb",
+                    "primary-fixed": "#dbe1ff",
+                    "error": "#ba1a1a",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#eff4ff",
+                    "tertiary-fixed": "#e1e0ff",
+                    "on-primary-container": "#eeefff",
+                    "surface-variant": "#d9e3f6",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed": "#07006c",
+                    "surface-container": "#e6eeff",
+                    "surface": "#f8f9ff",
+                    "outline-variant": "#c3c6d7",
+                    "on-background": "#121c2a",
+                    "surface-container-high": "#dee9fc",
+                    "tertiary": "#3e3fcc",
+                    "background": "#f8f9ff",
+                    "on-secondary-fixed": "#002113",
+                    "on-surface": "#121c2a",
+                    "surface-dim": "#d0dbed",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#585be6",
+                    "on-tertiary-fixed-variant": "#2f2ebe",
+                    "on-surface-variant": "#434655",
+                    "secondary-fixed": "#6ffbbe",
+                    "on-tertiary-container": "#f1eeff",
+                    "on-secondary-container": "#00714d",
+                    "inverse-primary": "#b4c5ff",
+                    "surface-bright": "#f8f9ff",
+                    "on-primary-fixed-variant": "#003ea8",
+                    "inverse-surface": "#27313f",
+                    "outline": "#737686",
+                    "primary-container": "#2563eb",
+                    "on-error": "#ffffff",
+                    "secondary": "#006c49",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#c0c1ff",
+                    "primary": "#004ac6",
+                    "primary-fixed-dim": "#b4c5ff",
+                    "on-primary-fixed": "#00174b"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "gutter": "24px",
+                    "base": "4px",
+                    "sm": "16px",
+                    "md": "24px",
+                    "lg": "40px",
+                    "xl": "64px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .backdrop-blur-lg { backdrop-filter: blur(16px); }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-none">
+<div class="max-w-7xl mx-auto px-8 flex justify-between items-center h-20">
+<div class="text-2xl font-bold tracking-tighter text-blue-700 dark:text-blue-400">EduMindWell</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-sans text-sm font-semibold border-b-2 border-blue-600 pb-1 text-blue-600 dark:text-blue-400" href="#">Programs</a>
+<a class="font-sans text-sm font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-opacity duration-200" href="#">Mentorship</a>
+<a class="font-sans text-sm font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-opacity duration-200" href="#">Wellness</a>
+<a class="font-sans text-sm font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-opacity duration-200" href="#">Resources</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="font-sans text-sm font-medium tracking-tight text-slate-600 hover:opacity-80 transition-opacity duration-200 px-4 py-2">Login</button>
+<button class="bg-primary-container text-white px-6 py-2.5 rounded-full font-sans text-sm font-semibold hover:opacity-90 scale-95 active:scale-100 transition-transform">Get Started</button>
+</div>
+</div>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative h-[870px] min-h-[700px] flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Student studying" class="w-full h-full object-cover object-center" data-alt="A focused Indian male student sitting at a modern desk using a tablet, warm natural morning light, high-fidelity realistic photography style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF1VqyuwVxAJgC92yUuCVJAbn8Fo42-9n3GuuDZlwI0mvlFAj6SRSIy_vLw0ETHZXhQAgL56IqvjiORMj9OUqQ7jBuU105dIQe8PZMpmdkuqa3fe3BEVygfdkWqBNEdtRDPi8S9HNcgPUtGr9S8WUJhamK-OWhzYNbVoIZ_By-VvgpvNBQvLku8T1Sk-O5JoYazB0WbXf2yA8T0Q8DrkdnbpuAkOycq_5xs9NqK3B1EqTHU15t4uupXlc6ANvoehST-qMBzYAGopU"/>
+<div class="absolute inset-0 bg-gradient-to-r from-on-background/80 via-on-background/40 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="text-white space-y-6">
+<h1 class="font-display-lg text-display-lg leading-tight">Unlock Your Full Potential with India’s Most Comprehensive Growth Platform</h1>
+<p class="text-body-lg text-slate-200 max-w-xl">AI career guidance meets empathetic mental wellness. Empowering students for Class 8-12 with roadmaps that prioritize both grades and peace of mind.</p>
+<div class="flex gap-4 pt-4">
+<button class="bg-primary-container text-white px-8 py-4 rounded-xl font-label-md text-label-md hover:shadow-lg transition-all scale-95 active:scale-100">Start Your Journey</button>
+<button class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-xl font-label-md text-label-md hover:bg-white/20 transition-all">Watch Demo</button>
+</div>
+</div>
+<!-- Floating UI Mockups -->
+<div class="hidden lg:block relative h-[500px]">
+<div class="absolute top-0 right-0 w-64 bg-white/95 backdrop-blur-md p-6 rounded-xl shadow-2xl border border-white/20 translate-y-4 -rotate-3 z-20">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="font-label-md text-on-surface">30-Page Roadmap</span>
+</div>
+<div class="space-y-2">
+<div class="h-2 w-full bg-slate-100 rounded"></div>
+<div class="h-2 w-3/4 bg-slate-100 rounded"></div>
+<div class="h-32 w-full bg-slate-50 rounded-lg mt-4 border border-dashed border-slate-200 flex items-center justify-center">
+<img class="w-full h-full object-cover rounded-lg opacity-40" data-alt="Minimalist career roadmap diagram with soft emerald and indigo accents, professional clean aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeYpZnXIBsRAgoBu2Nn-drFa8dZMYXCOEA_kMsv-XUV9Vi5w2ZFmfTMTA9FTCb87d8g1kFy39c6TylPvB7CmcVf8-besjDgoDw0FHVW2QAMrsoCbPzNeWmNSXYBHx1PLicaUSK9AARPDntB2sceGTuzEFtFC3K4tG4Xa_oArM2a1WIAgdkF6AaXd53LhZ6rNjUs-FfE35MDWQkjl1dVYtxRE0EkPT3ducCWC8n25IFyAhWRqqc3IJqp98jpubmS9N0RfcCu5wbULo"/>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-64 bg-white/95 backdrop-blur-md p-6 rounded-xl shadow-2xl border border-white/20 translate-x-4 rotate-3 z-30">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="font-label-md text-on-surface">Wellness Tracker</span>
+</div>
+<div class="flex items-end gap-2 h-20">
+<div class="w-full bg-secondary-container h-12 rounded-t-sm"></div>
+<div class="w-full bg-secondary-container h-16 rounded-t-sm"></div>
+<div class="w-full bg-secondary-container h-8 rounded-t-sm"></div>
+<div class="w-full bg-primary-container h-20 rounded-t-sm"></div>
+</div>
+<div class="mt-4 flex justify-between text-xs font-semibold text-slate-400">
+<span>Mon</span><span>Wed</span><span>Fri</span><span>Sun</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Problem Section: Emotional Storytelling -->
+<section class="py-xl px-8 max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Beyond Just Marks</h2>
+<p class="text-body-lg text-outline max-w-2xl mx-auto">The pressure of Indian education often overlooks the human behind the student. We bridge the gap between academic pressure and mental resilience.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="relative group overflow-hidden rounded-xl h-[400px]">
+<img alt="Overwhelmed student" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="An overwhelmed Indian female student in a library with towers of books, stressed expression, dramatic shadows, realistic moody lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXB0dQQ7toZTHVPukJM6FZqWlPYeouaANnwGADrX20knWukajcmNmvO1Pw8cxbBA8IV1QdRSUC1oYzn0DDSvo6K0jY_X7G2nRtalnRbsulJ6UBVrXYwzRUq1PX30RfE0TXgGHXoQ0A4HkiHK4qWJVi0qEuJMGuKcgFPRTV_v4BinAHpJZt0NHc8pS8-lgTpqviNiVGu88zJEUw0Q6NVmHbpKu3oBbDZCu5GZOjZmr9wHeZcU43oDbkWAoDkJ2shQuVjMKjiQleRlQ"/>
+<div class="absolute inset-0 bg-black/40 flex flex-col justify-end p-8">
+<span class="text-white/70 font-label-sm mb-2">The Struggle</span>
+<h3 class="text-white font-headline-md">Feeling lost in the competition?</h3>
+<p class="text-white/80 mt-2">Millions of students face burnout before they even reach college.</p>
+</div>
+</div>
+<div class="relative group overflow-hidden rounded-xl h-[400px]">
+<img alt="Supported student" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A happy Indian male student talking with a professional mentor in a bright modern cafe, warm soft lighting, authentic connection" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB51qakjpdqpKdvJinTOnrw2ewj8w0-guIE2Pcezyqzn7b5vRi6KELWAnhRWH-fYub39RrxR8B66Ww9Q-cpMHtHrhFPRq35zHagoK6qySGf5anMZh-pkK7Ejh3jeb3ByPsemjFyU5ou0x1GhMlvPr0iN8iV-E-KI2ZZTpI_fINa69jlo4Oikq9pqFeSinKY72Py9ParUlItno3ygS9J0iyAgeJxNLBu7XfMtrT_nQf-ZdqIIeg37GmTQNdJFlZPc6yJB14PIiT3SwY"/>
+<div class="absolute inset-0 bg-blue-900/40 flex flex-col justify-end p-8">
+<span class="text-white/70 font-label-sm mb-2">The Solution</span>
+<h3 class="text-white font-headline-md">Guidance that understands you</h3>
+<p class="text-white/80 mt-2">Personalized roadmaps and emotional support to navigate your future.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Solution Section -->
+<section class="bg-surface-container-low py-xl px-8">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<!-- Left: AI Guidance -->
+<div class="space-y-8">
+<div class="flex items-center gap-4">
+<div class="bg-secondary/10 p-3 rounded-xl">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg">AI Career Guidance</h3>
+</div>
+<p class="text-body-lg text-outline leading-relaxed">Our proprietary AI engine analyzes over 200 data points from your academic history and personality tests to craft a precise, realistic career path.</p>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-label-md">Detailed 30-page career blueprints</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="font-label-md">University matching across India & abroad</span>
+</div>
+</div>
+<div class="relative mt-12 group">
+<div class="absolute -inset-4 bg-secondary/5 rounded-2xl scale-95 group-hover:scale-100 transition-transform"></div>
+<img alt="AI Dashboard mockup" class="relative rounded-lg shadow-xl border border-slate-200" data-alt="Realistic laptop screen showing a sophisticated career dashboard with emerald green progress bars and clean data visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3OEPtmwlTo8rCWONGQ2Huudl4HynMLwxWijuSlsZx9hx0pKj-ojbWK6dvE_S4C0QdTKFNHz6_yjeg0X8eKs80DHZ4kp-YsL-9d46n-hk_ENBHr-EkpB0Wx4ceqaHVtBS_lzWSOhI7Vd6b4fzYaZH-veNFrcXwVWA9ekXjwQde8lbviiGnxX8Q7CdufDty4ghQPopS5LR7GwJiyVoE6pZd_sIyO0nsFlGOrHsx6IJwL9l-tQAAceqcHLkyTCkOy1bIJZo4mRCTo6k"/>
+</div>
+</div>
+<!-- Right: Mental Wellness -->
+<div class="space-y-8 lg:mt-24">
+<div class="flex items-center gap-4">
+<div class="bg-primary/10 p-3 rounded-xl">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">self_improvement</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg">Mental Wellness</h3>
+</div>
+<p class="text-body-lg text-outline leading-relaxed">Excellence is impossible without empathy. We provide 24/7 access to student-focused therapists and stress management modules.</p>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+<span class="font-label-md">One-on-one sessions with youth mentors</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+<span class="font-label-md">Daily resilience and mindfulness practices</span>
+</div>
+</div>
+<div class="relative mt-12 group">
+<div class="absolute -inset-4 bg-primary/5 rounded-2xl scale-95 group-hover:scale-100 transition-transform"></div>
+<img alt="Wellness App mockup" class="relative rounded-3xl shadow-xl border-8 border-slate-900 w-2/3 mx-auto" data-alt="Premium smartphone mockup showing a calming mental wellness app interface with royal blue gradients and soft round buttons" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEcKj-9N8egr4OxIHEeSeSvlF4Pqg3mg8HEgmdWXbXGN4gvWN4pxJ9TUqosOXRvxtZCyLZm91Wf6leqab4TLjWSV7Ldt09HVrkwOD0Eo0cyj0WFbyvPExshIc0mSx_JvSVdQHT79a0LKUe563ZwnafygVJIWrSn1z063CoDgUzkEIA3tcek8ftwNyjIE3XPiB47dSrgqSvjwuW4AzT11hgILLqYl0pwOsH0GA8oDID4Q01VjgeDntnW0mybmyXE1GnoqNu3WJ_56I"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Success Stories Section -->
+<section class="py-xl px-8 max-w-7xl mx-auto overflow-hidden">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<h2 class="font-headline-lg text-headline-lg mb-2">Our Community of Excellence</h2>
+<p class="text-outline">Real stories from parents and students across India.</p>
+</div>
+<div class="flex gap-4">
+<button class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<button class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="flex gap-gutter overflow-x-auto pb-8 snap-x no-scrollbar">
+<!-- Card 1 -->
+<div class="min-w-[400px] bg-white p-8 rounded-xl shadow-[0px_4px_20px_rgba(31,41,55,0.05)] border border-transparent hover:border-primary/20 transition-all snap-start">
+<div class="flex items-center gap-4 mb-6">
+<img class="w-16 h-16 rounded-full object-cover border-2 border-primary/10" data-alt="Authentic portrait of a middle-aged Indian father, smiling warmly, professional yet approachable look" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpLhxhJ56uHi5M745dZyPAXJ1GPk-qamUMEGwruYdx2PN0pUkeqg6Q3snUCWGydfqWGgdWoYU4wmj98bFOctAg_L2B_A3gpYh69Lw5aWARnkhA7_UI8aGN0hXbkMiPLCEho7ALfZ_cxamtHymk7klaDieaiDU7sxa5TM12i1ZVJslY_DEdmB9Ki4apqZksYEoMChvCDJhwYaUDVukdgq7fNRSRV18unEGA6SP4y6NUJMM2pCaOHJeI3m75vFeVqR2mSlrL1pNHBmg"/>
+<div>
+<p class="font-label-md text-on-surface">Rajesh Malhotra</p>
+<p class="text-label-sm text-outline">Parent of Grade 12 Student</p>
+</div>
+</div>
+<p class="text-body-md italic text-outline leading-relaxed">"The AI Roadmap gave my son clarity he couldn't find in coaching centers. But more importantly, the wellness tracker helped us manage his board exam stress together."</p>
+<div class="mt-6 flex gap-1">
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="min-w-[400px] bg-white p-8 rounded-xl shadow-[0px_4px_20px_rgba(31,41,55,0.05)] border border-transparent hover:border-primary/20 transition-all snap-start">
+<div class="flex items-center gap-4 mb-6">
+<img class="w-16 h-16 rounded-full object-cover border-2 border-primary/10" data-alt="Authentic portrait of a young Indian female student, bright eyes, smiling confidently at the camera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQV0p8psgaOeJU8CqugPNfD7CT-tgTacgZbWlrcMrFgltTPT0yijap4ylh4QLB7iJ_F7lyJYXfFYJZDTLP27iGxTZtC_wpNYZsqd7D3CaRq3oHWpISFvHsGEusneSzlIvL8ZbsXeJAQp4jIdgCtI-xIKG4gnBJMSIGBFpqs-jUQyooe2iptJ8Y9JmEI59nEkqFtI2Kv30BLoDwep9-Mt5eCU3ehDiWJ5onY9b1vtgcDrsG17R6WXdc6ljgJsWCWQD2uiHYbiY5kfM"/>
+<div>
+<p class="font-label-md text-on-surface">Ananya Singh</p>
+<p class="text-label-sm text-outline">Grade 10 Student</p>
+</div>
+</div>
+<p class="text-body-md italic text-outline leading-relaxed">"I used to think only about my marks. EduMindWell taught me that my mental health is just as important. Now I'm more focused and much happier with my progress."</p>
+<div class="mt-6 flex gap-1">
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="min-w-[400px] bg-white p-8 rounded-xl shadow-[0px_4px_20px_rgba(31,41,55,0.05)] border border-transparent hover:border-primary/20 transition-all snap-start">
+<div class="flex items-center gap-4 mb-6">
+<img class="w-16 h-16 rounded-full object-cover border-2 border-primary/10" data-alt="Authentic portrait of an Indian woman in her late 30s, warm and encouraging expression, modern attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi_S1u3j_JziXQIEy2AB-cFxl87umV9s8VvLs08ev7M4eyWV0eJOR1K_mJg08AAoA-5-KlDsxGtwZA4QGCGgSS3l9lnis1xr56cM-xncJVHXJRpKbKgg7SgZ1RTPLxGIbdy6Zh4B55FjmFs5t_N_eEwO5ZvvpQReZXn7OvqhtgQO_9YjN8RhW8BFV9oRswk_LHfZPjHF2HNvuyUWdwVy7n1YxtNhtx3Wq1Vbvx1NFi7jdQARQrl7oQeB3SPFfTw09dbfCwFMAF6p8"/>
+<div>
+<p class="font-label-md text-on-surface">Dr. Meera Iyer</p>
+<p class="text-label-sm text-outline">School Counselor</p>
+</div>
+</div>
+<p class="text-body-md italic text-outline leading-relaxed">"EduMindWell is the partner every school needs. It humanizes the career discovery process and provides a safety net for student well-being."</p>
+<div class="mt-6 flex gap-1">
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-yellow-500" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-xl bg-primary">
+<div class="max-w-4xl mx-auto text-center px-8 text-white">
+<h2 class="font-headline-lg text-display-lg mb-6">Ready to prioritize your future and your peace?</h2>
+<p class="text-body-lg text-white/80 mb-10">Join 50,000+ Indian students achieving Empathetic Excellence.</p>
+<button class="bg-white text-primary px-10 py-5 rounded-full font-headline-md hover:shadow-2xl transition-all scale-95 active:scale-100">Get My Personalized Roadmap</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 px-8 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+<div class="max-w-xs">
+<div class="text-lg font-bold text-slate-900 dark:text-white mb-4">EduMindWell</div>
+<p class="font-sans text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Empowering student growth through Empathetic Excellence. India's premier platform for holistic academic and mental development.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+<div class="space-y-4">
+<h4 class="font-bold text-slate-900 dark:text-white">Platform</h4>
+<nav class="flex flex-col gap-2">
+<a class="font-sans text-sm text-slate-500 hover:text-blue-600 hover:underline decoration-blue-500 underline-offset-4 transition-colors duration-300" href="#">Mentors</a>
+<a class="font-sans text-sm text-slate-500 hover:text-blue-600 hover:underline decoration-blue-500 underline-offset-4 transition-colors duration-300" href="#">Success Stories</a>
+<a class="font-sans text-sm text-slate-500 hover:text-blue-600 hover:underline decoration-blue-500 underline-offset-4 transition-colors duration-300" href="#">Resources</a>
+</nav>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-slate-900 dark:text-white">Legal</h4>
+<nav class="flex flex-col gap-2">
+<a class="font-sans text-sm text-slate-500 hover:text-blue-600 hover:underline decoration-blue-500 underline-offset-4 transition-colors duration-300" href="#">Privacy</a>
+<a class="font-sans text-sm text-slate-500 hover:text-blue-600 hover:underline decoration-blue-500 underline-offset-4 transition-colors duration-300" href="#">Terms</a>
+</nav>
+</div>
+<div class="space-y-4">
+<h4 class="font-bold text-slate-900 dark:text-white">Support</h4>
+<nav class="flex flex-col gap-2">
+<a class="font-sans text-sm text-slate-500 hover:text-blue-600 hover:underline decoration-blue-500 underline-offset-4 transition-colors duration-300" href="#">Contact</a>
+</nav>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-sans text-sm text-slate-500 dark:text-slate-400">© 2024 EduMindWell. Empowering student growth through Empathetic Excellence.</p>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary">language</span>
+<span class="material-symbols-outlined text-slate-400 cursor-pointer hover:text-primary">share</span>
+</div>
+</div>
+</footer>
+</body></html>
