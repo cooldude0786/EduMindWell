@@ -1,7 +1,15 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
+type EmailLogWithRelations = Prisma.EmailLogGetPayload<{
+  include: {
+    EmailRecipient: true;
+    BulkEmail: true;
+  };
+}>;
+
 export default async function LogsPage() {
-  const logs = await prisma.emailLog.findMany({
+  const logs: EmailLogWithRelations[] = await prisma.emailLog.findMany({
     orderBy: {
       createdAt: "desc",
     },
@@ -28,7 +36,7 @@ export default async function LogsPage() {
             No logs yet
           </p>
         ) : (
-          logs.map((log) => (
+          logs.map((log: EmailLogWithRelations) => (
             <div
               key={log.id}
               className="border p-4 rounded flex justify-between"
