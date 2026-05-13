@@ -1,17 +1,45 @@
 import nodemailer from "nodemailer";
 
-export const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: 587,
-  secure: false,
-  requireTLS: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  connectionTimeout: 60000, // 60 seconds
-  socketTimeout: 60000,
-});
+function getRequiredEnv(name: string) {
+  const value = process.env[name]?.trim();
+
+  if (!value) {
+    throw new Error(`Missing required mail environment variable: ${name}`);
+  }
+
+  return value;
+}
+
+function getMailConfig() {
+  const host = process.env.EMAIL_HOST?.trim() || "smtp.gmail.com";
+  const port = Number(process.env.EMAIL_PORT?.trim() || "465");
+  const secure = port === 465;
+  const user = getRequiredEnv("EMAIL_USER");
+  const pass = getRequiredEnv("EMAIL_PASS").replace(/\s+/g, "");
+  const from = process.env.EMAIL_FROM?.trim() || user;
+
+  return {
+    from,
+    transport: {
+      host,
+      port,
+      secure,
+      requireTLS: !secure,
+      auth: {
+        user,
+        pass,
+      },
+      connectionTimeout: 60000,
+      socketTimeout: 60000,
+    },
+  };
+}
+
+export const transporter = nodemailer.createTransport(getMailConfig().transport);
+
+export function getDefaultFromAddress() {
+  return getMailConfig().from;
+}
 
 export async function sendEmail({
   to,
@@ -23,7 +51,7 @@ export async function sendEmail({
   html: string;
 }) {
   return transporter.sendMail({
-    from: process.env.EMAIL_FROM,
+    from: getDefaultFromAddress(),
     to,
     subject,
     html,

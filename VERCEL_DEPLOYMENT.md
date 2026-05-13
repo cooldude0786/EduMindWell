@@ -60,8 +60,10 @@ EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=465
 EMAIL_USER=askviosatech@gmail.com
 EMAIL_FROM=askviosatech@gmail.com
-EMAIL_PASS=stmb qonc okhh wcxp
+EMAIL_PASS=your_16_character_gmail_app_password
 ```
+
+Important: when adding `EMAIL_PASS` in Vercel, paste the Gmail app password without quotes. If Google shows it grouped with spaces, remove the spaces before saving.
 
 #### QStash
 ```
@@ -146,6 +148,7 @@ If anything fails, check Vercel logs:
 
 **Fix**:
 1. Verify EMAIL_USER, EMAIL_PASS are correct in Vercel
+2. If using Gmail App Password, make sure `EMAIL_PASS` does not include spaces copied from Google's display format
 2. Check Vercel Function Logs for SMTP errors
 3. Test SMTP credentials locally if needed
 

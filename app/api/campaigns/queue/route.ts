@@ -23,6 +23,14 @@ export async function POST(req: Request) {
     }, { status: 404 });
   }
 
+  if (campaign.isDraft) {
+    return Response.json({
+      error: "Draft campaigns cannot be queued. Publish the campaign before sending.",
+      currentStatus: campaign.status,
+      isDraft: true,
+    }, { status: 409 });
+  }
+
   if (campaign.status !== "PENDING") {
     return Response.json({
       error: `Campaign cannot be queued when status is ${campaign.status}.`,

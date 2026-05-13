@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import nodemailer from "nodemailer";
+import { getDefaultFromAddress, transporter } from "@/lib/mail";
 
 export async function POST(req: Request) {
   try {
@@ -50,20 +50,11 @@ export async function POST(req: Request) {
       },
     });
 
-    // 5. Email transporter
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
-    // 6. Send emails
+    // 5. Send emails
     for (const sub of subscribers) {
       try {
         const info = await transporter.sendMail({
-          from: process.env.EMAIL_USER,
+          from: getDefaultFromAddress(),
           to: sub.email,
           subject: campaign.subject,
           text: campaign.body,
@@ -91,7 +82,7 @@ export async function POST(req: Request) {
       }
     }
 
-    // 7. Final update
+    // 6. Final update
     await prisma.bulkEmail.update({
       where: { id: campaign.id },
       data: {

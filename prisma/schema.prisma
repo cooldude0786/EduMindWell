@@ -9,8 +9,14 @@ datasource db {
 
 model BulkEmail {
   id String @id @default(cuid())
+  title String?
   subject   String
   body      String
+  senderName String?
+  senderEmail String?
+  previewText String?
+  scheduledAt DateTime?
+  isDraft Boolean @default(false)
   status    EmailStatus @default(PENDING)
   createdAt DateTime    @default(now())
   sentAt    DateTime?

@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import * as nodemailer from "nodemailer";
+import { getDefaultFromAddress, transporter } from "@/lib/mail";
 
 export async function POST(req: Request) {
   const { jobId } = await req.json();
@@ -13,19 +13,19 @@ export async function POST(req: Request) {
 
   const job = await prisma.emailQueue.findUnique({
     where: { id: jobId },
+    include: {
+      BulkEmail: true,
+    },
   });
 
   if (!job || job.status !== "PENDING") {
     return Response.json({ skipped: true });
   }
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
+  const campaign = job.BulkEmail;
+  const senderEmail = campaign?.senderEmail?.trim() || getDefaultFromAddress();
+  const senderName = campaign?.senderName?.trim();
+  const fromAddress = senderName ? `${senderName} <${senderEmail}>` : senderEmail;
 
   try {
     await prisma.emailQueue.update({
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     });
 
     const info = await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: fromAddress,
       to: job.email,
       subject: job.subject,
       text: job.body,

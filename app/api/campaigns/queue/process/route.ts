@@ -1,15 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import nodemailer from "nodemailer";
+import { getDefaultFromAddress, transporter } from "@/lib/mail";
 
 export async function POST() {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
   const jobs = await prisma.emailQueue.findMany({
     where: { status: "PENDING" },
     take: 10,
@@ -27,7 +19,7 @@ export async function POST() {
       });
 
       const info = await transporter.sendMail({
-        from: process.env.EMAIL_USER,
+        from: getDefaultFromAddress(),
         to: job.email,
         subject: job.subject,
         text: job.body,
