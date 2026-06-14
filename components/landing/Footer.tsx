@@ -1,67 +1,110 @@
 import Link from 'next/link'
-import { Mail, Share2 } from 'lucide-react'
-import { BRAND, FOOTER_COLUMNS, SOCIAL_LINKS } from '@/lib/landing-constants'
+import {
+  InstagramIcon,
+  Linkedin01Icon,
+  Mail01Icon,
+  MapPinIcon,
+  TelephoneIcon,
+  YoutubeIcon,
+} from '@hugeicons/core-free-icons'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { BRAND, FOOTER_COLUMNS } from '@/lib/landing-constants'
 
-const socialIconMap = {
-  Facebook: Share2,
-  Mail,
-  Link2: Share2,
-}
+const contactItems = [
+  {
+    icon: MapPinIcon,
+    label: 'Address',
+    value: 'EduMindWell, Bangalore, India',
+  },
+  {
+    icon: Mail01Icon,
+    label: 'Email',
+    value: 'hello@edumindwell.com',
+  },
+  {
+    icon: TelephoneIcon,
+    label: 'Phone',
+    value: '+91 98765 43210',
+  },
+]
+
+const socialLinks = [
+  { icon: Linkedin01Icon, label: 'LinkedIn', href: '#' },
+  { icon: InstagramIcon, label: 'Instagram', href: '#' },
+  { icon: YoutubeIcon, label: 'YouTube', href: '#' },
+]
 
 export function Footer() {
   return (
-    <footer id="contact" className="bg-slate-50 border-t border-indigo-100 pt-20 pb-8 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid gap-12 mb-12 md:grid-cols-3">
-          {/* Column 1: Brand */}
+    <footer id="contact" className="border-t border-indigo-100 bg-slate-50 px-6 pt-20 pb-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-12 grid gap-10 md:grid-cols-3">
+        
+
           <div>
-            <div className="mb-2">
-              <span className="text-xl font-bold text-primary">{BRAND.name}</span>
-            </div>
-            <p className="text-[10px] uppercase tracking-widest text-secondary font-label-bold mb-6">
-              {BRAND.tagline}
-            </p>
-            <div className="flex gap-3">
-              {SOCIAL_LINKS.map((social) => {
-                const IconComponent =
-                  socialIconMap[social.icon as keyof typeof socialIconMap]
+            <h4 className="mb-4 font-bold text-primary">Contact</h4>
+            <ul className="space-y-4">
+              {contactItems.map((item) => {
+                const IconComponent = item.icon
+
                 return (
-                  <button
-                    key={social.label}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/5 text-primary transition-all hover:bg-primary hover:text-white"
-                  >
-                    <IconComponent className="h-4 w-4" />
-                  </button>
+                  <li key={item.label} className="flex items-start gap-3">
+                    <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-full bg-primary/5 text-primary">
+                      <HugeiconsIcon icon={IconComponent} strokeWidth={2} className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.25em] text-secondary font-label-bold">
+                        {item.label}
+                      </p>
+                      <p className="mt-1 text-sm text-slate-600">{item.value}</p>
+                    </div>
+                  </li>
                 )
               })}
-            </div>
+            </ul>
           </div>
 
-          {/* Columns 2 & 3: Links */}
-          {FOOTER_COLUMNS.map((column) => (
-            <div key={column.title}>
-              <h4 className="font-bold text-primary mb-4">{column.title}</h4>
-              <ul className="space-y-3 text-body-sm text-slate-500">
-                {column.items.map((item) => (
-                  <li key={item.label}>
+          <div>
+            <h4 className="mb-4 font-bold text-primary">Social</h4>
+            <ul className="space-y-3">
+              {socialLinks.map((social) => {
+                const IconComponent = social.icon
+
+                return (
+                  <li key={social.label}>
                     <Link
-                      href={item.href || '#'}
-                      className="hover:text-primary transition-colors"
+                      href={social.href}
+                      className="inline-flex items-center gap-3 text-sm text-slate-600 transition-colors hover:text-primary"
                     >
-                      {item.label}
+                      <HugeiconsIcon icon={IconComponent} strokeWidth={2} className="h-4 w-4" />
+                      {social.label}
                     </Link>
                   </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                )
+              })}
+            </ul>
+          </div>
 
+          <div>
+            <h4 className="mb-4 font-bold text-primary">Resources</h4>
+            <ul className="space-y-3 text-body-sm text-slate-500">
+              {FOOTER_COLUMNS.flatMap((column) => column.items).map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href || '#'}
+                    className="transition-colors hover:text-primary"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        {/* Footer Bottom */}
-        <div className="border-t border-indigo-100 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-400 text-xs font-label-bold gap-4">
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-indigo-100 pt-8 text-center text-xs font-label-bold text-slate-400 md:flex-row md:text-left">
           <p>&copy; 2025 EduMindWell. All rights reserved.</p>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-6">
             <span>MADE WITH PURPOSE & CARE</span>
             <span>GDPR COMPLIANT</span>
           </div>

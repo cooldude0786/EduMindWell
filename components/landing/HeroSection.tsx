@@ -7,7 +7,7 @@ export function HeroSection() {
     <header id="hero" className="overflow-hidden bg-surface px-6 pb-20 pt-28 md:pt-32">
       <div className="mx-auto grid max-w-7xl items-center gap-16 md:grid-cols-2">
         {/* Left Column */}
-        <div className="order-2 w-full max-w-[36rem] space-y-8 md:order-1">
+        <div className="order-2 w-full space-y-8 md:order-1" style={{ maxWidth: '36rem' }}>
           {/* Trust Badge */}
           <div className="inline-flex items-center space-x-2 px-3 py-1 bg-secondary-container/30 rounded-full animate-fade-up">
             <CheckCircle2 className="w-4 h-4 text-on-secondary-container" />
@@ -17,22 +17,25 @@ export function HeroSection() {
           </div>
 
           {/* H1 Headline */}
-          <h1 className="max-w-[32rem] font-h1 text-h1 text-primary">
-            {BRAND.subTagline.split('. ')[0]}. {BRAND.subTagline.split('. ')[1]}.{' '}
-            <span className="text-secondary">
-              {BRAND.subTagline.split('. ')[2]}
-            </span>
+          <h1 className="font-h1 text-h1 text-primary" style={{ maxWidth: '34rem' }}>
+            <span className="font-slogan text-primary">{BRAND.tagline}</span>
           </h1>
 
           {/* Body Text */}
-          <p className="w-full max-w-[32rem] text-body-lg leading-relaxed text-on-surface-variant text-pretty">
+          <p
+            className="w-full text-body-lg leading-relaxed text-on-surface-variant text-pretty"
+            style={{ maxWidth: '32rem' }}
+          >
             Empowering students from Class 8 to 12 to build confident careers without
             sacrificing their mental wellbeing. Structured. Scientific. Personal.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col gap-4 pt-4 sm:flex-row">
-            <Button className="h-auto bg-primary !text-white px-8 py-4 rounded-xl text-button font-button shadow-lg shadow-primary/20 hover:shadow-xl transition-shadow">
+            <Button
+              className="h-auto bg-primary px-8 py-4 rounded-xl text-button font-button shadow-lg shadow-primary/20 hover:shadow-xl transition-shadow"
+              style={{ color: '#fff' }}
+            >
               Start Your Journey
             </Button>
             <Button
@@ -56,7 +59,10 @@ export function HeroSection() {
 
         {/* Right Column: Animated Circles + Cards */}
         <div className="order-1 md:order-2">
-          <div className="relative flex h-[360px] justify-center sm:h-[400px] md:h-[500px] md:justify-end">
+          <div
+            className="relative flex justify-center md:justify-end"
+            style={{ height: 'clamp(360px, 45vw, 500px)' }}
+          >
           {/* Background Glow */}
             <div className="absolute inset-0 rounded-full bg-primary/5 blur-3xl"></div>
 

@@ -1,13 +1,11 @@
-import { Navbar } from '@/components/landing/Navbar'
 import { HeroSection } from '@/components/landing/HeroSection'
-import { ProblemSection } from '@/components/landing/ProblemSection'
-import { ThreePillars } from '@/components/landing/ThreePillars'
 import { CareerGuidance } from '@/components/landing/CareerGuidance'
 import { AudienceSection } from '@/components/landing/AudienceSection'
+import { WellnessSection } from '@/components/landing/WellnessSection'
 import { StoriesSection } from '@/components/landing/StoriesSection'
+import { GallerySection } from '@/components/landing/GallerySection'
 import { FAQ } from '@/components/landing/FAQ'
 import { CTABanner } from '@/components/landing/CTABanner'
-import { Footer } from '@/components/landing/Footer'
 
 export const metadata = {
   title: 'EduMindWell | Career. Mind. Wellbeing. All Aligned.',
@@ -29,22 +27,35 @@ export const metadata = {
   },
 }
 
-export default function Home() {
-  return (
-    <main className="bg-background text-on-background font-body-md overflow-x-hidden">
-      {/* Fixed Navbar */}
-      <Navbar />
+type HomePageProps = {
+  searchParams: Promise<{
+    wellness?: string | string[]
+  }>
+}
 
-      {/* Page Sections */}
+export default async function Home({ searchParams }: HomePageProps) {
+  const resolvedSearchParams = await searchParams
+  const wellnessParam = resolvedSearchParams.wellness
+  const wellnessChoiceRaw = Array.isArray(wellnessParam)
+    ? wellnessParam[0]
+    : wellnessParam
+  const wellnessChoice =
+    wellnessChoiceRaw === '2' ||
+    wellnessChoiceRaw === '3' ||
+    wellnessChoiceRaw === '4'
+      ? wellnessChoiceRaw
+      : '1'
+
+  return (
+    <div className="bg-background text-on-background font-body-md overflow-x-hidden">
       <HeroSection />
-      <ProblemSection />
-      <ThreePillars />
-      {/* <CareerGuidance /> */}
-      {/* <AudienceSection />   */}
+      <CareerGuidance />
+      <AudienceSection />
+      <WellnessSection variant={wellnessChoice} />
       <StoriesSection />
+      <GallerySection />
       <FAQ />
       <CTABanner />
-      <Footer />
-    </main>
+    </div>
   )
 }

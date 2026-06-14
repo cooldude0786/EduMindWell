@@ -12,7 +12,7 @@ export function CTABanner() {
             className="absolute inset-0 opacity-10"
             style={{
               background:
-                'radial-gradient(circle at 50% 50%, #006a62 0%, transparent 100%)',
+                'radial-gradient(circle at 50% 50%, #10b981 0%, transparent 100%)',
             }}
           ></div>
 
@@ -29,12 +29,16 @@ export function CTABanner() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Button className="h-auto min-w-[260px] rounded-full bg-on-tertiary-container px-10 py-4 text-button font-button !text-white shadow-[0_16px_35px_rgba(220,132,91,0.28)] hover:bg-[#c8744d] hover:shadow-[0_18px_40px_rgba(220,132,91,0.34)] transition-all duration-200">
+              <Button
+                className="h-auto rounded-full bg-on-tertiary-container px-10 py-4 text-button font-button shadow-[0_16px_35px_rgba(31,41,55,0.18)] hover:bg-primary hover:shadow-[0_18px_40px_rgba(37,99,235,0.24)] transition-all duration-200"
+                style={{ minWidth: 260, color: '#ffffff' }}
+              >
                 {CTA_BANNER.primaryBtn}
               </Button>
               <Button
                 variant="outline"
-                className="h-auto min-w-[260px] rounded-full border border-white/85 bg-transparent px-10 py-4 text-button font-button !text-white hover:bg-white/8 hover:border-white transition-all duration-200"
+                className="h-auto rounded-full border border-white/85 bg-transparent px-10 py-4 text-button font-button hover:bg-white/8 hover:border-white transition-all duration-200"
+                style={{ minWidth: 260, color: '#ffffff' }}
               >
                 {CTA_BANNER.secondaryBtn}
               </Button>

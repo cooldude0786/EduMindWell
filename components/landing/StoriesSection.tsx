@@ -21,8 +21,11 @@ export function StoriesSection() {
   return (
     <section id="stories" className="py-xl px-6 bg-primary text-white">
       <div className="max-w-7xl mx-auto">
+        <p className="mb-3 text-center text-[10px] uppercase tracking-[0.35em] text-primary-fixed-dim font-label-bold">
+          Testimonials
+        </p>
         <h2 className="font-h2 text-h2 mb-16 text-center">
-          Real Students. Real Decisions. Real Results.
+          Real stories from students, parents, and guides.
         </h2>
 
         {/* Stories Scroll Container */}
@@ -55,7 +58,7 @@ export function StoriesSection() {
 
                 {/* Quote */}
                 <p className="italic text-primary-fixed-dim text-sm mb-4">
-                  "{story.quote}"
+                  &ldquo;{story.quote}&rdquo;
                 </p>
 
                 {/* Attribution */}

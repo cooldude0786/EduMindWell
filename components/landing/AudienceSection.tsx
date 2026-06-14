@@ -13,8 +13,11 @@ export function AudienceSection() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
+          <p className="mb-3 text-[10px] uppercase tracking-[0.35em] text-secondary font-label-bold">
+            Mindset Workshops
+          </p>
           <h2 className="font-h2 text-h2 text-primary">
-            Built for Every Stage of the Journey
+            Interactive workshops for students, parents, and teachers.
           </h2>
         </div>
 
@@ -33,7 +36,15 @@ export function AudienceSection() {
                   <div
                     className={`absolute inset-0 ${card.overlayColor} flex items-end p-8 transition-colors`}
                   >
-                    <h4 className="text-white text-2xl font-bold">{card.title}</h4>
+                    <div className="flex items-end justify-between w-full">
+                      <div>
+                        <h4 className="text-white text-2xl font-bold">{card.title}</h4>
+                        <div className="mt-3 flex items-center gap-2 text-white/80 text-xs uppercase tracking-[0.25em]">
+                          <IconComponent className="h-4 w-4" />
+                          Workshop track
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 

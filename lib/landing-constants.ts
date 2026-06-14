@@ -16,7 +16,7 @@ import type {
 
 export const BRAND: BrandInfo = {
   name: 'EduMindWell',
-  tagline: 'Academic & Mental Harmony',
+  tagline: 'Career. Mind. Wellbeing. All Aligned',
   subTagline: 'Career. Mind. Wellbeing. All Aligned.',
   description:
     'Empowering the next generation to excel academically while maintaining emotional equilibrium. We don\'t just build careers; we nurture minds.',
@@ -154,7 +154,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     title: 'Students',
     icon: 'BookOpen',
     description:
-      'Navigate streams, entrance exams, and college selection without losing your peace of mind.',
+      'Time management, goal setting, personality development, exam stress, confidence, emotional intelligence, and resilience.',
     linkText: "I'm a Student",
     gradient: 'from-blue-400 to-indigo-600',
     overlayColor: 'bg-primary/40 group-hover:bg-primary/50',
@@ -164,18 +164,18 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     title: 'Parents',
     icon: 'Users',
     description:
-      "Understand today's career landscape and become your child's biggest advantage, not their biggest pressure.",
+      'Parenting guidance for toddler age 2 to 6, young minds 7 to 12, and the new-age child 13 to 17.',
     linkText: "I'm a Parent",
     gradient: 'from-emerald-400 to-teal-600',
     overlayColor: 'bg-secondary/40 group-hover:bg-secondary/50',
     bgColor: 'text-secondary',
   },
   {
-    title: 'Professionals',
+    title: 'Teachers / Professionals',
     icon: 'Briefcase',
     description:
-      'Mid-career pivot or feeling stuck? Align your reality with your inner purpose.',
-    linkText: "I'm a Professional",
+      'Classroom management without stress, emotional intelligence, relationship skills, team bonding, resilience, limiting beliefs, and goal achievement.',
+    linkText: "I'm a Teacher / Professional",
     gradient: 'from-orange-400 to-red-600',
     overlayColor: 'bg-on-tertiary-container/40 group-hover:bg-on-tertiary-container/50',
     bgColor: 'text-on-tertiary-container',
@@ -275,7 +275,7 @@ export const CTA_BANNER = {
   description:
     "Stop worrying about what's next. Let's build it together — with precision and peace.",
   primaryBtn: 'Book My Free Session',
-  secondaryBtn: 'Download Brochure',
+  secondaryBtn: 'Join Whatsapp Group',
   trustSignals: [
     { icon: 'CheckCircle', text: 'Certified Counsellors' },
     { icon: 'Lock', text: 'Secure & Confidential' },
@@ -288,21 +288,16 @@ export const FOOTER_COLUMNS = [
   {
     title: 'Resources',
     items: [
-      { label: 'Privacy Policy', href: '#' },
       { label: 'Terms of Service', href: '#' },
-      { label: 'Contact Us', href: '#' },
       { label: 'Career Library', href: '#' },
-      { label: 'Blog', href: '#' },
+      { label: 'Refund Policy', href: '#' },
     ],
   },
   {
     title: 'Support',
     items: [
       { label: 'WhatsApp Support', href: '#' },
-      { label: 'Parent Sessions', href: '#' },
-      { label: 'School Partnerships', href: '#' },
-      { label: 'Scholarship Program', href: '#' },
-      { label: 'Affiliate Program', href: '#' },
+      { label: 'Associate', href: '#' },
     ],
   },
 ]
