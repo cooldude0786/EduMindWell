@@ -39,8 +39,8 @@ export default function Home() {
       <HeroSection />
       <ProblemSection />
       <ThreePillars />
-      <CareerGuidance />
-      <AudienceSection />
+      {/* <CareerGuidance /> */}
+      {/* <AudienceSection />   */}
       <StoriesSection />
       <FAQ />
       <CTABanner />

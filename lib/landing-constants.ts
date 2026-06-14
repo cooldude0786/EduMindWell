@@ -25,10 +25,11 @@ export const BRAND: BrandInfo = {
 export const NAV_LINKS: NavigationLink[] = [
   { label: 'Home', href: '#hero', id: 'hero' },
   { label: 'Approach', href: '#approach', id: 'approach' },
-  { label: 'Career', href: '#career', id: 'career' },
-  { label: 'Workshops', href: '#workshops', id: 'workshops' },
-  { label: 'Wellness', href: '#wellness', id: 'wellness' },
-  { label: 'Stories', href: '#stories', id: 'stories' },
+  // { label: 'Career', href: '#career', id: 'career' },
+  // { label: 'Workshops', href: '#workshops', id: 'workshops' },
+  { label: 'Gallery', href: '#gallery', id: 'gallery' },
+  { label: 'testimonial', href: '#stories', id: 'stories' },
+  { label: 'experts', href: '#wellness', id: 'wellness' },
   { label: 'Contact', href: '#contact', id: 'contact' },
 ]
 
