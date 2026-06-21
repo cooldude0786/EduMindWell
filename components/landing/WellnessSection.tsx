@@ -85,30 +85,35 @@ const wellnessVariantMap: Record<WellnessVariant, WellnessVariantConfig> = {
         icon: QrCode,
         description:
           'Simple daily tools that help wellness feel accessible and easy to return to.',
+        image: '/MiracleX.jpeg',
       },
       {
         title: 'Customized Therapeutic Meditation',
         icon: Sparkles,
         description:
           'A personalized practice to help settle the mind and support emotional ease.',
+        image: '/Therapeutic.jpeg',
       },
       {
         title: 'Individual Wellness Coaching',
         icon: Heart,
         description:
           'Supportive one-on-one coaching for life, relationships, health, or career concerns.',
+        image: '/oneToOne.jpeg',
       },
       {
         title: 'Group Meditation and Wellness Programs',
         icon: Users,
         description:
           'Thoughtful sessions for schools, families, teams, and community groups.',
+        image: '/groupMed.jpeg',
       },
       {
         title: 'Learning Videos',
         icon: PlayCircle,
         description:
           'Short learning content that supports ongoing wellness practice and consistency.',
+        image: '/LearningVideo.jpeg',
       },
     ],
     sideLabel: 'Support that fits life',
@@ -131,30 +136,35 @@ const wellnessVariantMap: Record<WellnessVariant, WellnessVariantConfig> = {
         icon: QrCode,
         description:
           'Wellness support in your pocket with guided tools and daily practices.',
+        image: '/MiracleX.jpeg',
       },
       {
         title: 'Customized Therapeutic Meditation',
         icon: Sparkles,
         description:
           'A focused meditation approach designed to reduce stress and improve clarity.',
+        image: '/Therapeutic.jpeg',
       },
       {
         title: 'Individual Wellness Coaching',
         icon: Heart,
         description:
           'Personal coaching to support balance, direction, and day-to-day decisions.',
+        image: '/oneToOne.jpeg',
       },
       {
         title: 'Group Meditation and Wellness Programs',
         icon: Users,
         description:
           'Flexible sessions for schools, colleges, teams, and community settings.',
+        image: '/groupMed.jpeg',
       },
       {
         title: 'Learning Videos',
         icon: PlayCircle,
         description:
           'Short learning content that supports ongoing wellness practice and consistency.',
+        image: '/LearningVideo.jpeg',
       },
     ],
     sideLabel: 'Built for routines',
@@ -177,30 +187,35 @@ const wellnessVariantMap: Record<WellnessVariant, WellnessVariantConfig> = {
         icon: QrCode,
         description:
           'A daily companion that makes steady wellness feel simple and personal.',
+        image: '/MiracleX.jpeg',
       },
       {
         title: 'Customized Therapeutic Meditation',
         icon: Sparkles,
         description:
           'Personalized sessions that help create calm, clarity, and inner balance.',
+        image: '/Therapeutic.jpeg',
       },
       {
         title: 'Individual Wellness Coaching',
         icon: Heart,
         description:
           'One-on-one support for moments when more clarity and care are needed.',
+        image: '/oneToOne.jpeg',
       },
       {
         title: 'Group Meditation and Wellness Programs',
         icon: Users,
         description:
           'Shared experiences designed for schools, families, teams, and communities.',
+        image: '/groupMed.jpeg',
       },
       {
         title: 'Learning Videos',
         icon: PlayCircle,
         description:
           'Short learning content that supports ongoing wellness practice and consistency.',
+        image: '/LearningVideo.jpeg',
       },
     ],
     sideLabel: 'Support that lasts',
