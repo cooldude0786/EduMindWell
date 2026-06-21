@@ -73,13 +73,13 @@ export function StoriesSection() {
           {/* Navigation Arrows */}
           <button
             onClick={() => scrollStories(-1)}
-            className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors"
+            className="absolute -left-4 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-white/20 p-2 text-white transition-all duration-200 hover:-translate-y-1/2 hover:scale-105 hover:bg-white/30 md:-left-12"
           >
             <ArrowLeft className="w-6 h-6" />
           </button>
           <button
             onClick={() => scrollStories(1)}
-            className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-10 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors"
+            className="absolute -right-4 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-full bg-white/20 p-2 text-white transition-all duration-200 hover:-translate-y-1/2 hover:scale-105 hover:bg-white/30 md:-right-12"
           >
             <ArrowRight className="w-6 h-6" />
           </button>

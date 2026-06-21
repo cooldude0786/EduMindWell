@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { Camera, PlayCircle, Sparkles, Users } from 'lucide-react'
 
 const galleryItems = [
@@ -6,24 +7,36 @@ const galleryItems = [
     subtitle: 'Photos and clips from assessment sessions',
     icon: Sparkles,
     accent: 'from-primary/90 to-primary/60',
+    image: '/CA.jpeg',
+    statement:
+      'A visual record of discovery sessions, student mapping, and report-led career clarity.',
   },
   {
     title: 'Counselling',
     subtitle: 'Report reviews and one-on-one guidance',
     icon: Users,
     accent: 'from-secondary/90 to-secondary/60',
+    image: '/CC.jpeg',
+    statement:
+      'A visual archive of personal guidance, report interpretation, and next-step planning.',
   },
   {
     title: 'Mindset Workshops',
     subtitle: 'Interactive learning and experiential sessions',
     icon: Camera,
     accent: 'from-tertiary-container/90 to-tertiary-container/60',
+    image: '/StudentMindset.jpeg',
+    statement:
+      'A visual look at student, parent, and professional mindset sessions in action.',
   },
   {
     title: 'Wellness',
     subtitle: 'Meditation circles, app demos, and group programs',
     icon: PlayCircle,
     accent: 'from-surface-tint/90 to-surface-tint/60',
+    image: '/MiracleX.jpeg',
+    statement:
+      'A visual collection of wellness practices, app demos, and guided group experiences.',
   },
 ]
 
@@ -50,11 +63,19 @@ export function GallerySection() {
                 className="group overflow-hidden rounded-[28px] border border-indigo-50 bg-white shadow-[0_16px_36px_rgba(15,23,42,0.05)]"
               >
                 <div
-                  className={`relative flex h-72 items-end bg-gradient-to-br ${item.accent} p-6`}
+                  className={`relative flex h-72 items-end overflow-hidden bg-gradient-to-br ${item.accent} p-6`}
                 >
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-slate-950/35 via-slate-900/25 to-slate-800/55" />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_40%)]" />
                   <div className="relative z-10">
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-white backdrop-blur">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/12 text-white backdrop-blur">
                       <IconComponent className="h-6 w-6" />
                     </div>
                     <h3 className="font-h3 text-2xl text-white">{item.title}</h3>
@@ -68,8 +89,7 @@ export function GallerySection() {
                     Photos + Videos
                   </p>
                   <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                    A curated visual archive of student journeys, family sessions,
-                    workshops, and wellness experiences.
+                    {item.statement}
                   </p>
                 </div>
               </div>

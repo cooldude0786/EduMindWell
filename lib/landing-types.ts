@@ -43,6 +43,7 @@ export interface AudienceCard {
   gradient: string
   overlayColor: string
   bgColor: string
+  image?: string
 }
 
 export interface Story {

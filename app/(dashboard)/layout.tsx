@@ -12,6 +12,7 @@ export default function DashboardLayout({
         <nav className="space-y-2 flex flex-col">
           <a href="/dashboard">Home</a>
           <a href="/dashboard/subscribers">Subscribers</a>
+          <a href="/dashboard/free-consultations">Free Consultations</a>
           <a href="/dashboard/logs">Emails Logs</a>
           <a href="/dashboard/campaigns">Campaigns</a>
         </nav>

@@ -1,9 +1,10 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { ChevronDown, Menu, X } from 'lucide-react'
-import { BRAND } from '@/lib/landing-constants'
+import { FreeConsultationDialog } from '@/components/landing/FreeConsultationDialog'
 
 type AnchorNavItem = {
   kind: 'anchor'
@@ -15,6 +16,7 @@ type AnchorNavItem = {
 type DropdownItem = {
   title: string
   description: string
+  image?: string
 }
 
 type DropdownNavItem = {
@@ -34,15 +36,18 @@ const NAV_ITEMS: NavItem[] = [
       {
         title: 'Career Assessments',
         description: 'Assessment-led discovery inspired by the Edumilestones flow.',
+        image: '/CA.jpeg',
       },
       {
         title: 'Career Counselling',
         description:
           'Expert counsellors review the report and guide students through the dashboard.',
+        image: '/CC.jpeg',
       },
       {
         title: 'Career Library',
         description: 'A growing reference library for careers, pathways, and planning.',
+        image: '/CL.jpeg',
       },
     ],
   },
@@ -54,16 +59,19 @@ const NAV_ITEMS: NavItem[] = [
         title: 'Students',
         description:
           'Time management, goal setting, personality growth, stress control, and resilience.',
+        image: '/StudentMindset.jpeg',
       },
       {
         title: 'Parents',
         description:
           'Programs for parenting children from toddler age through teenage years.',
+        image: '/ParentMindset.jpeg',
       },
       {
         title: 'Teachers / Professionals',
         description:
           'Classroom confidence, emotional intelligence, team bonding, and growth mindset.',
+        image: '/ProMindset.jpeg',
       },
     ],
   },
@@ -75,26 +83,31 @@ const NAV_ITEMS: NavItem[] = [
         title: 'Customized Therapeutic Meditation',
         description:
           'Personalized meditation experiences for stress, confidence, health, money, and relationships.',
+        image: '/Therapeutic.jpeg',
       },
       {
         title: 'Individual Wellness Coaching',
         description:
           'One-on-one coaching for health, relationships, finances, career, and life balance.',
+        image: '/oneToOne.jpeg',
       },
       {
         title: 'Group Meditation Programs',
         description:
           'Online, offline, and hybrid programs for schools, parents, students, corporates, and more.',
+        image: '/groupMed.jpeg',
       },
       {
         title: 'MiracleX App',
         description:
           'A daily wellness companion with guided meditation, gratitude, affirmations, goals, and tracking.',
+        image: '/MiracleX.jpeg',
       },
       {
         title: 'Learning Videos',
         description:
           'Supportive learning content from the YouTube channel for ongoing wellness practice.',
+        image: '/LearningVideo.jpeg',
       },
     ],
   },
@@ -108,6 +121,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [desktopMenu, setDesktopMenu] = useState<DropdownNavItem | null>(null)
+  const [consultationOpen, setConsultationOpen] = useState(false)
   const navbarRef = useRef<HTMLElement>(null)
   const closeTimerRef = useRef<number | null>(null)
 
@@ -181,16 +195,15 @@ export function Navbar() {
     }
   }
 
-  const handleCtaClick = () => {
+  const handleConsultationClick = () => {
     setMobileMenuOpen(false)
     closeDesktopDropdown()
+    setConsultationOpen(true)
+  }
 
-    const ctaTarget =
-      document.querySelector('#cta') || document.querySelector('#contact')
-
-    if (ctaTarget) {
-      ctaTarget.scrollIntoView({ behavior: 'smooth' })
-    }
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false)
+    closeDesktopDropdown()
   }
 
   const toggleDropdown = (label: string) => {
@@ -232,7 +245,7 @@ export function Navbar() {
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item.href)}
-                    className={`rounded-full px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 ${
+                    className={`cursor-pointer rounded-full px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 ${
                       item.id === 'hero'
                         ? 'text-primary'
                         : 'text-slate-600 hover:bg-white/60 hover:text-primary'
@@ -250,7 +263,7 @@ export function Navbar() {
                   <button
                     onClick={() => toggleDropdown(item.label)}
                     aria-expanded={isActive}
-                    className={`inline-flex items-center gap-1 rounded-full px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 ${
+                    className={`cursor-pointer inline-flex items-center gap-1 rounded-full px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 ${
                       isActive
                         ? 'bg-white/70 text-primary shadow-sm'
                         : 'text-slate-600 hover:bg-white/60 hover:text-primary'
@@ -273,25 +286,70 @@ export function Navbar() {
               <div className="w-full border-t border-slate-200/80 bg-white shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
                 <div className="mx-auto max-w-7xl px-6 py-6">
                   <div className="rounded-[28px] border border-slate-200/80 bg-white px-8 py-7 shadow-[0_10px_25px_rgba(15,23,42,0.05)]">
-                    <p className="text-[10px] uppercase tracking-[0.35em] text-secondary font-label-bold">
-                      {desktopMenu.label}
-                    </p>
+                    <div className="flex items-start justify-between gap-4">
+                      <p className="text-[10px] uppercase tracking-[0.35em] text-secondary font-label-bold">
+                        {desktopMenu.label}
+                      </p>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon-sm"
+                        onClick={closeDesktopDropdown}
+                        aria-label="Close dropdown menu"
+                        className="h-8 w-8 rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm hover:bg-slate-100 hover:text-slate-900"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
 
                     <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                       {desktopMenu.items.map((menuItem) => (
                         <div
                           key={menuItem.title}
-                          className="min-h-45 rounded-[22px] border border-slate-100 bg-[#fafafa] p-6 shadow-[0_6px_16px_rgba(15,23,42,0.03)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_10px_22px_rgba(15,23,42,0.05)]"
+                          className={`group relative min-h-45 overflow-hidden rounded-[22px] border p-6 shadow-[0_6px_16px_rgba(15,23,42,0.03)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_10px_22px_rgba(15,23,42,0.05)] ${
+                            menuItem.image
+                              ? 'border-slate-100 bg-slate-950/20'
+                              : 'border-slate-100 bg-[#fafafa]'
+                          }`}
                         >
-                          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/10 bg-primary/5 text-primary">
-                            <ChevronDown className="h-4 w-4 -rotate-90" />
-                          </div>
-                          <h4 className="mt-10 font-h3 text-[15px] text-primary">
-                            {menuItem.title}
-                          </h4>
-                          <p className="mt-3 text-[14px] leading-relaxed text-slate-600">
-                            {menuItem.description}
-                          </p>
+                          {menuItem.image && (
+                            <Image
+                              src={menuItem.image}
+                              alt=""
+                              fill
+                              className="absolute inset-0 object-cover transition-transform duration-500 group-hover:scale-105"
+                              sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+                              priority={menuItem.title === 'Career Assessments'}
+                            />
+                          )}
+                          {menuItem.image ? (
+                            <>
+                              <div className="absolute inset-0 bg-gradient-to-br from-slate-950/68 via-slate-900/48 to-slate-800/30" />
+                              <div className="relative z-10">
+                                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white backdrop-blur-sm">
+                                  <ChevronDown className="h-4 w-4 -rotate-90" />
+                                </div>
+                                <h4 className="mt-10 font-h3 text-[15px] text-white">
+                                  {menuItem.title}
+                                </h4>
+                                <p className="mt-3 text-[14px] leading-relaxed text-white/85">
+                                  {menuItem.description}
+                                </p>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/10 bg-primary/5 text-primary">
+                                <ChevronDown className="h-4 w-4 -rotate-90" />
+                              </div>
+                              <h4 className="mt-10 font-h3 text-[15px] text-primary">
+                                {menuItem.title}
+                              </h4>
+                              <p className="mt-3 text-[14px] leading-relaxed text-slate-600">
+                                {menuItem.description}
+                              </p>
+                            </>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -304,16 +362,16 @@ export function Navbar() {
           {/* CTA Button & Mobile Menu */}
           <div className="flex items-center gap-4">
             <Button
-              onClick={handleCtaClick}
-              className="hidden md:inline-flex h-auto bg-on-tertiary-container rounded-full px-6 py-2.5 text-button font-button shadow-sm hover:scale-95 hover:bg-primary transition-all duration-150"
+              onClick={handleConsultationClick}
+              className="hidden md:inline-flex h-auto cursor-pointer bg-on-tertiary-container rounded-full px-6 py-2.5 text-button font-button shadow-sm transition-all duration-150 hover:-translate-y-0.5 hover:scale-[0.98] hover:bg-primary"
               style={{ color: '#ffffff' }}
             >
-              Book a Consultation
+              Book a Free Consultation
             </Button>
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden"
+              className="md:hidden cursor-pointer transition-transform duration-200 hover:scale-105"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle navigation menu"
             >
@@ -331,6 +389,18 @@ export function Navbar() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className=" md:hidden p-4">
+          <div className="mb-3 flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+            <span className="text-sm font-semibold text-slate-700">Menu</span>
+            <button
+              type="button"
+              onClick={closeMobileMenu}
+              aria-label="Close menu"
+              className="cursor-pointer rounded-full border border-slate-200 p-2 text-slate-500 transition-all duration-200 hover:bg-slate-100 hover:text-slate-900"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
           <div className="space-y-2">
             {NAV_ITEMS.map((item) => {
               if (item.kind === 'anchor') {
@@ -338,7 +408,7 @@ export function Navbar() {
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item.href)}
-                    className="block w-full rounded-2xl px-4 py-3 text-left text-slate-600 transition-colors hover:bg-slate-100 hover:text-primary"
+                    className="block w-full cursor-pointer rounded-2xl px-4 py-3 text-left text-slate-600 transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-100 hover:text-primary"
                   >
                     {item.label}
                   </button>
@@ -352,7 +422,7 @@ export function Navbar() {
                   <button
                     onClick={() => setActiveDropdown(isActive ? null : item.label)}
                     aria-expanded={isActive}
-                    className="flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-slate-700"
+                    className="flex w-full cursor-pointer items-center justify-between rounded-2xl px-4 py-3 text-left text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-50"
                   >
                     <span className="font-medium">{item.label}</span>
                     <ChevronDown
@@ -367,14 +437,43 @@ export function Navbar() {
                         {item.items.map((dropdownItem) => (
                           <div
                             key={dropdownItem.title}
-                            className="rounded-xl bg-slate-50 p-3"
+                            className={`relative overflow-hidden rounded-xl border p-3 ${
+                              dropdownItem.image
+                                ? 'border-slate-200 text-white'
+                                : 'border-slate-200 bg-slate-50'
+                            }`}
                           >
-                            <div className="font-semibold text-primary">
-                              {dropdownItem.title}
-                            </div>
-                            <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                              {dropdownItem.description}
-                            </p>
+                            {dropdownItem.image && (
+                              <Image
+                                src={dropdownItem.image}
+                                alt=""
+                                fill
+                                className="absolute inset-0 object-cover"
+                                sizes="100vw"
+                              />
+                            )}
+                            {dropdownItem.image ? (
+                              <>
+                                <div className="absolute inset-0 bg-gradient-to-br from-slate-950/70 via-slate-900/55 to-slate-800/35" />
+                                <div className="relative z-10">
+                                  <div className="font-semibold text-white">
+                                    {dropdownItem.title}
+                                  </div>
+                                  <p className="mt-1 text-sm leading-relaxed text-white/85">
+                                    {dropdownItem.description}
+                                  </p>
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <div className="font-semibold text-primary">
+                                  {dropdownItem.title}
+                                </div>
+                                <p className="mt-1 text-sm leading-relaxed text-slate-600">
+                                  {dropdownItem.description}
+                                </p>
+                              </>
+                            )}
                           </div>
                         ))}
                       </div>
@@ -385,13 +484,19 @@ export function Navbar() {
             })}
           </div>
           <Button
-            onClick={handleCtaClick}
-            className="mt-4 w-full h-auto bg-on-tertiary-container text-white rounded-full px-6 py-3 text-button font-button transition-transform duration-200 hover:scale-[0.99] hover:bg-primary"
+            onClick={handleConsultationClick}
+            className="mt-4 w-full h-auto rounded-full bg-on-tertiary-container px-6 py-3 text-button font-button text-white transition-all duration-200 hover:-translate-y-0.5 hover:scale-[0.99] hover:bg-primary"
           >
-            Book a Consultation
+            Book a Free Consultation
           </Button>
         </div>
       )}
+
+      <FreeConsultationDialog
+        open={consultationOpen}
+        onOpenChange={setConsultationOpen}
+      />
     </nav>
   )
 }
+

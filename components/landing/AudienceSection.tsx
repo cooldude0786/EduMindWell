@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { ArrowRight, BookOpen, Users, Briefcase } from 'lucide-react'
 import { AUDIENCE_CARDS } from '@/lib/landing-constants'
 
@@ -32,7 +33,16 @@ export function AudienceSection() {
                 <div
                   className={`relative h-64 rounded-3xl overflow-hidden mb-6 bg-gradient-to-br ${card.gradient}`}
                 >
-                  <div className="w-full h-full bg-cover bg-center"></div>
+                  {card.image && (
+                    <Image
+                      src={card.image}
+                      alt={card.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-black/15" />
                   <div
                     className={`absolute inset-0 ${card.overlayColor} flex items-end p-8 transition-colors`}
                   >

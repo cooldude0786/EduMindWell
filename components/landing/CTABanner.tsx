@@ -1,8 +1,14 @@
+'use client'
+
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { CheckCircle2, Lock, Star } from 'lucide-react'
 import { CTA_BANNER } from '@/lib/landing-constants'
+import { FreeConsultationDialog } from '@/components/landing/FreeConsultationDialog'
 
 export function CTABanner() {
+  const [consultationOpen, setConsultationOpen] = useState(false)
+
   return (
     <section id="cta" className="py-xl px-6 bg-surface-container-lowest">
       <div className="max-w-4xl mx-auto">
@@ -30,8 +36,9 @@ export function CTABanner() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <Button
-                className="h-auto rounded-full bg-on-tertiary-container px-10 py-4 text-button font-button shadow-[0_16px_35px_rgba(31,41,55,0.18)] hover:bg-primary hover:shadow-[0_18px_40px_rgba(37,99,235,0.24)] transition-all duration-200"
-                style={{ minWidth: 260, color: '#ffffff' }}
+                onClick={() => setConsultationOpen(true)}
+                className="h-auto rounded-full bg-white px-10 py-4 text-button font-button text-primary shadow-[0_16px_35px_rgba(255,255,255,0.16)] transition-all duration-200 hover:bg-slate-100 hover:text-primary hover:shadow-[0_18px_40px_rgba(255,255,255,0.22)]"
+                style={{ minWidth: 260 }}
               >
                 {CTA_BANNER.primaryBtn}
               </Button>
@@ -62,6 +69,11 @@ export function CTABanner() {
           </div>
         </div>
       </div>
+
+      <FreeConsultationDialog
+        open={consultationOpen}
+        onOpenChange={setConsultationOpen}
+      />
     </section>
   )
 }

@@ -159,6 +159,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     gradient: 'from-blue-400 to-indigo-600',
     overlayColor: 'bg-primary/40 group-hover:bg-primary/50',
     bgColor: 'text-primary',
+    image: '/StudentMindset.jpeg',
   },
   {
     title: 'Parents',
@@ -169,6 +170,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     gradient: 'from-emerald-400 to-teal-600',
     overlayColor: 'bg-secondary/40 group-hover:bg-secondary/50',
     bgColor: 'text-secondary',
+    image: '/ParentMindset.jpeg',
   },
   {
     title: 'Teachers / Professionals',
@@ -179,6 +181,7 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
     gradient: 'from-orange-400 to-red-600',
     overlayColor: 'bg-on-tertiary-container/40 group-hover:bg-on-tertiary-container/50',
     bgColor: 'text-on-tertiary-container',
+    image: '/ProMindset.jpeg',
   },
 ]
 
@@ -274,7 +277,7 @@ export const CTA_BANNER = {
   subheadline: 'Than Guesswork.',
   description:
     "Stop worrying about what's next. Let's build it together — with precision and peace.",
-  primaryBtn: 'Book My Free Session',
+  primaryBtn: 'Book a Free Consultation',
   secondaryBtn: 'Join Whatsapp Group',
   trustSignals: [
     { icon: 'CheckCircle', text: 'Certified Counsellors' },

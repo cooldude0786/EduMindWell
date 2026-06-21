@@ -86,3 +86,22 @@ enum QueueStatus {
   SENT
   FAILED
 }
+
+model FreeConsultationLead {
+  id        String   @id @default(cuid())
+  phone     String
+  email     String
+  status    ConsultationStatus @default(NEW)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status, createdAt])
+  @@index([email])
+}
+
+enum ConsultationStatus {
+  NEW
+  CONTACTED
+  BOOKED
+  CLOSED
+}

@@ -23,7 +23,7 @@ export function FAQ() {
             <div key={item.id} className="border-b border-indigo-100 pb-4">
               <button
                 onClick={() => toggleFaq(item.id)}
-                className="flex justify-between items-center w-full text-left font-bold text-primary py-4 group"
+                className="flex w-full cursor-pointer items-center justify-between py-4 text-left font-bold text-primary transition-all duration-200 hover:-translate-y-0.5 group"
               >
                 <span>{item.question}</span>
                 <ChevronDown

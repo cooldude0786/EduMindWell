@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { LucideIcon } from 'lucide-react'
 import { Heart, PlayCircle, QrCode, Sparkles, Users } from 'lucide-react'
 
@@ -7,6 +8,7 @@ type WellnessCard = {
   title: string
   icon: LucideIcon
   description: string
+  image: string
 }
 
 type WellnessVariantConfig = {
@@ -32,30 +34,35 @@ const wellnessVariantMap: Record<WellnessVariant, WellnessVariantConfig> = {
         icon: QrCode,
         description:
           'A daily wellness companion with guided meditation, gratitude, affirmations, and progress tracking.',
+        image: '/MiracleX.jpeg',
       },
       {
         title: 'Customized Therapeutic Meditation',
         icon: Sparkles,
         description:
           'Personalized meditation sessions that support calm, balance, and better emotional awareness.',
+        image: '/Therapeutic.jpeg',
       },
       {
         title: 'Individual Wellness Coaching',
         icon: Heart,
         description:
           'One-on-one guidance for health, relationships, career, and life decisions.',
+        image: '/oneToOne.jpeg',
       },
       {
         title: 'Group Meditation and Wellness Programs',
         icon: Users,
         description:
           'Tailored sessions for schools, parents, students, teachers, corporates, and communities.',
+        image: '/groupMed.jpeg',
       },
       {
         title: 'Learning Videos',
         icon: PlayCircle,
         description:
           'Short learning content to support ongoing wellness practice and consistency.',
+        image: '/LearningVideo.jpeg',
       },
     ],
     sideLabel: 'MiracleX App',
@@ -227,79 +234,89 @@ export function WellnessSection({ variant = '1' }: WellnessSectionProps) {
           </p>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid gap-8 lg:grid-cols-[0.98fr_1.02fr] lg:items-start">
           <div className="grid gap-4 md:grid-cols-2">
             {config.cards.map((card) => {
               const IconComponent = card.icon
-
-              const isFeatureCard = card.title === 'MiracleX App'
+              const spanFullWidth = card.title === 'Learning Videos'
 
               return (
                 <div
                   key={card.title}
-                  className={`rounded-3xl border border-indigo-50 bg-white shadow-[0_14px_35px_rgba(15,23,42,0.05)] transition-transform duration-200 hover:-translate-y-1 ${
-                    isFeatureCard ? 'p-4' : 'p-6'
+                  className={`overflow-hidden rounded-3xl border border-indigo-50 bg-white shadow-[0_14px_35px_rgba(15,23,42,0.05)] transition-transform duration-200 hover:-translate-y-1 ${
+                    spanFullWidth ? 'md:col-span-2' : ''
                   }`}
                 >
-                  <div
-                    className={`mb-5 flex items-center justify-center rounded-2xl bg-primary/5 text-primary ${
-                      isFeatureCard ? 'h-9 w-9' : 'h-11 w-11'
-                    }`}
-                  >
-                    <IconComponent className="h-5 w-5" />
+                  <div className="relative h-44 overflow-hidden">
+                    <Image
+                      src={card.image}
+                      alt={card.title}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-slate-950/18 via-slate-900/10 to-slate-800/45" />
+                    <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-white backdrop-blur-sm">
+                      <IconComponent className="h-5 w-5" />
+                    </div>
                   </div>
-                  <h3 className={`font-h3 text-primary ${isFeatureCard ? 'text-[15px]' : 'text-lg'}`}>
-                    {card.title}
-                  </h3>
-                  <p
-                    className={`mt-3 leading-relaxed text-slate-600 ${
-                      isFeatureCard ? 'text-[12px]' : 'text-sm'
-                    }`}
-                  >
-                    {card.description}
-                  </p>
+                  <div className="p-5">
+                    <h3 className="font-h3 text-lg text-primary">{card.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                      {card.description}
+                    </p>
+                  </div>
                 </div>
               )
             })}
           </div>
 
-          <div className="rounded-[32px] border border-primary/10 bg-primary p-8 text-white shadow-[0_18px_45px_rgba(2,16,100,0.18)]">
+          <div className="rounded-[32px] border border-primary/10 bg-primary p-8 text-white shadow-[0_18px_45px_rgba(2,16,100,0.18)] lg:min-h-[38rem] lg:self-start">
             <p className="text-[10px] uppercase tracking-[0.35em] text-primary-fixed-dim font-label-bold">
               {config.sideLabel}
             </p>
-            <h3 className="mt-3 font-h2 text-3xl">{config.sideHeading}</h3>
-            <p className="mt-4 text-sm leading-relaxed text-primary-fixed-dim">
+            <h3 className="mt-3 max-w-[16rem] font-h2 text-[2.15rem] leading-[1.05] tracking-[-0.03em] md:text-[2.45rem]">
+              {config.sideHeading}
+            </h3>
+            <p className="mt-4 max-w-[20rem] text-[0.95rem] leading-7 text-primary-fixed-dim">
               {config.sideCopy}
             </p>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-[180px_1fr]">
-              <div className="flex items-center justify-center rounded-3xl border border-white/10 bg-white/5 p-6">
-                <div className="flex h-36 w-36 items-center justify-center rounded-3xl border-2 border-dashed border-white/25 bg-white/10">
-                  <QrCode className="h-16 w-16 text-white/80" />
+            <div className="mt-8 space-y-4">
+              <div className="rounded-[28px] border border-white/10 bg-white/5 p-5">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+                  <div className="flex h-32 w-full items-center justify-center rounded-3xl border-2 border-dashed border-white/20 bg-white/10 sm:h-40 sm:w-40">
+                    <QrCode className="h-14 w-14 text-white/80" />
+                  </div>
+
+                  <div className="grid flex-1 gap-3">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <p className="text-[10px] uppercase tracking-[0.3em] text-secondary-fixed-dim">
+                        Highlight
+                      </p>
+                      <p className="mt-1 text-sm font-medium text-white">
+                        {config.sideHighlights[0]}
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <p className="text-[10px] uppercase tracking-[0.3em] text-secondary-fixed-dim">
+                        Support
+                      </p>
+                      <p className="mt-1 text-sm font-medium text-white">
+                        {config.sideHighlights[1]}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.25em] text-secondary-fixed-dim">
-                    Highlight
-                  </p>
-                  <p className="mt-1 text-sm text-white">{config.sideHighlights[0]}</p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.25em] text-secondary-fixed-dim">
-                    Support
-                  </p>
-                  <p className="mt-1 text-sm text-white">{config.sideHighlights[1]}</p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.25em] text-secondary-fixed-dim">
-                    Learn More
-                  </p>
-                  <p className="mt-1 text-sm text-white">
-                    Scan the QR code to explore the MiracleX app experience.
-                  </p>
-                </div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-xs uppercase tracking-[0.25em] text-secondary-fixed-dim">
+                  Learn More
+                </p>
+                <p className="mt-1 text-sm text-white">
+                  Scan the QR code to explore the MiracleX app experience.
+                </p>
               </div>
             </div>
           </div>
