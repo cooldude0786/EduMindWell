@@ -98,10 +98,10 @@ export function FreeConsultationDialog({
       <DialogContent className="sm:max-w-[460px] rounded-2xl border border-slate-200 bg-white p-6 text-slate-900 shadow-[0_24px_60px_rgba(15,23,42,0.24)]">
         <DialogHeader className="space-y-2">
           <DialogTitle className="text-left text-2xl font-bold text-slate-900">
-            Book a Free Consultation
+            Book a Free Consulting Session
           </DialogTitle>
           <DialogDescription className="text-left text-sm leading-relaxed text-slate-600">
-            Share your phone number and email and we&apos;ll save your request in the dashboard.
+            Share your phone number and email and we&apos;ll save your request in the dashboard so we can follow up with a free consulting session and consultation-related guidance.
           </DialogDescription>
         </DialogHeader>
 

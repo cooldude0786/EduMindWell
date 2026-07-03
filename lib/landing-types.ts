@@ -26,6 +26,7 @@ export interface PillarCard {
   color: 'primary' | 'secondary' | 'on-tertiary-container'
   description: string
   linkText: string
+  href?: string
 }
 
 export interface CareerStep {

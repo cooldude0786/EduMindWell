@@ -85,6 +85,9 @@ export const PARENT_DIALOGUE = [
 ]
 
 // THREE PILLARS SECTION
+export const MIRACLE_X_APP_URL =
+  'https://play.google.com/store/apps/details?id=com.miraclesx.app&pcampaignid=web_share'
+
 export const PILLARS: PillarCard[] = [
   {
     icon: 'route',
@@ -109,6 +112,7 @@ export const PILLARS: PillarCard[] = [
     description:
       'Holistic wellness programs and the MiraclesX App — your daily companion for focus, calm, and subconscious transformation.',
     linkText: 'Discover MiraclesX',
+    href: MIRACLE_X_APP_URL,
   },
 ]
 
@@ -265,9 +269,9 @@ export const FAQ_ITEMS: FAQItem[] = [
   },
   {
     id: 'q8',
-    question: 'Is the first session really free?',
+    question: 'Is the first consulting session really free?',
     answer:
-      'Yes. The first 30-minute discovery call is completely free with no commitment required. It is simply a conversation to understand your situation and see if EduMindWell is the right fit.',
+      'Yes. The first 30-minute consulting session is completely free with no commitment required. It is meant to give you consultation-related guidance, understand your situation, and see if EduMindWell is the right fit.',
   },
 ]
 
@@ -277,7 +281,7 @@ export const CTA_BANNER = {
   subheadline: 'Than Guesswork.',
   description:
     "Stop worrying about what's next. Let's build it together — with precision and peace.",
-  primaryBtn: 'Book a Free Consultation',
+  primaryBtn: 'Book a Free Consulting Session',
   secondaryBtn: 'Join Whatsapp Group',
   trustSignals: [
     { icon: 'CheckCircle', text: 'Certified Counsellors' },
@@ -288,7 +292,7 @@ export const CTA_BANNER = {
 
 // FOOTER SECTION
 export const FOOTER_COLUMNS = [
-  {
+  {   
     title: 'Resources',
     items: [
       { label: 'Terms of Service', href: '#' },

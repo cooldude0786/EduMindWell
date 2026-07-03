@@ -226,15 +226,24 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6" tabIndex={-1}>
         <div className="flex items-center justify-between py-4">
           {/* Brand */}
-          <div className="flex flex-col">
-            <span className="text-xl font-bold leading-none">
-              <span className="text-black">Edu</span>
-              <span className="text-primary">Mind</span>
-              <span className="text-black">Well</span>
-            </span>
-            <span className="font-slogan text-[10px] tracking-widest text-primary">
-              Aligning Career, Mind and Well-being
-            </span>
+          <div className="flex items-center gap-4">
+            <Image
+              src="/brandLogo.png"
+              alt="EduMindWell logo"
+              width={48}
+              height={48}
+              className="h-12 w-12 object-contain"
+            />
+            <div className="flex flex-col">
+              <span className="text-xl font-bold leading-none">
+                <span className="text-black">Edu</span>
+                <span className="text-primary">Mind</span>
+                <span className="text-black">Well</span>
+              </span>
+              <span className="font-slogan text-[10px] tracking-widest text-primary">
+                Aligning Career, Mind and Well-being
+              </span>
+            </div>
           </div>
 
           {/* Desktop Menu */}
@@ -366,7 +375,7 @@ export function Navbar() {
               className="hidden md:inline-flex h-auto cursor-pointer bg-on-tertiary-container rounded-full px-6 py-2.5 text-button font-button shadow-sm transition-all duration-150 hover:-translate-y-0.5 hover:scale-[0.98] hover:bg-primary"
               style={{ color: '#ffffff' }}
             >
-              Book a Free Consultation
+              Book a Free Consulting Session
             </Button>
 
             {/* Mobile Menu Button */}
@@ -487,7 +496,7 @@ export function Navbar() {
             onClick={handleConsultationClick}
             className="mt-4 w-full h-auto rounded-full bg-on-tertiary-container px-6 py-3 text-button font-button text-white transition-all duration-200 hover:-translate-y-0.5 hover:scale-[0.99] hover:bg-primary"
           >
-            Book a Free Consultation
+            Book a Free Consulting Session
           </Button>
         </div>
       )}
@@ -499,4 +508,3 @@ export function Navbar() {
     </nav>
   )
 }
-

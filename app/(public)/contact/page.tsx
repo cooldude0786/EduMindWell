@@ -4,7 +4,7 @@ import { PublicPageShell } from '@/components/landing/PublicPageShell'
 const contactFeatures = [
   {
     title: 'Address',
-    description: 'EduMindWell, Bangalore, India',
+    description: '401, Vishal, Janki kutir, Juhu church road, Juhu 400049',
   },
   {
     title: 'Email',
@@ -12,7 +12,7 @@ const contactFeatures = [
   },
   {
     title: 'Phone',
-    description: '+91 98765 43210',
+    description: '+91 98199 90361, +91 77188 92677',
   },
 ]
 

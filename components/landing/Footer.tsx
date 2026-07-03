@@ -14,7 +14,7 @@ const contactItems = [
   {
     icon: MapPinIcon,
     label: 'Address',
-    value: 'EduMindWell, Bangalore, India',
+    value: '401, Vishal, Janki kutir, Juhu church road, Juhu 400049',
   },
   {
     icon: Mail01Icon,
@@ -24,7 +24,7 @@ const contactItems = [
   {
     icon: TelephoneIcon,
     label: 'Phone',
-    value: '+91 98765 43210',
+    value: '+91 98199 90361, +91 77188 92677',
   },
 ]
 

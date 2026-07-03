@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import type { LucideIcon } from 'lucide-react'
 import { Heart, PlayCircle, QrCode, Sparkles, Users } from 'lucide-react'
+import { MIRACLE_X_APP_URL } from '@/lib/landing-constants'
 
 type WellnessVariant = '1' | '2' | '3' | '4'
 
@@ -332,6 +333,14 @@ export function WellnessSection({ variant = '1' }: WellnessSectionProps) {
                 <p className="mt-1 text-sm text-white">
                   Scan the QR code to explore the MiracleX app experience.
                 </p>
+                <a
+                  href={MIRACLE_X_APP_URL}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="mt-4 inline-flex items-center rounded-full bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
+                >
+                  Open MiracleX in Play Store
+                </a>
               </div>
             </div>
           </div>

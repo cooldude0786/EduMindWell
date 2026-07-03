@@ -14,6 +14,7 @@ interface PillarCardProps {
   color: 'primary' | 'secondary' | 'on-tertiary-container'
   description: string
   linkText: string
+  href?: string
 }
 
 function PillarCard({
@@ -22,6 +23,7 @@ function PillarCard({
   color,
   description,
   linkText,
+  href,
 }: PillarCardProps) {
   const IconComponent = iconMap[icon]
   const colorClasses = {
@@ -47,7 +49,9 @@ function PillarCard({
       <h3 className={`font-h3 text-h3 ${textColors[color]} mb-4`}>{title}</h3>
       <p className="text-body-md text-on-surface-variant mb-6">{description}</p>
       <a
-        href="#"
+        href={href ?? '#'}
+        target={href ? '_blank' : undefined}
+        rel={href ? 'noreferrer noopener' : undefined}
         className={`${textColors[color]} font-bold inline-flex items-center gap-2 hover:gap-3 transition-all`}
       >
         {linkText} <ArrowRight className="w-4 h-4" />
@@ -80,6 +84,7 @@ export function ThreePillars() {
               color={pillar.color}
               description={pillar.description}
               linkText={pillar.linkText}
+              href={pillar.href}
             />
           ))}
         </div>
