@@ -10,6 +10,7 @@ type PublicPageShellProps = {
   title: string
   description: string
   features?: FeatureCard[]
+  className?: string
   children?: ReactNode
 }
 
@@ -18,10 +19,11 @@ export function PublicPageShell({
   title,
   description,
   features = [],
+  className,
   children,
 }: PublicPageShellProps) {
   return (
-    <div className="bg-background text-on-background">
+    <div className={`bg-background text-on-background ${className ?? ''}`}>
       <section className="px-6 py-20">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">

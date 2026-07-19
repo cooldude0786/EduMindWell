@@ -77,7 +77,7 @@ export function HeroSection() {
               className="absolute bottom-6 right-6 flex h-32 w-32 items-center justify-center rounded-full border-4 border-secondary bg-white shadow-xl animate-bounce sm:h-36 sm:w-36 md:bottom-0 md:right-1/4 md:h-48 md:w-48"
               style={{ animationDuration: '5s' }}
             >
-              <span className="font-bold text-secondary">Mind</span>
+              <span className="font-bold text-secondary">Mindset</span>
             </div>
             <div
               className="absolute bottom-0 left-6 flex h-32 w-32 items-center justify-center rounded-full border-4 border-on-tertiary-container bg-white shadow-xl animate-bounce sm:h-36 sm:w-36 md:left-auto md:right-0 md:top-1/3 md:h-48 md:w-48"

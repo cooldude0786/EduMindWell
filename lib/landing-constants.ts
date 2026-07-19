@@ -88,6 +88,38 @@ export const PARENT_DIALOGUE = [
 export const MIRACLE_X_APP_URL =
   'https://play.google.com/store/apps/details?id=com.miraclesx.app&pcampaignid=web_share'
 
+export const ASSESSMENT_MEDIA = [
+  '/assessments/IMG-20260718-WA0008.jpg',
+  '/assessments/IMG-20260718-WA0009.jpg',
+  '/assessments/IMG-20260718-WA0010.jpg',
+  '/assessments/IMG-20260718-WA0011.jpg',
+]
+
+export const WELLNESS_MEDIA = [
+  '/Wellness/WhatsApp Image 2026-07-12 at 11.59.22 (1).jpeg',
+  '/Wellness/WhatsApp Image 2026-07-12 at 11.59.22 (2).jpeg',
+  '/Wellness/WhatsApp Image 2026-07-12 at 11.59.22.jpeg',
+  '/Wellness/WhatsApp Image 2026-07-12 at 11.59.23 (1).jpeg',
+  '/Wellness/WhatsApp Image 2026-07-12 at 11.59.23 (2).jpeg',
+  '/Wellness/WhatsApp Image 2026-07-12 at 11.59.23.jpeg',
+]
+
+export const TESTIMONIAL_MEDIA = [
+  '/testimonials/IMG-20260718-WA0000.jpg',
+  '/testimonials/IMG-20260718-WA0001.jpg',
+  '/testimonials/VID-20260718-WA0003.mp4',
+  '/testimonials/VID-20260718-WA0004.mp4',
+  '/testimonials/VID-20260718-WA0005.mp4',
+  '/testimonials/VID-20260718-WA0006.mp4',
+  '/testimonials/VID-20260718-WA0007.mp4',
+]
+
+export const WORKSHOP_MEDIA = [
+  '/workshop/IMG-20260719-WA0007.jpg',
+  '/workshop/VID-20260719-WA0004.mp4',
+  '/workshop/VID-20260719-WA0006.mp4',
+]
+
 export const PILLARS: PillarCard[] = [
   {
     icon: 'route',

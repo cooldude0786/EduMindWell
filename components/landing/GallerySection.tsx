@@ -1,5 +1,18 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Camera, PlayCircle, Sparkles, Users } from 'lucide-react'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from '@/components/ui/carousel'
+import { ASSESSMENT_MEDIA, WELLNESS_MEDIA } from '@/lib/landing-constants'
 
 const galleryItems = [
   {
@@ -7,7 +20,7 @@ const galleryItems = [
     subtitle: 'Photos and clips from assessment sessions',
     icon: Sparkles,
     accent: 'from-primary/90 to-primary/60',
-    image: '/CA.jpeg',
+    images: ASSESSMENT_MEDIA,
     statement:
       'A visual record of discovery sessions, student mapping, and report-led career clarity.',
   },
@@ -16,7 +29,7 @@ const galleryItems = [
     subtitle: 'Report reviews and one-on-one guidance',
     icon: Users,
     accent: 'from-secondary/90 to-secondary/60',
-    image: '/CC.jpeg',
+    images: ASSESSMENT_MEDIA,
     statement:
       'A visual archive of personal guidance, report interpretation, and next-step planning.',
   },
@@ -25,7 +38,7 @@ const galleryItems = [
     subtitle: 'Interactive learning and experiential sessions',
     icon: Camera,
     accent: 'from-tertiary-container/90 to-tertiary-container/60',
-    image: '/StudentMindset.jpeg',
+    images: WELLNESS_MEDIA,
     statement:
       'A visual look at student, parent, and professional mindset sessions in action.',
   },
@@ -34,11 +47,82 @@ const galleryItems = [
     subtitle: 'Meditation circles, app demos, and group programs',
     icon: PlayCircle,
     accent: 'from-surface-tint/90 to-surface-tint/60',
-    image: '/MiracleX.jpeg',
+    images: WELLNESS_MEDIA,
     statement:
       'A visual collection of wellness practices, app demos, and guided group experiences.',
   },
 ]
+
+type GalleryCardProps = (typeof galleryItems)[number]
+
+function GalleryCard({ item }: { item: GalleryCardProps }) {
+  const [api, setApi] = useState<CarouselApi>()
+
+  useEffect(() => {
+    if (!api) {
+      return
+    }
+
+    const timer = window.setInterval(() => {
+      api.scrollNext()
+    }, 3200)
+
+    return () => window.clearInterval(timer)
+  }, [api])
+
+  const IconComponent = item.icon
+
+  return (
+    <div className="group overflow-hidden rounded-[28px] border border-indigo-50 bg-white shadow-[0_16px_36px_rgba(15,23,42,0.05)]">
+      <div className="relative">
+        <Carousel
+          opts={{ loop: true, align: 'start' }}
+          setApi={setApi}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-0">
+            {item.images.map((image) => (
+              <CarouselItem key={image} className="basis-full pl-0">
+                <div className="relative flex h-72 items-end overflow-hidden p-6">
+                  <div className="absolute inset-0 bg-gradient-to-br from-slate-950/35 via-slate-900/25 to-slate-800/55" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_40%)]" />
+                  <Image
+                    src={image}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
+                  />
+                  <div className="relative z-10">
+                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/12 text-white backdrop-blur">
+                      <IconComponent className="h-6 w-6" />
+                    </div>
+                    <h3 className="font-h3 text-2xl text-white">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-white/85">
+                      {item.subtitle}
+                    </p>
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+
+          <CarouselPrevious className="-left-3 hidden md:flex" />
+          <CarouselNext className="-right-3 hidden md:flex" />
+        </Carousel>
+      </div>
+
+      <div className="border-t border-indigo-50 bg-surface-container-lowest p-5">
+        <p className="text-xs uppercase tracking-[0.3em] text-secondary font-label-bold">
+          Photos + Videos
+        </p>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">
+          {item.statement}
+        </p>
+      </div>
+    </div>
+  )
+}
 
 export function GallerySection() {
   return (
@@ -54,47 +138,18 @@ export function GallerySection() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {galleryItems.map((item) => {
-            const IconComponent = item.icon
+          {galleryItems.map((item) => (
+            <GalleryCard key={item.title} item={item} />
+          ))}
+        </div>
 
-            return (
-              <div
-                key={item.title}
-                className="group overflow-hidden rounded-[28px] border border-indigo-50 bg-white shadow-[0_16px_36px_rgba(15,23,42,0.05)]"
-              >
-                <div
-                  className={`relative flex h-72 items-end overflow-hidden bg-gradient-to-br ${item.accent} p-6`}
-                >
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-950/35 via-slate-900/25 to-slate-800/55" />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_40%)]" />
-                  <div className="relative z-10">
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/12 text-white backdrop-blur">
-                      <IconComponent className="h-6 w-6" />
-                    </div>
-                    <h3 className="font-h3 text-2xl text-white">{item.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-white/85">
-                      {item.subtitle}
-                    </p>
-                  </div>
-                </div>
-                <div className="border-t border-indigo-50 bg-surface-container-lowest p-5">
-                  <p className="text-xs uppercase tracking-[0.3em] text-secondary font-label-bold">
-                    Photos + Videos
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                    {item.statement}
-                  </p>
-                </div>
-              </div>
-            )
-          })}
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/gallery"
+            className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          >
+            Explore more
+          </Link>
         </div>
       </div>
     </section>

@@ -1,26 +1,21 @@
-import { GallerySection } from '@/components/landing/GallerySection'
+import { GalleryCollageSection } from '@/components/landing/GalleryCollageSection'
 import { PublicPageShell } from '@/components/landing/PublicPageShell'
 
 const galleryFeatures = [
   {
     title: 'Career assessment',
     description:
-      'Visual snapshots from assessment sessions and report reviews.',
+      'Program moments from assessment sessions and outcome-focused conversations.',
   },
   {
     title: 'Counselling',
     description:
-      'Moments from one-on-one guidance and planning conversations.',
+      'Guidance moments that show the personal support behind each next step.',
   },
   {
     title: 'Mindset workshops',
     description:
-      'Interactive session photos that show the workshop energy and format.',
-  },
-  {
-    title: 'Wellness',
-    description:
-      'Meditation circles, app demos, and group experiences in practice.',
+      'Interactive workshop scenes that capture energy, participation, and reflection.',
   },
 ]
 
@@ -28,11 +23,12 @@ export default function GalleryPage() {
   return (
     <PublicPageShell
       eyebrow="Gallery"
-      title="See the work in context across career, mindset, and wellness."
-      description="Use this page to give the visual archive a dedicated home, with enough breathing room to scan the different moments clearly."
+      title="Program moments across career, counselling, and workshops."
+      description="This gallery now presents the work by program so visitors can understand each experience in context rather than as one undifferentiated media wall."
       features={galleryFeatures}
+      className="mt-10"
     >
-      <GallerySection />
+      <GalleryCollageSection />
     </PublicPageShell>
   )
 }

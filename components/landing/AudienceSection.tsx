@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { ArrowRight, BookOpen, Users, Briefcase } from 'lucide-react'
-import { AUDIENCE_CARDS } from '@/lib/landing-constants'
+import { AUDIENCE_CARDS, WORKSHOP_MEDIA } from '@/lib/landing-constants'
 
 const iconMap = {
   BookOpen,
@@ -20,6 +20,32 @@ export function AudienceSection() {
           <h2 className="font-h2 text-h2 text-primary">
             Interactive workshops for students, parents, and teachers.
           </h2>
+        </div>
+
+        <div className="mb-10 grid gap-3 md:grid-cols-3">
+          {WORKSHOP_MEDIA.map((item, index) => (
+            <div key={item} className="overflow-hidden rounded-3xl border border-slate-200 bg-white">
+              {item.endsWith('.mp4') ? (
+                <video
+                  src={item}
+                  muted
+                  playsInline
+                  controls
+                  className="h-48 w-full object-cover"
+                />
+              ) : (
+                <div className="relative h-48">
+                  <Image
+                    src={item}
+                    alt={`Workshop media ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                  />
+                </div>
+              )}
+            </div>
+          ))}
         </div>
 
         {/* Cards Grid */}
