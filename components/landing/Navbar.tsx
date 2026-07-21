@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { ChevronDown, Menu, X } from 'lucide-react'
 import { FreeConsultationDialog } from '@/components/landing/FreeConsultationDialog'
-import { ASSESSMENT_MEDIA, WELLNESS_MEDIA } from '@/lib/landing-constants'
+import { AUDIENCE_CARDS } from '@/lib/landing-constants'
 
 type AnchorNavItem = {
   kind: 'anchor'
@@ -19,11 +19,13 @@ type DropdownItem = {
   title: string
   description: string
   image?: string | string[]
+  href?: string
 }
 
 type DropdownNavItem = {
   kind: 'dropdown'
   label: string
+  id: string
   items: DropdownItem[]
 }
 
@@ -34,6 +36,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     kind: 'dropdown',
     label: 'Career',
+    id: 'career',
     items: [
       {
         title: 'Career Assessments',
@@ -53,8 +56,47 @@ const NAV_ITEMS: NavItem[] = [
       },
     ],
   },
-  { kind: 'anchor', label: 'Mindset Workshops', href: '#workshops', id: 'workshops' },
-  { kind: 'anchor', label: 'Wellness', href: '#wellness', id: 'wellness' },
+  {
+    kind: 'dropdown',
+    label: 'Mindset Workshops',
+    id: 'workshops',
+    items: AUDIENCE_CARDS.map((card) => ({
+      title: card.title,
+      description: card.description,
+      image: card.image,
+    })),
+  },
+  {
+    kind: 'dropdown',
+    label: 'Wellness',
+    id: 'wellness',
+    items: [
+      {
+        title: 'Customized Therapeutic Meditation',
+        description:
+          'Personalized meditation sessions that support calm, balance, and better emotional awareness.',
+        image: '/Therapeutic.jpeg',
+      },
+      {
+        title: 'Individual Wellness Coaching',
+        description:
+          'One-on-one guidance for health, relationships, career, and life decisions.',
+        image: '/oneToOne.jpeg',
+      },
+      {
+        title: 'Group Meditation and Wellness Programs',
+        description:
+          'Tailored sessions for schools, parents, students, teachers, corporates, and communities.',
+        image: '/groupMed.jpeg',
+      },
+      {
+        title: 'Learning Videos',
+        description:
+          'Short learning content to support ongoing wellness practice and consistency.',
+        image: '/LearningVideo.jpeg',
+      },
+    ],
+  },
   { kind: 'anchor', label: 'Testimonials', href: '#stories', id: 'stories' },
   { kind: 'anchor', label: 'Gallery', href: '#gallery', id: 'gallery' },
   { kind: 'anchor', label: 'Contact', href: '#contact', id: 'contact' },
@@ -128,9 +170,7 @@ export function Navbar() {
       return
     }
 
-    const sectionIds = NAV_ITEMS.filter(
-      (item): item is AnchorNavItem => item.kind === 'anchor',
-    ).map((item) => item.id)
+    const sectionIds = NAV_ITEMS.map((item) => item.id)
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -190,10 +230,6 @@ export function Navbar() {
   }, [])
 
   const isActiveNavItem = (item: NavItem) => {
-    if (item.kind !== 'anchor') {
-      return false
-    }
-
     if (pathname === '/gallery') {
       return item.id === 'gallery'
     }
@@ -303,13 +339,14 @@ export function Navbar() {
                 )
               }
 
-              const isActive = activeDropdown === item.label
+              const isOpen = activeDropdown === item.label
+              const isActive = isOpen || isActiveNavItem(item)
 
               return (
                 <div key={item.label}>
                   <button
                     onClick={() => toggleDropdown(item.label)}
-                    aria-expanded={isActive}
+                    aria-expanded={isOpen}
                     className={`cursor-pointer inline-flex items-center gap-1 rounded-full px-3 py-2 transition-all duration-200 hover:-translate-y-0.5 ${
                       isActive
                         ? 'bg-white/70 text-primary shadow-sm'
@@ -319,7 +356,7 @@ export function Navbar() {
                     {item.label}
                     <ChevronDown
                       className={`h-4 w-4 transition-transform duration-300 ${
-                        isActive ? 'rotate-180' : ''
+                        isOpen ? 'rotate-180' : ''
                       }`}
                     />
                   </button>
@@ -352,16 +389,13 @@ export function Navbar() {
                     <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                       {desktopMenu.items.map((menuItem, index) => {
                         const currentImage = getRotatingImage(menuItem.image, index)
-
-                        return (
-                          <div
-                            key={menuItem.title}
-                            className={`group relative min-h-45 overflow-hidden rounded-[22px] border p-6 shadow-[0_6px_16px_rgba(15,23,42,0.03)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_10px_22px_rgba(15,23,42,0.05)] ${
-                              currentImage
-                                ? 'border-slate-100 bg-slate-950/20'
-                                : 'border-slate-100 bg-[#fafafa]'
-                            }`}
-                          >
+                        const cardClass = `group relative min-h-45 overflow-hidden rounded-[22px] border p-6 shadow-[0_6px_16px_rgba(15,23,42,0.03)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_10px_22px_rgba(15,23,42,0.05)] ${
+                          currentImage
+                            ? 'border-slate-100 bg-slate-950/20'
+                            : 'border-slate-100 bg-[#fafafa]'
+                        }`
+                        const cardContent = (
+                          <>
                             {currentImage && (
                               <Image
                                 src={currentImage}
@@ -400,6 +434,22 @@ export function Navbar() {
                                 </p>
                               </>
                             )}
+                          </>
+                        )
+
+                        return menuItem.href ? (
+                          <a
+                            key={menuItem.title}
+                            href={menuItem.href}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className={cardClass}
+                          >
+                            {cardContent}
+                          </a>
+                        ) : (
+                          <div key={menuItem.title} className={cardClass}>
+                            {cardContent}
                           </div>
                         )
                       })}
@@ -471,37 +521,37 @@ export function Navbar() {
                 )
               }
 
-              const isActive = activeDropdown === item.label
+              const isOpen = activeDropdown === item.label
+              const isActive = isOpen || isActiveNavItem(item)
 
               return (
                 <div key={item.label} className="rounded-2xl border border-slate-200">
                   <button
-                    onClick={() => setActiveDropdown(isActive ? null : item.label)}
-                    aria-expanded={isActive}
+                    onClick={() => setActiveDropdown(isOpen ? null : item.label)}
+                    aria-expanded={isOpen}
                     className="flex w-full cursor-pointer items-center justify-between rounded-2xl px-4 py-3 text-left text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:bg-slate-50"
                   >
-                    <span className="font-medium">{item.label}</span>
+                    <span className={`font-medium ${isActive ? 'text-primary' : ''}`}>
+                      {item.label}
+                    </span>
                     <ChevronDown
                       className={`h-4 w-4 transition-transform duration-200 ${
-                        isActive ? 'rotate-180' : ''
+                        isOpen ? 'rotate-180 text-primary' : ''
                       }`}
                     />
                   </button>
-                  {isActive && (
+                  {isOpen && (
                     <div className="border-t border-slate-200 p-3">
                       <div className="space-y-3">
                         {item.items.map((dropdownItem, index) => {
                           const currentImage = getRotatingImage(dropdownItem.image, index)
-
-                          return (
-                            <div
-                              key={dropdownItem.title}
-                              className={`relative overflow-hidden rounded-xl border p-3 ${
-                                currentImage
-                                  ? 'border-slate-200 text-white'
-                                  : 'border-slate-200 bg-slate-50'
-                              }`}
-                            >
+                          const cardClass = `relative block overflow-hidden rounded-xl border p-3 ${
+                            currentImage
+                              ? 'border-slate-200 text-white'
+                              : 'border-slate-200 bg-slate-50'
+                          }`
+                          const cardContent = (
+                            <>
                               {currentImage && (
                                 <Image
                                   src={currentImage}
@@ -533,6 +583,22 @@ export function Navbar() {
                                   </p>
                                 </>
                               )}
+                            </>
+                          )
+
+                          return dropdownItem.href ? (
+                            <a
+                              key={dropdownItem.title}
+                              href={dropdownItem.href}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                              className={cardClass}
+                            >
+                              {cardContent}
+                            </a>
+                          ) : (
+                            <div key={dropdownItem.title} className={cardClass}>
+                              {cardContent}
                             </div>
                           )
                         })}
