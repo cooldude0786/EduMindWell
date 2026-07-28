@@ -327,9 +327,9 @@ export const FOOTER_COLUMNS = [
   {   
     title: 'Resources',
     items: [
-      { label: 'Terms of Service', href: '#' },
+      { label: 'Terms of Service', href: '/terms-and-conditions' },
       { label: 'Career Library', href: '#' },
-      { label: 'Refund Policy', href: '#' },
+      { label: 'Refund Policy', href: '/refund-policy' },
     ],
   },
   {

@@ -1,3 +1,4 @@
+import { CareerCounselling } from '@/components/landing/CareerCounselling'
 import { CareerGuidance } from '@/components/landing/CareerGuidance'
 import { PublicPageShell } from '@/components/landing/PublicPageShell'
 import { ThreePillars } from '@/components/landing/ThreePillars'
@@ -28,6 +29,7 @@ export default function CareerPage() {
       description="This page brings together the assessment, counselling, and planning tools behind the career guidance offer so it is easy to explore on its own."
       features={careerFeatures}
     >
+      <CareerCounselling />
       <CareerGuidance />
       <ThreePillars />
     </PublicPageShell>

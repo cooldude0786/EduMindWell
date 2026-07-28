@@ -42,23 +42,26 @@ const NAV_ITEMS: NavItem[] = [
         title: 'Career Assessments',
         description: 'Assessment-led discovery inspired by the Edumilestones flow.',
         image: '/CA.jpeg',
+        href: '/career/assessment',
       },
       {
         title: 'Career Counselling',
         description:
           'Expert counsellors review the report and guide students through the dashboard.',
         image: '/CC.jpeg',
+        href: '/career/counselling',
       },
       {
         title: 'Career Library',
         description: 'A growing reference library for careers, pathways, and planning.',
         image: '/CL.jpeg',
+        href: '/career/library',
       },
     ],
   },
   {
     kind: 'dropdown',
-    label: 'Mindset Workshops',
+    label: 'Mindset',
     id: 'workshops',
     items: AUDIENCE_CARDS.map((card) => ({
       title: card.title,
@@ -294,8 +297,8 @@ export function Navbar() {
         hasScroll ? 'shadow-md' : ''
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6" tabIndex={-1}>
-        <div className="flex items-center justify-between py-4">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6" tabIndex={-1}>
+        <div className="flex items-center justify-between py-3 sm:py-4">
           {/* Brand */}
           <div className="flex items-center gap-4">
             <Image
@@ -408,7 +411,7 @@ export function Navbar() {
                             )}
                             {currentImage ? (
                               <>
-                                <div className="absolute inset-0 bg-gradient-to-br from-slate-950/68 via-slate-900/48 to-slate-800/30" />
+                                <div className="absolute inset-0 bg-linear-to-br from-slate-950/68 via-slate-900/48 to-slate-800/30" />
                                 <div className="relative z-10">
                                   <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white backdrop-blur-sm">
                                     <ChevronDown className="h-4 w-4 -rotate-90" />
@@ -441,8 +444,6 @@ export function Navbar() {
                           <a
                             key={menuItem.title}
                             href={menuItem.href}
-                            target="_blank"
-                            rel="noreferrer noopener"
                             className={cardClass}
                           >
                             {cardContent}
@@ -563,7 +564,7 @@ export function Navbar() {
                               )}
                               {currentImage ? (
                                 <>
-                                  <div className="absolute inset-0 bg-gradient-to-br from-slate-950/70 via-slate-900/55 to-slate-800/35" />
+                                  <div className="absolute inset-0 bg-linear-to-br from-slate-950/70 via-slate-900/55 to-slate-800/35" />
                                   <div className="relative z-10">
                                     <div className="font-semibold text-white">
                                       {dropdownItem.title}
@@ -590,8 +591,6 @@ export function Navbar() {
                             <a
                               key={dropdownItem.title}
                               href={dropdownItem.href}
-                              target="_blank"
-                              rel="noreferrer noopener"
                               className={cardClass}
                             >
                               {cardContent}

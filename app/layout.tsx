@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   title: 'EduMindWell | Career. Mind. Wellbeing. All Aligned.',
   description:
     'Empowering students from Class 8 to 12 to build confident careers without sacrificing their mental wellbeing.',
+  icons: {
+    icon: '/brandLogo.png',
+    shortcut: '/brandLogo.png',
+    apple: '/brandLogo.png',
+  },
 };
 
 export default function RootLayout({
@@ -33,6 +38,11 @@ export default function RootLayout({
       className={cn('h-full', 'antialiased', inter.variable, playfairDisplay.variable)}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="icon" href="/brandLogo.png" type="image/png" />
+        <link rel="shortcut icon" href="/brandLogo.png" />
+        <link rel="apple-touch-icon" href="/brandLogo.png" />
+      </head>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {children}
       </body>
