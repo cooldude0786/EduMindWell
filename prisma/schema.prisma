@@ -1,4 +1,4 @@
-generator client {
+  generator client {
   provider = "prisma-client-js"
   // output   = "../app/generated/prisma"
 }
@@ -23,6 +23,7 @@ model BulkEmail {
   EmailLog  EmailLog[]
 
   emailQueues EmailQueue[]
+  mediaAttachments CampaignMedia[]
 }
 
 model EmailLog {
@@ -54,6 +55,74 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  mediaAssets MediaAsset[]
+}
+
+model MediaAsset {
+  id          String      @id @default(cuid())
+  title       String?
+  altText     String?
+  description String?
+  type        MediaType
+  bucket      String
+  path        String      @unique
+  publicUrl   String?
+  mimeType    String
+  sizeBytes   Int
+  width       Int?
+  height      Int?
+  durationSec Int?
+  section     MediaSection @default(GALLERY)
+  isPublished Boolean     @default(false)
+  sortOrder   Int         @default(0)
+  uploadedById String?
+  uploadedBy   User?      @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  campaignAttachments CampaignMedia[]
+
+  @@index([section, isPublished, sortOrder])
+  @@index([type, createdAt])
+  @@index([uploadedById])
+}
+
+model CampaignMedia {
+  id          String     @id @default(cuid())
+  campaignId  String
+  mediaAssetId String
+  placement    MediaPlacement @default(BODY)
+  sortOrder    Int        @default(0)
+  createdAt    DateTime   @default(now())
+
+  campaign   BulkEmail  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  mediaAsset MediaAsset @relation(fields: [mediaAssetId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, mediaAssetId, placement])
+  @@index([campaignId, placement, sortOrder])
+  @@index([mediaAssetId])
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum MediaSection {
+  GALLERY
+  CAREER
+  WELLNESS
+  WORKSHOPS
+  TESTIMONIALS
+  CAMPAIGNS
+}
+
+enum MediaPlacement {
+  HERO
+  BODY
+  FOOTER
+  ATTACHMENT
 }
 
 enum EmailStatus {
@@ -80,11 +149,49 @@ model EmailQueue {
   EmailRecipient EmailRecipient @relation(fields: [recipientId], references: [id])
 }
 
+model RefundPolicy {
+  id          String              @id @default(cuid())
+  order       Int
+  description String
+  status      RefundPolicyStatus @default(ACTIVE)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+}
+
 enum QueueStatus {
   PENDING
   PROCESSING
   SENT
   FAILED
+}
+
+enum RefundPolicyStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+model RefundPolicySection {
+  id         String                     @id @default(cuid())
+  title      String?
+  order      Int
+  status     RefundPolicyStatus        @default(ACTIVE)
+  createdAt  DateTime                   @default(now())
+  updatedAt  DateTime                   @updatedAt
+
+  paragraphs RefundPolicyParagraph[]
+}
+
+model RefundPolicyParagraph {
+  id        String                  @id @default(cuid())
+  sectionId String
+  order     Int
+  text      String
+  createdAt DateTime                @default(now())
+  updatedAt DateTime                @updatedAt
+
+  section   RefundPolicySection     @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@index([sectionId, order])
 }
 
 model FreeConsultationLead {
