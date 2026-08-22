@@ -10,6 +10,7 @@ export default function DashboardLayout({
     { href: "/dashboard/logs", label: "Emails Logs" },
     { href: "/dashboard/campaigns", label: "Campaigns" },
     { href: "/dashboard/refund-policy", label: "Refund Policy" },
+    { href: "/dashboard/terms-and-conditions", label: "Terms & Conditions" },
   ];
 
   return (

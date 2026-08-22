@@ -1,7 +1,7 @@
 'use client'
 
 import { Fragment, useEffect, useMemo, useState } from 'react'
-import { ArrowDown, ArrowUp, Edit3, Save, Trash2, X, Plus } from 'lucide-react'
+import { ArrowDown, ArrowUp, Edit3, LoaderCircle, Save, Trash2, X, Plus } from 'lucide-react'
 
 type Paragraph = {
   id: string
@@ -22,10 +22,11 @@ const getErrorMessage = (err: unknown, fallback: string) => {
   return err instanceof Error ? err.message : fallback
 }
 
-export default function RefundPolicyAdmin() {
+export default function RefundPolicyAdmin({ endpoint = '/api/refund-policy', pageTitle = 'Refund Policy', pageDescription = 'Keep the public refund policy current by editing sections in the same order visitors will read them.', loadingLabel = 'Loading refund policy editor...' }: { endpoint?: string; pageTitle?: string; pageDescription?: string; loadingLabel?: string }) {
   const [sections, setSections] = useState<Section[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [savingId, setSavingId] = useState<string | null>(null)
 
   // Editing state
   const [editingSectionId, setEditingSectionId] = useState<string | null>(null)
@@ -37,7 +38,7 @@ export default function RefundPolicyAdmin() {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch('/api/refund-policy')
+        const res = await fetch(endpoint)
         if (!res.ok) throw new Error('Failed to load')
         const data = await res.json()
         setSections(data)
@@ -48,7 +49,7 @@ export default function RefundPolicyAdmin() {
       }
     }
     load()
-  }, [])
+  }, [endpoint])
 
   const sortedSections = useMemo(() => [...sections].sort((a, b) => a.order - b.order), [sections])
 
@@ -93,8 +94,9 @@ export default function RefundPolicyAdmin() {
     if (!section) return
 
     try {
+      setSavingId(sectionId)
       if (isTemp(sectionId)) {
-        const res = await fetch('/api/refund-policy', {
+        const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ type: 'section', title, order: section.order }),
@@ -103,7 +105,7 @@ export default function RefundPolicyAdmin() {
         const created = await res.json()
         setSections((prev) => prev.map((s) => (s.id === sectionId ? { ...created, paragraphs: [] } as Section : s)))
       } else {
-        const res = await fetch('/api/refund-policy', {
+        const res = await fetch(endpoint, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ type: 'section', id: sectionId, title }),
@@ -116,6 +118,8 @@ export default function RefundPolicyAdmin() {
       setDraftSectionTitle('')
     } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to save section'))
+    } finally {
+      setSavingId(null)
     }
   }
 
@@ -125,7 +129,7 @@ export default function RefundPolicyAdmin() {
       return
     }
     try {
-      const res = await fetch(`/api/refund-policy?id=${sectionId}&type=section`, { method: 'DELETE' })
+      const res = await fetch(`${endpoint}?id=${sectionId}&type=section`, { method: 'DELETE' })
       if (!res.ok) throw new Error('Failed to delete section')
       setSections((s) => s.filter((x) => x.id !== sectionId))
     } catch (err: unknown) {
@@ -155,8 +159,9 @@ export default function RefundPolicyAdmin() {
     const paragraph = sec.paragraphs.find((p) => p.id === paragraphId)!
 
     try {
+      setSavingId(paragraphId)
       if (isTemp(paragraphId)) {
-        const res = await fetch('/api/refund-policy', {
+        const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ type: 'paragraph', sectionId: sec.id, order: paragraph.order, text }),
@@ -165,7 +170,7 @@ export default function RefundPolicyAdmin() {
         const created = await res.json()
         setSections((prev) => prev.map((s) => (s.id === sec.id ? { ...s, paragraphs: s.paragraphs.map((p) => (p.id === paragraphId ? created : p)) } : s)))
       } else {
-        const res = await fetch('/api/refund-policy', {
+        const res = await fetch(endpoint, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ type: 'paragraph', id: paragraphId, text }),
@@ -178,6 +183,8 @@ export default function RefundPolicyAdmin() {
       setDraftParagraphText('')
     } catch (err: unknown) {
       setError(getErrorMessage(err, 'Failed to save paragraph'))
+    } finally {
+      setSavingId(null)
     }
   }
 
@@ -188,7 +195,7 @@ export default function RefundPolicyAdmin() {
       return
     }
     try {
-      const res = await fetch(`/api/refund-policy?id=${paragraphId}&type=paragraph`, { method: 'DELETE' })
+      const res = await fetch(`${endpoint}?id=${paragraphId}&type=paragraph`, { method: 'DELETE' })
       if (!res.ok) throw new Error('Failed to delete paragraph')
       setSections((prev) => prev.map((s) => ({ ...s, paragraphs: s.paragraphs.filter((p) => p.id !== paragraphId) })))
     } catch (err: unknown) {
@@ -224,22 +231,22 @@ export default function RefundPolicyAdmin() {
     const a = items[idx]
     const b = items[swapIdx]
     if (!isTemp(a.id)) {
-      fetch('/api/refund-policy', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'paragraph', id: a.id, order: a.order + (direction === 'up' ? -1 : 1) }) })
+      fetch(endpoint, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'paragraph', id: a.id, order: a.order + (direction === 'up' ? -1 : 1) }) })
     }
     if (!isTemp(b.id)) {
-      fetch('/api/refund-policy', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'paragraph', id: b.id, order: b.order + (direction === 'up' ? 1 : -1) }) })
+      fetch(endpoint, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'paragraph', id: b.id, order: b.order + (direction === 'up' ? 1 : -1) }) })
     }
   }
 
-  if (loading) return <div className="text-sm text-slate-500">Loading refund policy editor...</div>
+  if (loading) return <div className="text-sm text-slate-500">{loadingLabel}</div>
 
   return (
     <div className="mx-auto max-w-5xl space-y-6">
       <div className="flex flex-col gap-4 pb-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Website content</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">Refund Policy</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">Keep the public refund policy current by editing sections in the same order visitors will read them.</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">{pageTitle}</h1>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">{pageDescription}</p>
         </div>
         <button onClick={addSection} className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-slate-950 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800">
           <Plus className="h-5 w-5" />
@@ -270,8 +277,8 @@ export default function RefundPolicyAdmin() {
                         b.order = oa
                         return copy
                       })
-                      if (!isTemp(section.id)) fetch('/api/refund-policy', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'section', id: section.id, order: section.order - 1 }) })
-                      if (!isTemp(above.id)) fetch('/api/refund-policy', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'section', id: above.id, order: above.order + 1 }) })
+                      if (!isTemp(section.id)) fetch(endpoint, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'section', id: section.id, order: section.order - 1 }) })
+                      if (!isTemp(above.id)) fetch(endpoint, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'section', id: above.id, order: above.order + 1 }) })
                     }
                   }} className="rounded-md p-1 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-35" aria-label="Move section up" disabled={sIndex === 0}>
                     <ArrowUp className="h-4 w-4" />
@@ -290,8 +297,8 @@ export default function RefundPolicyAdmin() {
                         b.order = oa
                         return copy
                       })
-                      if (!isTemp(section.id)) fetch('/api/refund-policy', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'section', id: section.id, order: section.order + 1 }) })
-                      if (!isTemp(below.id)) fetch('/api/refund-policy', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'section', id: below.id, order: below.order - 1 }) })
+                      if (!isTemp(section.id)) fetch(endpoint, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'section', id: section.id, order: section.order + 1 }) })
+                      if (!isTemp(below.id)) fetch(endpoint, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'section', id: below.id, order: below.order - 1 }) })
                     }
                   }} className="rounded-md p-1 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-35" aria-label="Move section down" disabled={sIndex === sortedSections.length - 1}>
                     <ArrowDown className="h-4 w-4" />
@@ -307,9 +314,9 @@ export default function RefundPolicyAdmin() {
                 {editingSectionId === section.id ? (
                     <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto_auto]">
                       <input value={draftSectionTitle} onChange={(e) => setDraftSectionTitle(e.target.value)} className="h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-100" placeholder="Section title (optional)" />
-                    <button onClick={() => saveSection(section.id)} className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-slate-950 px-4 text-sm font-semibold text-white transition hover:bg-slate-800">
-                      <Save className="h-4 w-4" />
-                      Save
+                    <button onClick={() => saveSection(section.id)} disabled={savingId === section.id} className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-slate-950 px-4 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-wait disabled:opacity-70">
+                      {savingId === section.id ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                      {savingId === section.id ? 'Saving...' : 'Save'}
                     </button>
                     <button onClick={() => cancelSectionEdit(section.id)} className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
                       <X className="h-4 w-4" />
@@ -353,7 +360,7 @@ export default function RefundPolicyAdmin() {
                       <div className="space-y-3">
                         <textarea value={draftParagraphText} onChange={(e)=>setDraftParagraphText(e.target.value)} rows={5} className="min-h-32 w-full resize-y rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm leading-6 text-slate-900 outline-none transition focus:border-slate-500 focus:ring-4 focus:ring-slate-100" placeholder="Write paragraph text..." />
                         <div className="flex flex-wrap gap-2">
-                          <button onClick={()=>saveParagraph(p.id)} className="inline-flex h-9 items-center justify-center gap-2 rounded-full bg-slate-950 px-4 text-sm font-semibold text-white transition hover:bg-slate-800"><Save className="h-4 w-4"/> Save</button>
+                          <button onClick={()=>saveParagraph(p.id)} disabled={savingId === p.id} className="inline-flex h-9 items-center justify-center gap-2 rounded-full bg-slate-950 px-4 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-wait disabled:opacity-70">{savingId === p.id ? <LoaderCircle className="h-4 w-4 animate-spin"/> : <Save className="h-4 w-4"/>} {savingId === p.id ? 'Saving...' : 'Save'}</button>
                           <button onClick={()=>{ setEditingParagraphId(null); setDraftParagraphText('') }} className="inline-flex h-9 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-4 text-sm font-medium text-slate-700 transition hover:bg-slate-50"><X className="h-4 w-4"/> Cancel</button>
                         </div>
                       </div>

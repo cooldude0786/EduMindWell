@@ -194,6 +194,28 @@ model RefundPolicyParagraph {
   @@index([sectionId, order])
 }
 
+model TermsAndConditionsSection {
+  id         String                         @id @default(cuid())
+  title      String?
+  order      Int
+  status     RefundPolicyStatus             @default(ACTIVE)
+  createdAt  DateTime                       @default(now())
+  updatedAt  DateTime                       @updatedAt
+  paragraphs TermsAndConditionsParagraph[]
+}
+
+model TermsAndConditionsParagraph {
+  id        String                    @id @default(cuid())
+  sectionId String
+  order     Int
+  text      String
+  createdAt DateTime                  @default(now())
+  updatedAt DateTime                  @updatedAt
+  section   TermsAndConditionsSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@index([sectionId, order])
+}
+
 model FreeConsultationLead {
   id        String   @id @default(cuid())
   phone     String
