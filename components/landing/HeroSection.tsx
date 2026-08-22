@@ -1,8 +1,19 @@
+"use client"
+
 import { Button } from '@/components/ui/button'
+import { useEffect, useState } from 'react'
 import { CheckCircle2 } from 'lucide-react'
 import { BRAND, HERO_STATS } from '@/lib/landing-constants'
 
 export function HeroSection() {
+  const [heroMedia, setHeroMedia] = useState<{ type: 'IMAGE' | 'VIDEO'; publicUrl: string } | null>(null)
+
+  useEffect(() => {
+    fetch('/api/media?section=HERO')
+      .then((response) => (response.ok ? response.json() : []))
+      .then((assets) => assets[0] && setHeroMedia(assets[0]))
+      .catch((error) => console.error('Failed to fetch hero media:', error))
+  }, [])
   return (
     <header id="hero" className="overflow-hidden bg-surface px-6 pb-20 pt-28 md:pt-32">
       <div className="mx-auto grid max-w-7xl items-center gap-16 md:grid-cols-2">
@@ -63,6 +74,13 @@ export function HeroSection() {
             className="relative flex justify-center md:justify-end"
             style={{ height: 'clamp(360px, 45vw, 500px)' }}
           >
+          {heroMedia && (
+            heroMedia.type === 'VIDEO' ? (
+              <video src={heroMedia.publicUrl} autoPlay muted loop playsInline controls className="absolute inset-0 z-30 h-full w-full rounded-3xl object-cover" />
+            ) : (
+              <img src={heroMedia.publicUrl} alt="EduMindWell hero" className="absolute inset-0 z-30 h-full w-full rounded-3xl object-cover" />
+            )
+          )}
           {/* Background Glow */}
             <div className="absolute inset-0 rounded-full bg-primary/5 blur-3xl"></div>
 

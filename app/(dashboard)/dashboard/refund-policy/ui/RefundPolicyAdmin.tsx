@@ -1,7 +1,9 @@
 'use client'
 
 import { Fragment, useEffect, useMemo, useState } from 'react'
-import { ArrowDown, ArrowUp, Edit3, LoaderCircle, Save, Trash2, X, Plus } from 'lucide-react'
+import { ArrowDown, ArrowUp, Download, Edit3, LoaderCircle, Save, Trash2, X, Plus } from 'lucide-react'
+
+import { flattenLegalExportRows, toCsv } from '@/lib/legal-export'
 
 type Paragraph = {
   id: string
@@ -53,7 +55,35 @@ export default function RefundPolicyAdmin({ endpoint = '/api/refund-policy', pag
 
   const sortedSections = useMemo(() => [...sections].sort((a, b) => a.order - b.order), [sections])
 
+  const exportRows = useMemo(() => flattenLegalExportRows(
+    sortedSections.map((section) => ({
+      title: section.title,
+      order: section.order,
+      paragraphs: section.paragraphs.map((paragraph) => ({
+        order: paragraph.order,
+        text: paragraph.text,
+      })),
+    })),
+  ), [sortedSections])
+
   const isTemp = (id: string) => id.startsWith('temp-')
+
+  const handleExport = () => {
+    if (exportRows.length === 0) return
+
+    const csv = toCsv(exportRows)
+    const fileName = `${pageTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'legal-document'}.csv`
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+
+    link.href = url
+    link.download = fileName
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    URL.revokeObjectURL(url)
+  }
 
   // Scroll new edited paragraph into view
   useEffect(() => {
@@ -248,10 +278,16 @@ export default function RefundPolicyAdmin({ endpoint = '/api/refund-policy', pag
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-950">{pageTitle}</h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">{pageDescription}</p>
         </div>
-        <button onClick={addSection} className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-slate-950 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800">
-          <Plus className="h-5 w-5" />
-          Add section
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button type="button" onClick={handleExport} className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-950">
+            <Download className="h-4 w-4" />
+            Export CSV
+          </button>
+          <button onClick={() => addSection()} className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-slate-950 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800">
+            <Plus className="h-5 w-5" />
+            Add section
+          </button>
+        </div>
       </div>
 
       {error ? <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</div> : null}
@@ -365,7 +401,7 @@ export default function RefundPolicyAdmin({ endpoint = '/api/refund-policy', pag
                         </div>
                       </div>
                     ) : (
-                      <p className="whitespace-pre-wrap break-words text-[15px] leading-7 text-slate-700">{p.text}</p>
+                      <p className="whitespace-pre-wrap wrap-break-word text-[15px] leading-7 text-slate-700">{p.text}</p>
                     )}
                   </div>
 

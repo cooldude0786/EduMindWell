@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { ImageIcon, PlayCircle } from 'lucide-react'
+import { ImageIcon, Pause, Play, Volume2, VolumeX } from 'lucide-react'
 import {
   Carousel,
   CarouselContent,
@@ -25,7 +25,7 @@ type GalleryProgram = {
   media: GalleryMediaItem[]
 }
 
-const assessmentMedia: GalleryMediaItem[] = [
+const defaultAssessmentMedia: GalleryMediaItem[] = [
   {
     type: 'image',
     src: '/assessments/IMG-20260718-WA0008.jpg',
@@ -76,7 +76,9 @@ const assessmentMedia: GalleryMediaItem[] = [
   },
 ]
 
-const wellnessMedia: GalleryMediaItem[] = [
+const defaultCounsellingMedia: GalleryMediaItem[] = []
+
+const defaultWellnessMedia: GalleryMediaItem[] = [
   {
     type: 'image',
     src: '/Wellness/WhatsApp Image 2026-07-12 at 11.59.22 (1).jpeg',
@@ -127,27 +129,6 @@ const wellnessMedia: GalleryMediaItem[] = [
   },
 ]
 
-const galleryPrograms: GalleryProgram[] = [
-  {
-    title: 'Career Assessment',
-    description:
-      'A public-facing look at discovery sessions, assessment conversations, and outcome-led career clarity moments.',
-    media: assessmentMedia,
-  },
-  {
-    title: 'Counselling',
-    description:
-      'One-on-one guidance moments and reflective planning conversations that shape the next steps students actually take.',
-    media: assessmentMedia,
-  },
-  {
-    title: 'Mindset Workshops',
-    description:
-      'Workshop energy, participation, and practical exercises from sessions designed to shift confidence and clarity.',
-    media: wellnessMedia,
-  },
-]
-
 function GalleryMediaPreview({ item }: { item: GalleryMediaItem }) {
   if (item.type === 'image') {
     return (
@@ -178,6 +159,9 @@ function GalleryMediaPreview({ item }: { item: GalleryMediaItem }) {
 
 function GalleryProgramCard({ program }: { program: GalleryProgram }) {
   const [api, setApi] = useState<CarouselApi>()
+  const [isHovered, setIsHovered] = useState(false)
+  const [playingKey, setPlayingKey] = useState<string | null>(null)
+  const [muted, setMuted] = useState(true)
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([])
 
   useEffect(() => {
@@ -186,11 +170,11 @@ function GalleryProgramCard({ program }: { program: GalleryProgram }) {
     }
 
     const timer = window.setInterval(() => {
-      api.scrollNext()
+      if (!isHovered) api.scrollNext()
     }, 4000)
 
     return () => window.clearInterval(timer)
-  }, [api])
+  }, [api, isHovered])
 
   useEffect(() => {
     if (!api) {
@@ -251,56 +235,105 @@ function GalleryProgramCard({ program }: { program: GalleryProgram }) {
         <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">{program.description}</p>
       </div>
 
-      <div className="flex flex-col gap-5 p-4 lg:flex-row lg:items-start lg:p-6">
+      <div
+        className="flex flex-col gap-5 p-4 lg:flex-row lg:items-start lg:p-6"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <div className="relative w-full lg:w-[68%]">
           <Carousel opts={{ loop: true, align: 'start' }} setApi={setApi} className="w-full">
             <CarouselContent className="-ml-0">
-              {program.media.map((item, index) => (
-                <CarouselItem key={`${program.title}-${item.title}`} className="basis-full pl-0">
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-[24px] bg-white md:aspect-[16/10]">
+              {program.media.length === 0 ? (
+                <CarouselItem className="basis-full pl-0">
+                  <div className="flex aspect-[4/3] items-center justify-center rounded-[24px] bg-slate-100 text-sm text-slate-500 md:aspect-[16/10]">
+                    Counselling media coming soon.
+                  </div>
+                </CarouselItem>
+              ) : Array.from({ length: Math.ceil(program.media.length / 3) }).map((_, slideIndex) => (
+                <CarouselItem key={`${program.title}-collage-${slideIndex}`} className="basis-full pl-0">
+                  <div className="grid aspect-[4/3] grid-cols-2 gap-2 overflow-hidden rounded-[24px] bg-white p-2 md:aspect-[16/10] md:gap-3 md:p-3">
+                    {program.media.slice(slideIndex * 3, slideIndex * 3 + 3).map((item, itemIndex) => (
+                    <div
+                      className={`relative overflow-hidden rounded-2xl bg-slate-100 ${itemIndex === 0 ? 'row-span-2' : ''}`}
+                      key={`${program.title}-${item.title}-${slideIndex}-${itemIndex}`}
+                      onClick={() => {
+                        const video = videoRefs.current[slideIndex * 3 + itemIndex]
+                        if (item.type === 'video' && video) {
+                          if (video.paused) {
+                            video.play().catch(() => undefined)
+                            setPlayingKey(`${slideIndex}-${itemIndex}`)
+                          } else {
+                            video.pause()
+                            setPlayingKey(null)
+                          }
+                        }
+                      }}
+                    >
                     {item.type === 'image' ? (
                       <Image
                         src={item.src}
                         alt={item.alt}
                         fill
-                        priority={item.src.includes('WA0008')}
-                        className="object-contain"
+                        priority={slideIndex === 0 && itemIndex === 0}
+                        className="object-cover"
                         sizes="(min-width: 1280px) 60vw, (min-width: 768px) 55vw, 100vw"
                       />
                     ) : (
                       <video
                         ref={(element) => {
-                          videoRefs.current[index] = element
+                          videoRefs.current[slideIndex * 3 + itemIndex] = element
                         }}
                         src={item.src}
-                        muted
                         playsInline
-                        controls
-                        autoPlay
+                        controls={false}
+                        muted={muted}
+                        onPlay={() => setPlayingKey(`${slideIndex}-${itemIndex}`)}
+                        onPause={() => setPlayingKey(null)}
                         loop
                         preload="auto"
                         className="h-full w-full object-cover"
                       />
                     )}
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-900/20 to-slate-900/10" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
-                      <div className="flex items-center justify-between gap-3 rounded-2xl border border-white/20 bg-slate-950/40 px-3 py-2 backdrop-blur-sm">
-                        <div>
-                          <p className="text-sm font-semibold text-white">{item.title}</p>
-                          <p className="mt-1 text-[10px] uppercase tracking-[0.28em] text-white/80">
-                            {item.type === 'image' ? 'Photo' : 'Video'}
-                          </p>
-                        </div>
-                        <div className="rounded-full bg-white/15 p-2 text-white">
-                          {item.type === 'image' ? (
-                            <ImageIcon className="h-4 w-4" />
-                          ) : (
-                            <PlayCircle className="h-4 w-4" />
-                          )}
-                        </div>
-                      </div>
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-900/20 to-slate-900/10" />
+                    <div className="pointer-events-none absolute bottom-0 right-0 p-3">
+                        {item.type === 'image' ? (
+                          <div className="rounded-full bg-slate-950/50 p-2 text-white"><ImageIcon className="h-4 w-4" /></div>
+                        ) : (
+                          <div className="pointer-events-auto flex items-center gap-1">
+                            <button
+                              type="button"
+                              aria-label={playingKey === `${slideIndex}-${itemIndex}` ? 'Pause video' : 'Play video'}
+                              className="rounded-full bg-white/20 p-2 text-white transition hover:bg-white/35"
+                              onClick={(event) => {
+                                event.stopPropagation()
+                                const video = videoRefs.current[slideIndex * 3 + itemIndex]
+                                if (!video) return
+                                if (video.paused) {
+                                  video.play().catch(() => undefined)
+                                } else {
+                                  video.pause()
+                                }
+                              }}
+                            >
+                              {playingKey === `${slideIndex}-${itemIndex}` ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                            </button>
+                            <button
+                              type="button"
+                              aria-label={muted ? 'Unmute video' : 'Mute video'}
+                              className="rounded-full bg-white/20 p-2 text-white transition hover:bg-white/35"
+                              onClick={(event) => {
+                                event.stopPropagation()
+                                setMuted((current) => !current)
+                              }}
+                            >
+                              {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                            </button>
+                          </div>
+                        )}
                     </div>
+                    </div>
+                    ))}
                   </div>
                 </CarouselItem>
               ))}
@@ -316,8 +349,8 @@ function GalleryProgramCard({ program }: { program: GalleryProgram }) {
               Preview strip
             </p>
             <div className="mt-3 grid grid-cols-2 gap-2">
-              {program.media.slice(0, 4).map((item) => (
-                <GalleryMediaPreview key={`${program.title}-${item.title}-strip`} item={item} />
+              {program.media.slice(0, 4).map((item, index) => (
+                <GalleryMediaPreview key={`${program.title}-${item.title}-${index}-strip`} item={item} />
               ))}
             </div>
           </div>
@@ -332,6 +365,86 @@ function GalleryProgramCard({ program }: { program: GalleryProgram }) {
 }
 
 export function GalleryCollageSection() {
+  const [assessmentMedia, setAssessmentMedia] = useState<GalleryMediaItem[]>([])
+  const [counsellingMedia, setCounsellingMedia] = useState<GalleryMediaItem[]>(defaultCounsellingMedia)
+  const [wellnessMedia, setWellnessMedia] = useState<GalleryMediaItem[]>([])
+
+  useEffect(() => {
+    async function loadMedia() {
+      try {
+        const [assessmentRes, counsellingRes, wellnessRes] = await Promise.all([
+          fetch('/api/media?mediaGroup=ASSESSMENT'),
+          fetch('/api/media?mediaGroup=COUNSELLING'),
+          fetch('/api/media?section=WELLNESS'),
+        ])
+
+        if (assessmentRes.ok) {
+          const galleryData = await assessmentRes.json()
+          if (galleryData.length > 0) {
+            setAssessmentMedia(
+              galleryData.map((asset: any) => ({
+                type: asset.type.toLowerCase() as 'image' | 'video',
+                src: asset.publicUrl,
+                title: asset.title || 'Career Assessment Moment',
+                alt: asset.altText || 'Career assessment moment',
+              }))
+            )
+          }
+        }
+
+        if (counsellingRes.ok) {
+          const counsellingData = await counsellingRes.json()
+          if (counsellingData.length > 0) {
+            setCounsellingMedia(counsellingData.map((asset: any) => ({
+              type: asset.type.toLowerCase() as 'image' | 'video',
+              src: asset.publicUrl,
+              title: asset.title || 'Counselling Moment',
+              alt: asset.altText || 'Counselling moment',
+            })))
+          }
+        }
+
+        if (wellnessRes.ok) {
+          const wellnessData = await wellnessRes.json()
+          if (wellnessData.length > 0) {
+            setWellnessMedia(
+              wellnessData.map((asset: any) => ({
+                type: asset.type.toLowerCase() as 'image' | 'video',
+                src: asset.publicUrl,
+                title: asset.title || 'Wellness Moment',
+                alt: asset.altText || 'Wellness session moment',
+              }))
+            )
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load collage gallery media:', err)
+      }
+    }
+    loadMedia()
+  }, [])
+
+  const galleryPrograms: GalleryProgram[] = [
+    {
+      title: 'Career Assessment',
+      description:
+        'A public-facing look at discovery sessions, assessment conversations, and outcome-led career clarity moments.',
+      media: assessmentMedia,
+    },
+    {
+      title: 'Counselling',
+      description:
+        'One-on-one guidance moments and reflective planning conversations that shape the next steps students actually take.',
+      media: counsellingMedia,
+    },
+    {
+      title: 'Mindset Workshops',
+      description:
+        'Workshop energy, participation, and practical exercises from sessions designed to shift confidence and clarity.',
+      media: wellnessMedia,
+    },
+  ]
+
   return (
     <section className="mt-10 bg-surface-container-lowest px-6 py-xl">
       <div className="mx-auto max-w-7xl space-y-6">

@@ -1,6 +1,6 @@
-import { prisma } from "../lib/prisma.ts";
+import { prisma } from "../lib/prisma";
 import bcrypt from "bcrypt";
-import { termsAndConditionsSections } from "../lib/legal-content.ts";
+import { termsAndConditionsSections } from "../lib/legal-content";
 
 async function main() {
   const hashed = await bcrypt.hash("admin123", 10);

@@ -29,14 +29,14 @@ export function LegalPage({
         </header>
 
         <div className="space-y-10 py-10">
-          {sections.map((section) => (
-            <section key={section.title}>
+          {sections.map((section, sectionIndex) => (
+            <section key={`${section.title}-${sectionIndex}`}>
               <h2 className="font-h3 text-2xl text-primary">
                 {section.title}
               </h2>
               <div className="mt-4 space-y-4 text-sm leading-7 text-slate-600 sm:text-base">
-                {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
+                {section.paragraphs.map((paragraph, paragraphIndex) => (
+                  <p key={`${section.title}-${paragraphIndex}`}>{paragraph}</p>
                 ))}
               </div>
             </section>

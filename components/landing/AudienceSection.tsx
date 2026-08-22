@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { ArrowRight, BookOpen, Users, Briefcase } from 'lucide-react'
 import { AUDIENCE_CARDS, WORKSHOP_MEDIA } from '@/lib/landing-constants'
@@ -8,7 +11,39 @@ const iconMap = {
   Briefcase,
 }
 
+type MediaAssetResponse = { publicUrl: string; description: string | null }
+
 export function AudienceSection() {
+  const [workshopMedia, setWorkshopMedia] = useState<string[]>(WORKSHOP_MEDIA)
+  const [audienceImages, setAudienceImages] = useState<Record<string, string>>(
+    Object.fromEntries(AUDIENCE_CARDS.map((card) => [card.title, card.image ?? ''])),
+  )
+
+  useEffect(() => {
+    async function loadMedia() {
+      try {
+        const res = await fetch('/api/media?section=WORKSHOPS')
+        if (res.ok) {
+          const data: MediaAssetResponse[] = await res.json()
+          const urls = data.map((asset) => asset.publicUrl)
+          if (urls.length > 0) {
+            setWorkshopMedia(urls)
+          }
+          const covers = data.filter((asset) => asset.description?.startsWith('COVER:'))
+          if (covers.length > 0) {
+            setAudienceImages((current) => ({
+              ...current,
+              ...Object.fromEntries(covers.map((asset) => [asset.description!.slice(6), asset.publicUrl])),
+            }))
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch workshop media:', err)
+      }
+    }
+    loadMedia()
+  }, [])
+
   return (
     <section id="workshops" className="py-xl px-6 bg-surface-container">
       <div className="max-w-7xl mx-auto">
@@ -22,31 +57,7 @@ export function AudienceSection() {
           </h2>
         </div>
 
-        <div className="mb-10 grid gap-3 md:grid-cols-3">
-          {WORKSHOP_MEDIA.map((item, index) => (
-            <div key={item} className="overflow-hidden rounded-3xl border border-slate-200 bg-white">
-              {item.endsWith('.mp4') ? (
-                <video
-                  src={item}
-                  muted
-                  playsInline
-                  controls
-                  className="h-48 w-full object-cover"
-                />
-              ) : (
-                <div className="relative h-48">
-                  <Image
-                    src={item}
-                    alt={`Workshop media ${index + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 768px) 33vw, 100vw"
-                  />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        
 
         {/* Cards Grid */}
         <div className="grid md:grid-cols-3 gap-8">
@@ -59,9 +70,9 @@ export function AudienceSection() {
                 <div
                   className={`relative h-64 rounded-3xl overflow-hidden mb-6 bg-gradient-to-br ${card.gradient}`}
                 >
-                  {card.image && (
+                  {audienceImages[card.title] && (
                     <Image
-                      src={card.image}
+                      src={audienceImages[card.title]}
                       alt={card.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"

@@ -12,48 +12,15 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from '@/components/ui/carousel'
-import { ASSESSMENT_MEDIA, WELLNESS_MEDIA } from '@/lib/landing-constants'
 
-const galleryItems = [
-  {
-    title: 'Career Assessment',
-    subtitle: 'Photos and clips from assessment sessions',
-    icon: Sparkles,
-    accent: 'from-primary/90 to-primary/60',
-    images: ASSESSMENT_MEDIA,
-    statement:
-      'A visual record of discovery sessions, student mapping, and report-led career clarity.',
-  },
-  {
-    title: 'Counselling',
-    subtitle: 'Report reviews and one-on-one guidance',
-    icon: Users,
-    accent: 'from-secondary/90 to-secondary/60',
-    images: ASSESSMENT_MEDIA,
-    statement:
-      'A visual archive of personal guidance, report interpretation, and next-step planning.',
-  },
-  {
-    title: 'Mindset Workshops',
-    subtitle: 'Interactive learning and experiential sessions',
-    icon: Camera,
-    accent: 'from-tertiary-container/90 to-tertiary-container/60',
-    images: WELLNESS_MEDIA,
-    statement:
-      'A visual look at student, parent, and professional mindset sessions in action.',
-  },
-  {
-    title: 'Wellness',
-    subtitle: 'Meditation circles, app demos, and group programs',
-    icon: PlayCircle,
-    accent: 'from-surface-tint/90 to-surface-tint/60',
-    images: WELLNESS_MEDIA,
-    statement:
-      'A visual collection of wellness practices, app demos, and guided group experiences.',
-  },
-]
-
-type GalleryCardProps = (typeof galleryItems)[number]
+type GalleryCardProps = {
+  title: string
+  subtitle: string
+  icon: any
+  accent: string
+  images: string[]
+  statement: string
+}
 
 function GalleryCard({ item }: { item: GalleryCardProps }) {
   const [api, setApi] = useState<CarouselApi>()
@@ -81,7 +48,13 @@ function GalleryCard({ item }: { item: GalleryCardProps }) {
           className="w-full"
         >
           <CarouselContent className="-ml-0">
-            {item.images.map((image) => (
+            {item.images.length === 0 ? (
+              <CarouselItem className="basis-full pl-0">
+                <div className="flex h-72 items-center justify-center bg-slate-100 text-sm text-slate-500">
+                  No media available yet.
+                </div>
+              </CarouselItem>
+            ) : item.images.map((image) => (
               <CarouselItem key={image} className="basis-full pl-0">
                 <div className="relative flex h-72 items-end overflow-hidden p-6">
                   <div className="absolute inset-0 bg-gradient-to-br from-slate-950/35 via-slate-900/25 to-slate-800/55" />
@@ -125,6 +98,92 @@ function GalleryCard({ item }: { item: GalleryCardProps }) {
 }
 
 export function GallerySection() {
+  const [assessmentMedia, setAssessmentMedia] = useState<string[]>([])
+  const [counsellingMedia, setCounsellingMedia] = useState<string[]>([])
+  const [wellnessMedia, setWellnessMedia] = useState<string[]>([])
+
+  useEffect(() => {
+    async function loadMedia() {
+      try {
+        const [assessmentRes, counsellingRes, wellnessRes] = await Promise.all([
+          fetch('/api/media?mediaGroup=ASSESSMENT'),
+          fetch('/api/media?mediaGroup=COUNSELLING'),
+          fetch('/api/media?section=WELLNESS'),
+        ])
+
+        if (assessmentRes.ok) {
+          const galleryData = await assessmentRes.json()
+          const galleryUrls = galleryData
+            .filter((asset: any) => asset.type === 'IMAGE')
+            .map((asset: any) => asset.publicUrl)
+          if (galleryUrls.length > 0) {
+            setAssessmentMedia(galleryUrls)
+          }
+        }
+
+        if (counsellingRes.ok) {
+          const counsellingData = await counsellingRes.json()
+          const counsellingUrls = counsellingData
+            .filter((asset: any) => asset.type === 'IMAGE')
+            .map((asset: any) => asset.publicUrl)
+          setCounsellingMedia(counsellingUrls)
+        }
+
+        if (wellnessRes.ok) {
+          const wellnessData = await wellnessRes.json()
+          const wellnessUrls = wellnessData
+            .filter((asset: any) => asset.type === 'IMAGE')
+            .map((asset: any) => asset.publicUrl)
+          if (wellnessUrls.length > 0) {
+            setWellnessMedia(wellnessUrls)
+          }
+        }
+      } catch (err) {
+        console.error('Failed to fetch gallery media:', err)
+      }
+    }
+    loadMedia()
+  }, [])
+
+  const galleryItems: GalleryCardProps[] = [
+    {
+      title: 'Career Assessment',
+      subtitle: 'Photos and clips from assessment sessions',
+      icon: Sparkles,
+      accent: 'from-primary/90 to-primary/60',
+      images: assessmentMedia,
+      statement:
+        'A visual record of discovery sessions, student mapping, and report-led career clarity.',
+    },
+    {
+      title: 'Counselling',
+      subtitle: 'Report reviews and one-on-one guidance',
+      icon: Users,
+      accent: 'from-secondary/90 to-secondary/60',
+      images: counsellingMedia,
+      statement:
+        'A visual archive of personal guidance, report interpretation, and next-step planning.',
+    },
+    {
+      title: 'Mindset Workshops',
+      subtitle: 'Interactive learning and experiential sessions',
+      icon: Camera,
+      accent: 'from-tertiary-container/90 to-tertiary-container/60',
+      images: wellnessMedia,
+      statement:
+        'A visual look at student, parent, and professional mindset sessions in action.',
+    },
+    {
+      title: 'Wellness',
+      subtitle: 'Meditation circles, app demos, and group programs',
+      icon: PlayCircle,
+      accent: 'from-surface-tint/90 to-surface-tint/60',
+      images: wellnessMedia,
+      statement:
+        'A visual collection of wellness practices, app demos, and guided group experiences.',
+    },
+  ]
+
   return (
     <section id="gallery" className="py-xl px-6 bg-surface-container-lowest">
       <div className="mx-auto max-w-7xl">

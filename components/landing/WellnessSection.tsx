@@ -1,4 +1,7 @@
+"use client"
+
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import { Heart, PlayCircle, QrCode, Sparkles, Users } from 'lucide-react'
 import { MIRACLE_X_APP_URL } from '@/lib/landing-constants'
@@ -236,6 +239,20 @@ type WellnessSectionProps = {
 
 export function WellnessSection({ variant = '1' }: WellnessSectionProps) {
   const config = wellnessVariantMap[variant] ?? wellnessVariantMap['1']
+  const [cardImages, setCardImages] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    fetch('/api/media?section=WELLNESS')
+      .then((response) => (response.ok ? response.json() : []))
+      .then((assets) => {
+        const next = Object.fromEntries(
+          assets.filter((asset: { title?: string | null; publicUrl?: string | null; type?: string }) => asset.title && asset.publicUrl && asset.type === 'IMAGE')
+            .map((asset: { title: string; publicUrl: string }) => [asset.title, asset.publicUrl]),
+        )
+        if (Object.keys(next).length) setCardImages(next)
+      })
+      .catch((error) => console.error('Failed to fetch wellness media:', error))
+  }, [])
 
   return (
     <section id="wellness" className="py-xl px-6 bg-surface">
@@ -265,7 +282,7 @@ export function WellnessSection({ variant = '1' }: WellnessSectionProps) {
                 >
                   <div className="relative h-44 overflow-hidden">
                     <Image
-                      src={card.image}
+                      src={cardImages[card.title] ?? card.image}
                       alt={card.title}
                       fill
                       className="object-cover"
