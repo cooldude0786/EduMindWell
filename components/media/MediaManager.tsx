@@ -55,7 +55,8 @@ export function MediaManager({ section, mediaGroup, title, description }: MediaM
   const fetchAssets = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/media?section=${section}&all=true`);
+      const query = mediaGroup ? `mediaGroup=${mediaGroup}` : `section=${section}`;
+      const res = await fetch(`/api/media?${query}&all=true`);
       if (!res.ok) throw new Error("Failed to fetch assets");
       const data = await res.json();
       setAssets(data);
@@ -68,7 +69,7 @@ export function MediaManager({ section, mediaGroup, title, description }: MediaM
 
   useEffect(() => {
     fetchAssets();
-  }, [section]);
+  }, [section, mediaGroup]);
 
   useEffect(() => {
     return () => {

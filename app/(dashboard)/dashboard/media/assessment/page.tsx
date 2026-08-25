@@ -4,8 +4,9 @@ export default function AssessmentMediaPage() {
   return (
     <MediaManager
       section="GALLERY"
-      title="Career Assessment & Counselling Gallery"
-      description="Manage photos and video clips displayed inside the Career Assessment and Counselling sections of the public website."
+      mediaGroup="ASSESSMENT"
+      title="Career Assessment Gallery"
+      description="Manage photos and video clips displayed in the Career Assessment gallery."
     />
   );
 }
