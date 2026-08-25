@@ -1,4 +1,8 @@
+'use client'
+
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { getWhatsAppUrl } from '@/lib/contact-details'
+import { useContactDetails } from './useContactDetails'
 
 const assessments = [
   {
@@ -217,6 +221,8 @@ const faqs = [
 ]
 
 export function CareerGuidance() {
+  const { contactDetails } = useContactDetails()
+  const whatsappUrl = contactDetails ? getWhatsAppUrl(contactDetails) : null
   return (
     <section id="career" className="bg-background px-6 py-16 text-on-background md:py-20">
       <div className="mx-auto flex max-w-7xl flex-col gap-14">
@@ -449,9 +455,9 @@ export function CareerGuidance() {
             <a href="#" className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5">
               Book a Free Consulting Session
             </a>
-            <a href="#" className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
-              Join WhatsApp Group
-            </a>
+            {whatsappUrl && <a href={whatsappUrl} target="_blank" rel="noreferrer noopener" className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+              Connect on WhatsApp
+            </a>}
           </div>
           <div className="mt-6 flex flex-wrap justify-center gap-5 text-sm text-primary-container">
             <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4" /> Certified Counsellors</span>

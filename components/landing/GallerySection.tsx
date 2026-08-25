@@ -20,6 +20,7 @@ type GalleryCardProps = {
   accent: string
   images: string[]
   statement: string
+  onNearEnd?: () => void
 }
 
 function GalleryCard({ item }: { item: GalleryCardProps }) {
@@ -36,6 +37,17 @@ function GalleryCard({ item }: { item: GalleryCardProps }) {
 
     return () => window.clearInterval(timer)
   }, [api])
+
+  useEffect(() => {
+    if (!api || !item.onNearEnd) return
+    const loadAhead = () => {
+      if (api.selectedScrollSnap() >= item.images.length - 3) item.onNearEnd?.()
+    }
+    api.on('select', loadAhead)
+    return () => {
+      api.off('select', loadAhead)
+    }
+  }, [api, item.images.length, item.onNearEnd])
 
   const IconComponent = item.icon
 
@@ -101,43 +113,35 @@ export function GallerySection() {
   const [assessmentMedia, setAssessmentMedia] = useState<string[]>([])
   const [counsellingMedia, setCounsellingMedia] = useState<string[]>([])
   const [wellnessMedia, setWellnessMedia] = useState<string[]>([])
+  const [workshopMedia, setWorkshopMedia] = useState<string[]>([])
+  const [offsets, setOffsets] = useState({ ASSESSMENT: 0, COUNSELLING: 0, WELLNESS: 0, WORKSHOPS: 0 })
+  const [loadingMore, setLoadingMore] = useState<Record<string, boolean>>({})
+
+  const loadGroup = async (group: 'ASSESSMENT' | 'COUNSELLING' | 'WELLNESS' | 'WORKSHOPS', offset: number, append: boolean) => {
+    if (loadingMore[group]) return
+    setLoadingMore((current) => ({ ...current, [group]: true }))
+    try {
+      const response = await fetch(`/api/media?mediaGroup=${group}&limit=10&offset=${offset}`)
+      if (!response.ok) return
+      const result = await response.json()
+      const urls = result.assets.filter((asset: any) => asset.type === 'IMAGE').map((asset: any) => asset.publicUrl)
+      const setter = group === 'ASSESSMENT' ? setAssessmentMedia : group === 'COUNSELLING' ? setCounsellingMedia : group === 'WELLNESS' ? setWellnessMedia : setWorkshopMedia
+      setter((current) => append ? [...current, ...urls] : urls)
+      setOffsets((current) => ({ ...current, [group]: offset + result.assets.length }))
+    } finally {
+      setLoadingMore((current) => ({ ...current, [group]: false }))
+    }
+  }
 
   useEffect(() => {
     async function loadMedia() {
       try {
-        const [assessmentRes, counsellingRes, wellnessRes] = await Promise.all([
-          fetch('/api/media?mediaGroup=ASSESSMENT'),
-          fetch('/api/media?mediaGroup=COUNSELLING'),
-          fetch('/api/media?section=WELLNESS'),
+        const [assessmentRes, counsellingRes, wellnessRes, workshopRes] = await Promise.all([
+          loadGroup('ASSESSMENT', 0, false),
+          loadGroup('COUNSELLING', 0, false),
+          loadGroup('WELLNESS', 0, false),
+          loadGroup('WORKSHOPS', 0, false),
         ])
-
-        if (assessmentRes.ok) {
-          const galleryData = await assessmentRes.json()
-          const galleryUrls = galleryData
-            .filter((asset: any) => asset.type === 'IMAGE')
-            .map((asset: any) => asset.publicUrl)
-          if (galleryUrls.length > 0) {
-            setAssessmentMedia(galleryUrls)
-          }
-        }
-
-        if (counsellingRes.ok) {
-          const counsellingData = await counsellingRes.json()
-          const counsellingUrls = counsellingData
-            .filter((asset: any) => asset.type === 'IMAGE')
-            .map((asset: any) => asset.publicUrl)
-          setCounsellingMedia(counsellingUrls)
-        }
-
-        if (wellnessRes.ok) {
-          const wellnessData = await wellnessRes.json()
-          const wellnessUrls = wellnessData
-            .filter((asset: any) => asset.type === 'IMAGE')
-            .map((asset: any) => asset.publicUrl)
-          if (wellnessUrls.length > 0) {
-            setWellnessMedia(wellnessUrls)
-          }
-        }
       } catch (err) {
         console.error('Failed to fetch gallery media:', err)
       }
@@ -152,6 +156,7 @@ export function GallerySection() {
       icon: Sparkles,
       accent: 'from-primary/90 to-primary/60',
       images: assessmentMedia,
+      onNearEnd: () => loadGroup('ASSESSMENT', offsets.ASSESSMENT, true),
       statement:
         'A visual record of discovery sessions, student mapping, and report-led career clarity.',
     },
@@ -161,6 +166,7 @@ export function GallerySection() {
       icon: Users,
       accent: 'from-secondary/90 to-secondary/60',
       images: counsellingMedia,
+      onNearEnd: () => loadGroup('COUNSELLING', offsets.COUNSELLING, true),
       statement:
         'A visual archive of personal guidance, report interpretation, and next-step planning.',
     },
@@ -169,7 +175,8 @@ export function GallerySection() {
       subtitle: 'Interactive learning and experiential sessions',
       icon: Camera,
       accent: 'from-tertiary-container/90 to-tertiary-container/60',
-      images: wellnessMedia,
+      images: workshopMedia,
+      onNearEnd: () => loadGroup('WORKSHOPS', offsets.WORKSHOPS, true),
       statement:
         'A visual look at student, parent, and professional mindset sessions in action.',
     },
@@ -179,6 +186,7 @@ export function GallerySection() {
       icon: PlayCircle,
       accent: 'from-surface-tint/90 to-surface-tint/60',
       images: wellnessMedia,
+      onNearEnd: () => loadGroup('WELLNESS', offsets.WELLNESS, true),
       statement:
         'A visual collection of wellness practices, app demos, and guided group experiences.',
     },

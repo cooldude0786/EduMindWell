@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import {
   InstagramIcon,
@@ -8,40 +10,29 @@ import {
   YoutubeIcon,
 } from '@hugeicons/core-free-icons'
 import { HugeiconsIcon } from '@hugeicons/react'
-import { BRAND, FOOTER_COLUMNS } from '@/lib/landing-constants'
-
-const contactItems = [
-  {
-    icon: MapPinIcon,
-    label: 'Address',
-    value: '401, Vishal, Janki kutir, Juhu church road, Juhu 400049',
-  },
-  {
-    icon: Mail01Icon,
-    label: 'Email',
-    value: 'hello@edumindwell.com',
-  },
-  {
-    icon: TelephoneIcon,
-    label: 'Phone',
-    value: '+91 98199 90361, +91 77188 92677',
-  },
-]
-
-const socialLinks = [
-  { icon: Linkedin01Icon, label: 'LinkedIn', href: '#' },
-  { icon: InstagramIcon, label: 'Instagram', href: '#' },
-  { icon: YoutubeIcon, label: 'YouTube', href: '#' },
-]
+import { FOOTER_COLUMNS } from '@/lib/landing-constants'
+import { useContactDetails } from './useContactDetails'
 
 export function Footer() {
+  const { contactDetails } = useContactDetails()
+  const contactItems = contactDetails ? [
+    { icon: MapPinIcon, label: 'Address', value: contactDetails.address },
+    { icon: Mail01Icon, label: 'Email', value: contactDetails.email, href: `mailto:${contactDetails.email}` },
+    { icon: TelephoneIcon, label: 'Phone', value: [contactDetails.phone, contactDetails.secondaryPhone].filter(Boolean).join(', '), href: `tel:${contactDetails.phone}` },
+  ] : []
+  const socialLinks = contactDetails ? [
+    { icon: Linkedin01Icon, label: 'LinkedIn', href: contactDetails.linkedinUrl },
+    { icon: InstagramIcon, label: 'Instagram', href: contactDetails.instagramUrl },
+    { icon: YoutubeIcon, label: 'YouTube', href: contactDetails.youtubeUrl },
+  ].filter((social) => social.href) : []
+
   return (
     <footer id="contact" className="border-t border-indigo-100 bg-slate-50 px-6 pt-20 pb-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 grid gap-10 md:grid-cols-3">
         
 
-          <div>
+          {contactDetails && <div>
             <h4 className="mb-4 font-bold text-primary">Contact</h4>
             <ul className="space-y-4">
               {contactItems.map((item) => {
@@ -56,15 +47,15 @@ export function Footer() {
                       <p className="text-xs uppercase tracking-[0.25em] text-secondary font-label-bold">
                         {item.label}
                       </p>
-                      <p className="mt-1 text-sm text-slate-600">{item.value}</p>
+                      {item.href ? <a href={item.href} className="mt-1 block text-sm text-slate-600 hover:text-primary">{item.value}</a> : <p className="mt-1 text-sm text-slate-600">{item.value}</p>}
                     </div>
                   </li>
                 )
               })}
             </ul>
-          </div>
+          </div>}
 
-          <div>
+          {socialLinks.length > 0 && <div>
             <h4 className="mb-4 font-bold text-primary">Social</h4>
             <ul className="space-y-3">
               {socialLinks.map((social) => {
@@ -72,18 +63,20 @@ export function Footer() {
 
                 return (
                   <li key={social.label}>
-                    <Link
-                      href={social.href}
+                    <a
+                      href={social.href ?? undefined}
+                      target="_blank"
+                      rel="noreferrer"
                       className="inline-flex items-center gap-3 text-sm text-slate-600 transition-colors hover:text-primary"
                     >
                       <HugeiconsIcon icon={IconComponent} strokeWidth={2} className="h-4 w-4" />
                       {social.label}
-                    </Link>
+                    </a>
                   </li>
                 )
               })}
             </ul>
-          </div>
+          </div>}
 
           <div>
             <h4 className="mb-4 font-bold text-primary">Resources</h4>

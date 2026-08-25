@@ -1,22 +1,17 @@
+'use client'
+
 import { CTABanner } from '@/components/landing/CTABanner'
 import { PublicPageShell } from '@/components/landing/PublicPageShell'
-
-const contactFeatures = [
-  {
-    title: 'Address',
-    description: '401, Vishal, Janki kutir, Juhu church road, Juhu 400049',
-  },
-  {
-    title: 'Email',
-    description: 'hello@edumindwell.com',
-  },
-  {
-    title: 'Phone',
-    description: '+91 98199 90361, +91 77188 92677',
-  },
-]
+import { useContactDetails } from '@/components/landing/useContactDetails'
 
 export default function ContactPage() {
+  const { contactDetails } = useContactDetails()
+  const contactFeatures = contactDetails ? [
+    { title: 'Address', description: contactDetails.address },
+    { title: 'Email', description: contactDetails.email },
+    { title: 'Phone', description: [contactDetails.phone, contactDetails.secondaryPhone].filter(Boolean).join(', ') },
+  ] : []
+
   return (
     <PublicPageShell
       eyebrow="Contact"

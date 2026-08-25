@@ -8,6 +8,16 @@ export async function GET(req: Request) {
     const section = searchParams.get("section");
     const mediaGroup = searchParams.get("mediaGroup");
     const all = searchParams.get("all") === "true";
+    const limitParam = searchParams.get("limit");
+    const offset = Math.max(Number(searchParams.get("offset") ?? 0) || 0, 0);
+    const limit = limitParam ? Math.min(Math.max(Number(limitParam) || 10, 1), 50) : undefined;
+
+    // Public requests may only read published assets. Hidden/admin listings
+    // require the existing authenticated admin session.
+    if (all) {
+      const token = await getToken({ req: req as any });
+      if (!token) return Response.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     const whereClause: any = {};
 
@@ -27,13 +37,16 @@ export async function GET(req: Request) {
 
     const assets = await prisma.mediaAsset.findMany({
       where: whereClause,
+      ...(limit ? { skip: offset, take: limit } : {}),
       orderBy: [
         { sortOrder: "asc" },
         { createdAt: "desc" }
       ]
     });
 
-    return Response.json(assets);
+    if (!limit) return Response.json(assets);
+    const total = await prisma.mediaAsset.count({ where: whereClause });
+    return Response.json({ assets, hasMore: offset + assets.length < total, total });
   } catch (error: unknown) {
     console.error("Fetch media assets error:", error);
     return Response.json({ error: "Failed to fetch media assets" }, { status: 500 });

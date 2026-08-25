@@ -314,7 +314,7 @@ export const CTA_BANNER = {
   description:
     "Stop worrying about what's next. Let's build it together — with precision and peace.",
   primaryBtn: 'Book a Free Consulting Session',
-  secondaryBtn: 'Join Whatsapp Group',
+  secondaryBtn: 'Connect on WhatsApp',
   trustSignals: [
     { icon: 'CheckCircle', text: 'Certified Counsellors' },
     { icon: 'Lock', text: 'Secure & Confidential' },

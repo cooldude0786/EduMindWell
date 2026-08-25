@@ -1,0 +1,2 @@
+-- No-op. The whatToDiscuss column is created by the following migration
+-- (20260823140000_add_consultation_topic), so its default cannot be altered here.

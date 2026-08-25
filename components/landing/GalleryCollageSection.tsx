@@ -368,14 +368,16 @@ export function GalleryCollageSection() {
   const [assessmentMedia, setAssessmentMedia] = useState<GalleryMediaItem[]>([])
   const [counsellingMedia, setCounsellingMedia] = useState<GalleryMediaItem[]>(defaultCounsellingMedia)
   const [wellnessMedia, setWellnessMedia] = useState<GalleryMediaItem[]>([])
+  const [workshopMedia, setWorkshopMedia] = useState<GalleryMediaItem[]>([])
 
   useEffect(() => {
     async function loadMedia() {
       try {
-        const [assessmentRes, counsellingRes, wellnessRes] = await Promise.all([
+        const [assessmentRes, counsellingRes, wellnessRes, workshopRes] = await Promise.all([
           fetch('/api/media?mediaGroup=ASSESSMENT'),
           fetch('/api/media?mediaGroup=COUNSELLING'),
           fetch('/api/media?section=WELLNESS'),
+          fetch('/api/media?mediaGroup=WORKSHOPS'),
         ])
 
         if (assessmentRes.ok) {
@@ -417,6 +419,18 @@ export function GalleryCollageSection() {
             )
           }
         }
+
+        if (workshopRes.ok) {
+          const workshopData = await workshopRes.json()
+          if (workshopData.length > 0) {
+            setWorkshopMedia(workshopData.map((asset: any) => ({
+              type: asset.type.toLowerCase() as 'image' | 'video',
+              src: asset.publicUrl,
+              title: asset.title || 'Workshop Moment',
+              alt: asset.altText || 'Workshop moment',
+            })))
+          }
+        }
       } catch (err) {
         console.error('Failed to load collage gallery media:', err)
       }
@@ -441,7 +455,7 @@ export function GalleryCollageSection() {
       title: 'Mindset Workshops',
       description:
         'Workshop energy, participation, and practical exercises from sessions designed to shift confidence and clarity.',
-      media: wellnessMedia,
+      media: workshopMedia,
     },
   ]
 

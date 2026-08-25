@@ -44,6 +44,7 @@ export function MediaManager({ section, mediaGroup, title, description }: MediaM
   const [editAltText, setEditAltText] = useState("");
   const [editSortOrder, setEditSortOrder] = useState("0");
   const [savingEdit, setSavingEdit] = useState(false);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
   // Form states
   const [files, setFiles] = useState<File[]>([]);
@@ -69,16 +70,30 @@ export function MediaManager({ section, mediaGroup, title, description }: MediaM
     fetchAssets();
   }, [section]);
 
+  useEffect(() => {
+    return () => {
+      previewUrls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [previewUrls]);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = Array.from(e.target.files ?? []);
     const invalid = selected.find((item) => item.size > 50 * 1024 * 1024 || (!item.type.startsWith("image/") && !item.type.startsWith("video/")));
     if (invalid) {
       toast.error(`${invalid.name} must be an image/video smaller than 50MB`);
       setFiles([]);
+      setPreviewUrls((current) => {
+        current.forEach((url) => URL.revokeObjectURL(url));
+        return [];
+      });
       e.target.value = "";
       return;
     }
     setFiles(selected);
+    setPreviewUrls((current) => {
+      current.forEach((url) => URL.revokeObjectURL(url));
+      return selected.map((item) => URL.createObjectURL(item));
+    });
   };
 
   const handleUpload = async (e: React.FormEvent) => {
@@ -104,6 +119,10 @@ export function MediaManager({ section, mediaGroup, title, description }: MediaM
 
       toast.success(`${files.length} file${files.length === 1 ? "" : "s"} uploaded successfully!`);
       setFiles([]);
+      setPreviewUrls((current) => {
+        current.forEach((url) => URL.revokeObjectURL(url));
+        return [];
+      });
       setAssetTitle("");
       setAltText("");
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -261,12 +280,12 @@ export function MediaManager({ section, mediaGroup, title, description }: MediaM
 
               {files.length > 0 && (
                 <div className="grid grid-cols-3 gap-2">
-                  {files.map((selectedFile) => (
+                  {files.map((selectedFile, index) => (
                     <div key={`${selectedFile.name}-${selectedFile.lastModified}`} className="overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
                       {selectedFile.type.startsWith("image/") ? (
-                        <img src={URL.createObjectURL(selectedFile)} alt={selectedFile.name} className="h-20 w-full object-cover" />
+                        <img src={previewUrls[index]} alt={selectedFile.name} className="h-20 w-full object-cover" />
                       ) : (
-                        <video src={URL.createObjectURL(selectedFile)} muted className="h-20 w-full object-cover" />
+                        <video src={previewUrls[index]} muted className="h-20 w-full object-cover" />
                       )}
                       <p className="truncate px-1 py-1 text-[10px] text-slate-600">{selectedFile.name}</p>
                     </div>

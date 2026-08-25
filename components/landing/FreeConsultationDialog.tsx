@@ -11,7 +11,10 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { CalendarCheck2, Mail, Phone, ShieldCheck, X } from 'lucide-react'
+import { Textarea } from '@/components/ui/textarea'
+import { CalendarCheck2, Mail, MessageCircle, Phone, ShieldCheck, X } from 'lucide-react'
+import { getWhatsAppUrl } from '@/lib/contact-details'
+import { useContactDetails } from './useContactDetails'
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const phoneRegex = /^[0-9+\-()\s]{7,20}$/
@@ -27,13 +30,17 @@ export function FreeConsultationDialog({
 }: FreeConsultationDialogProps) {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
+  const [whatToDiscuss, setWhatToDiscuss] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const { contactDetails } = useContactDetails()
+  const whatsappUrl = contactDetails ? getWhatsAppUrl(contactDetails, whatToDiscuss) : null
 
   const resetForm = () => {
     setPhone('')
     setEmail('')
+    setWhatToDiscuss('')
     setError('')
     setSuccess('')
     setLoading(false)
@@ -46,24 +53,30 @@ export function FreeConsultationDialog({
 
     const trimmedPhone = phone.trim()
     const trimmedEmail = email.trim().toLowerCase()
+    const trimmedWhatToDiscuss = whatToDiscuss.trim()
 
-    if (!trimmedPhone) {
-      setError('Phone number is required')
+    if (!trimmedPhone && !trimmedEmail) {
+      setError('Please provide either a phone number or an email address')
       return
     }
 
-    if (!phoneRegex.test(trimmedPhone)) {
+    if (trimmedPhone && !phoneRegex.test(trimmedPhone)) {
       setError('Enter a valid phone number')
       return
     }
 
-    if (!trimmedEmail) {
-      setError('Email is required')
+    if (trimmedEmail && !emailRegex.test(trimmedEmail)) {
+      setError('Enter a valid email address')
       return
     }
 
-    if (!emailRegex.test(trimmedEmail)) {
-      setError('Enter a valid email address')
+    if (!trimmedWhatToDiscuss) {
+      setError('Tell us briefly what you would like to discuss')
+      return
+    }
+
+    if (trimmedWhatToDiscuss.length > 1000) {
+      setError('Keep your message under 1000 characters')
       return
     }
 
@@ -75,8 +88,9 @@ export function FreeConsultationDialog({
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        phone: trimmedPhone,
-        email: trimmedEmail,
+        phone: trimmedPhone || undefined,
+        email: trimmedEmail || undefined,
+        whatToDiscuss: trimmedWhatToDiscuss,
       }),
     })
 
@@ -99,7 +113,7 @@ export function FreeConsultationDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         showCloseButton={false}
-        className="max-h-[88dvh] gap-0 overflow-y-auto rounded-[24px] border border-white/40 bg-surface-container-lowest p-0 text-on-surface shadow-[0_30px_90px_rgba(15,23,42,0.34)] sm:max-h-[92dvh] sm:max-w-[520px] sm:rounded-[32px]"
+        className="modal-scrollbar max-h-[88dvh] gap-0 overflow-y-auto rounded-[24px] border border-white/40 bg-surface-container-lowest p-0 text-on-surface shadow-[0_30px_90px_rgba(15,23,42,0.34)] sm:max-h-[92dvh] sm:max-w-[520px] sm:rounded-[32px]"
       >
         <div className="relative bg-primary px-5 pb-5 pt-5 text-white sm:px-8 sm:pb-7 sm:pt-8">
           <div
@@ -185,6 +199,20 @@ export function FreeConsultationDialog({
             </span>
           </div>
 
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-on-surface" htmlFor="consult-topic">
+              What would you like help with?
+            </label>
+            <Textarea
+              id="consult-topic"
+              value={whatToDiscuss}
+              onChange={(event) => setWhatToDiscuss(event.target.value)}
+              placeholder="Tell us briefly what you'd like to discuss..."
+              maxLength={1000}
+              className="min-h-24 rounded-2xl border-outline-variant bg-white px-4 py-3 text-sm shadow-sm placeholder:text-slate-400 focus-visible:border-primary focus-visible:ring-primary/20"
+            />
+          </div>
+
           {error ? (
             <div className="rounded-2xl border border-error-container bg-error-container/55 px-4 py-3 text-sm font-medium text-on-error-container">
               {error}
@@ -198,6 +226,15 @@ export function FreeConsultationDialog({
           ) : null}
 
           <div className="grid gap-3 pt-1 sm:grid-cols-[0.9fr_1.1fr]">
+            {whatsappUrl && <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-secondary bg-white px-5 text-sm font-semibold text-secondary hover:bg-secondary-container sm:col-span-2 sm:h-12 sm:px-6"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Connect on WhatsApp
+            </a>}
             <Button
               type="button"
               variant="outline"

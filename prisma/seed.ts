@@ -1,6 +1,7 @@
-import { prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma.ts";
 import bcrypt from "bcrypt";
-import { termsAndConditionsSections } from "../lib/legal-content";
+import { termsAndConditionsSections } from "../lib/legal-content.ts";
+import { CONTACT_DETAILS_ID } from "../lib/contact-details.ts";
 
 async function main() {
   const hashed = await bcrypt.hash("admin123", 10);
@@ -15,6 +16,21 @@ async function main() {
       email: "admin@gmail.com",
       password: hashed,
       name: "Admin",
+    },
+  });
+
+  await prisma.contactDetails.upsert({
+    where: { id: CONTACT_DETAILS_ID },
+    update: {},
+    create: {
+      id: CONTACT_DETAILS_ID,
+      address: "401, Vishal, Janki kutir, Juhu church road, Juhu 400049",
+      email: "hello@edumindwell.com",
+      phone: "+91 98199 90361",
+      secondaryPhone: "+91 77188 92677",
+      whatsappCountryCode: "+91",
+      whatsappNumber: "9819990361",
+      isPublished: true,
     },
   });
 

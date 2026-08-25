@@ -42,7 +42,7 @@ const NAV_ITEMS: NavItem[] = [
         title: 'Career Assessments',
         description: 'Assessment-led discovery inspired by the Edumilestones flow.',
         image: '/CA.jpeg',
-        href: '/career/assessment',
+        href: 'https://emw.edumilestones.com/',
       },
       {
         title: 'Career Counselling',
@@ -55,7 +55,7 @@ const NAV_ITEMS: NavItem[] = [
         title: 'Career Library',
         description: 'A growing reference library for careers, pathways, and planning.',
         image: '/CL.jpeg',
-        href: '/career/library',
+        href: 'https://emw.edumilestones.com/global-career-library/',
       },
     ],
   },
@@ -269,6 +269,13 @@ export function Navbar() {
     window.location.assign(href)
   }
 
+  const handleExternalLinkClick = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith('http')) return
+
+    event.preventDefault()
+    window.open(href, '_blank', 'noopener,noreferrer')
+  }
+
   const handleConsultationClick = () => {
     setMobileMenuOpen(false)
     closeDesktopDropdown()
@@ -444,6 +451,9 @@ export function Navbar() {
                           <a
                             key={menuItem.title}
                             href={menuItem.href}
+                            target={menuItem.href.startsWith('http') ? '_blank' : undefined}
+                            rel={menuItem.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                            onClick={(event) => handleExternalLinkClick(event, menuItem.href!)}
                             className={cardClass}
                           >
                             {cardContent}
@@ -591,6 +601,9 @@ export function Navbar() {
                             <a
                               key={dropdownItem.title}
                               href={dropdownItem.href}
+                              target={dropdownItem.href.startsWith('http') ? '_blank' : undefined}
+                              rel={dropdownItem.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                              onClick={(event) => handleExternalLinkClick(event, dropdownItem.href!)}
                               className={cardClass}
                             >
                               {cardContent}

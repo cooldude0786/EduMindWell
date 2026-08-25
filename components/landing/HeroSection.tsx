@@ -2,11 +2,13 @@
 
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
-import { CheckCircle2 } from 'lucide-react'
+import { CheckCircle2, Mail, Phone } from 'lucide-react'
 import { BRAND, HERO_STATS } from '@/lib/landing-constants'
+import { useContactDetails } from './useContactDetails'
 
 export function HeroSection() {
   const [heroMedia, setHeroMedia] = useState<{ type: 'IMAGE' | 'VIDEO'; publicUrl: string } | null>(null)
+  const { contactDetails } = useContactDetails()
 
   useEffect(() => {
     fetch('/api/media?section=HERO')
@@ -44,16 +46,38 @@ export function HeroSection() {
           {/* CTA Buttons */}
           <div className="flex flex-col gap-4 pt-4 sm:flex-row">
             <Button
+              asChild
               className="h-auto bg-primary px-8 py-4 rounded-xl text-button font-button shadow-lg shadow-primary/20 hover:shadow-xl transition-shadow"
               style={{ color: '#fff' }}
             >
-              Start Your Journey
+              <a
+                href="https://emw.edumilestones.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(event) => {
+                  event.preventDefault()
+                  window.open('https://emw.edumilestones.com/', '_blank', 'noopener,noreferrer')
+                }}
+              >
+                Start Your Assessment
+              </a>
             </Button>
             <Button
+              asChild
               variant="outline"
               className="h-auto border border-primary bg-transparent text-primary px-8 py-4 rounded-xl text-button font-button hover:bg-primary/5 transition-colors"
             >
-              Watch a Student Story
+              <a
+                href="https://emw.edumilestones.com/global-career-library/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(event) => {
+                  event.preventDefault()
+                  window.open('https://emw.edumilestones.com/global-career-library/', '_blank', 'noopener,noreferrer')
+                }}
+              >
+                See the Career Library
+              </a>
             </Button>
           </div>
 
@@ -66,6 +90,19 @@ export function HeroSection() {
               </div>
             ))}
           </div>
+
+          {contactDetails && (
+            <div className="flex flex-wrap gap-x-6 gap-y-3 border-t border-outline-variant pt-5 text-sm text-on-surface-variant">
+              <a href={`mailto:${contactDetails.email}`} className="inline-flex items-center gap-2 hover:text-primary">
+                <Mail className="h-4 w-4 text-primary" />
+                {contactDetails.email}
+              </a>
+              <a href={`tel:${contactDetails.phone}`} className="inline-flex items-center gap-2 hover:text-primary">
+                <Phone className="h-4 w-4 text-primary" />
+                {contactDetails.phone}
+              </a>
+            </div>
+          )}
         </div>
 
         {/* Right Column: Animated Circles + Cards */}

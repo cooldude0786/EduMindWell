@@ -4,8 +4,9 @@ import { useState } from 'react'
 
 type FreeConsultationLead = {
   id: string
-  phone: string
-  email: string
+  phone: string | null
+  email: string | null
+  whatToDiscuss: string
   status: 'NEW' | 'CONTACTED' | 'BOOKED' | 'CLOSED'
   createdAt: string
   updatedAt: string
@@ -68,7 +69,7 @@ export default function FreeConsultationsList({
     )
   }
 
-  const handleDelete = async (id: string, email: string) => {
+  const handleDelete = async (id: string, email: string | null) => {
     if (!confirm(`Delete consultation request from ${email}?`)) {
       return
     }
@@ -108,8 +109,17 @@ export default function FreeConsultationsList({
               <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                 <div className="space-y-2">
                   <div>
-                    <h2 className="font-semibold text-gray-900">{lead.email}</h2>
-                    <p className="text-sm text-gray-600">{lead.phone}</p>
+                    <h2 className="font-semibold text-gray-900">{lead.email || 'Email not provided'}</h2>
+                    <p className="text-sm text-gray-600">{lead.phone || 'Phone not provided'}</p>
+                  </div>
+
+                  <div className="rounded bg-slate-50 p-3">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                      What they would like help with
+                    </p>
+                    <p className="mt-1 whitespace-pre-wrap text-sm text-gray-700">
+                      {lead.whatToDiscuss}
+                    </p>
                   </div>
 
                   <p className="text-xs text-gray-500">

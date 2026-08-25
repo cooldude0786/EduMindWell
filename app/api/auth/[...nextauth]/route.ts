@@ -24,6 +24,7 @@ const handler = NextAuth({
         });
 
         if (!user) throw new Error("User not found");
+        if (!user.isActive) throw new Error("User account is suspended");
 
         const isValid = await bcrypt.compare(
           credentials.password,

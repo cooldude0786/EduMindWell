@@ -53,10 +53,27 @@ model User {
   name      String?
   email     String   @unique
   password  String
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   mediaAssets MediaAsset[]
+}
+
+model ContactDetails {
+  id             String   @id
+  address        String
+  email          String
+  phone          String
+  secondaryPhone String?
+  whatsappCountryCode String?
+  whatsappNumber     String?
+  linkedinUrl    String?
+  instagramUrl   String?
+  youtubeUrl     String?
+  isPublished    Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model MediaAsset {
@@ -227,8 +244,9 @@ model TermsAndConditionsParagraph {
 
 model FreeConsultationLead {
   id        String   @id @default(cuid())
-  phone     String
-  email     String
+  phone     String?
+  email     String?
+  whatToDiscuss String
   status    ConsultationStatus @default(NEW)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

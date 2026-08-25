@@ -9,43 +9,54 @@ function getErrorMessage(error: unknown) {
 
 export async function POST(req: Request) {
   try {
-    const { phone, email } = await req.json()
+    const { phone, email, whatToDiscuss } = await req.json()
 
-    if (!phone || typeof phone !== 'string') {
-      return Response.json(
-        { error: 'Phone number is required and must be a string' },
-        { status: 400 },
-      )
+    if (phone !== undefined && typeof phone !== 'string') {
+      return Response.json({ error: 'Phone number must be a string' }, { status: 400 })
     }
 
-    if (!email || typeof email !== 'string') {
-      return Response.json(
-        { error: 'Email is required and must be a string' },
-        { status: 400 },
-      )
+    if (email !== undefined && typeof email !== 'string') {
+      return Response.json({ error: 'Email must be a string' }, { status: 400 })
     }
 
-    const trimmedPhone = phone.trim()
-    const trimmedEmail = email.trim().toLowerCase()
+    if (whatToDiscuss !== undefined && typeof whatToDiscuss !== 'string') {
+      return Response.json({ error: 'Help request must be a string' }, { status: 400 })
+    }
 
-    if (!phoneRegex.test(trimmedPhone)) {
+    const trimmedPhone = typeof phone === 'string' ? phone.trim() : ''
+    const trimmedEmail = typeof email === 'string' ? email.trim().toLowerCase() : ''
+    const trimmedWhatToDiscuss = typeof whatToDiscuss === 'string' ? whatToDiscuss.trim() : ''
+
+    if (!trimmedPhone && !trimmedEmail) {
+      return Response.json({ error: 'Please provide either a phone number or an email address' }, { status: 400 })
+    }
+
+    if (trimmedPhone && !phoneRegex.test(trimmedPhone)) {
       return Response.json(
         { error: 'Invalid phone number format' },
         { status: 400 },
       )
     }
 
-    if (!emailRegex.test(trimmedEmail)) {
+    if (trimmedEmail && !emailRegex.test(trimmedEmail)) {
       return Response.json(
         { error: 'Invalid email format' },
         { status: 400 },
       )
     }
 
+    if (trimmedWhatToDiscuss.length > 1000) {
+      return Response.json(
+        { error: 'Please keep your message under 1000 characters' },
+        { status: 400 },
+      )
+    }
+
     const lead = await prisma.freeConsultationLead.create({
       data: {
-        phone: trimmedPhone,
-        email: trimmedEmail,
+        phone: trimmedPhone || null,
+        email: trimmedEmail || null,
+        whatToDiscuss: trimmedWhatToDiscuss,
       },
     })
 

@@ -5,9 +5,13 @@ import { Button } from '@/components/ui/button'
 import { CheckCircle2, Lock, Star } from 'lucide-react'
 import { CTA_BANNER } from '@/lib/landing-constants'
 import { FreeConsultationDialog } from '@/components/landing/FreeConsultationDialog'
+import { getWhatsAppUrl } from '@/lib/contact-details'
+import { useContactDetails } from './useContactDetails'
 
 export function CTABanner() {
   const [consultationOpen, setConsultationOpen] = useState(false)
+  const { contactDetails } = useContactDetails()
+  const whatsappUrl = contactDetails ? getWhatsAppUrl(contactDetails) : null
 
   return (
     <section id="cta" className="py-xl px-6 bg-surface-container-lowest">
@@ -42,13 +46,15 @@ export function CTABanner() {
               >
                 {CTA_BANNER.primaryBtn}
               </Button>
-              <Button
-                variant="outline"
+              {whatsappUrl && <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer noopener"
                 className="h-auto rounded-full border border-white/85 bg-transparent px-10 py-4 text-button font-button hover:bg-white/8 hover:border-white transition-all duration-200"
                 style={{ minWidth: 260, color: '#ffffff' }}
               >
                 {CTA_BANNER.secondaryBtn}
-              </Button>
+              </a>}
             </div>
 
             {/* Trust Signals */}

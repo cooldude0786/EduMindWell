@@ -147,6 +147,33 @@
     box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
   }
 
+  .modal-scrollbar {
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 transparent;
+  }
+
+  .modal-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .modal-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 18px 0;
+  }
+
+  .modal-scrollbar::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    background-clip: padding-box;
+  }
+
+  .modal-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+    background-clip: padding-box;
+  }
+
   @keyframes fadeInUp {
     from {
       opacity: 0;
