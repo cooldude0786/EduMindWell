@@ -3,6 +3,8 @@ import { LegalPage } from '@/components/landing/LegalPage'
 import { termsAndConditionsSections } from '@/lib/legal-content'
 import { prisma } from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Terms and Conditions | EduMindWell',
   description: 'Terms and conditions for accessing and using EduMindWell.',

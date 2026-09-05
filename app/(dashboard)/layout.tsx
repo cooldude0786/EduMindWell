@@ -12,6 +12,7 @@ export default function DashboardLayout({
     { href: "/dashboard/refund-policy", label: "Refund Policy" },
     { href: "/dashboard/terms-and-conditions", label: "Terms & Conditions" },
     { href: "/dashboard/contact-details", label: "Contact Details" },
+    { href: "/dashboard/navigation", label: "Nav Content" },
   ];
 
   const mediaNavItems = [
@@ -20,6 +21,7 @@ export default function DashboardLayout({
     { href: "/dashboard/media/wellness", label: "Wellness Media" },
     { href: "/dashboard/media/workshops", label: "Workshops Highlights" },
     { href: "/dashboard/media/hero", label: "Hero Media" },
+    { href: "/dashboard/media/institutions", label: "Institution Logos" },
     { href: "/dashboard/users", label: "Admin Users" },
   ];
 

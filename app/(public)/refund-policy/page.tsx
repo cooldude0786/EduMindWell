@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { LegalPage } from '@/components/landing/LegalPage'
 import { prisma } from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Refund Policy | EduMindWell',
   description: 'Refund policy for EduMindWell services.',

@@ -1,20 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
-
-const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-display',
-  style: ['normal', 'italic'],
-  weight: ['600', '700'],
-});
 
 export const metadata: Metadata = {
   title: 'EduMindWell | Career. Mind. Wellbeing. All Aligned.',
@@ -36,7 +22,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={cn('h-full', 'antialiased', inter.variable, playfairDisplay.variable)}
+      className="h-full antialiased"
       suppressHydrationWarning
     >
       <head>

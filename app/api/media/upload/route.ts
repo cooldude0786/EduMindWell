@@ -17,6 +17,7 @@ export async function POST(req: Request) {
     const requestedMediaGroup = formData.get("mediaGroup") as string | null;
     const title = formData.get("title") as string | null;
     const altText = formData.get("altText") as string | null;
+    const showTitle = formData.get("showTitle") === "true";
 
     if (!file) {
       return Response.json({ error: "No file uploaded" }, { status: 400 });
@@ -34,7 +35,9 @@ export async function POST(req: Request) {
 
     // 3. Determine folder path inside the bucket
     let folder = "general";
-    if (section === "GALLERY") {
+    if (requestedMediaGroup === "INSTITUTIONS") {
+      folder = "institutions";
+    } else if (section === "GALLERY") {
       folder = "assessments";
     } else if (section === "WELLNESS") {
       folder = "wellness";
@@ -99,7 +102,7 @@ export async function POST(req: Request) {
 
     let dbSection: "GALLERY" | "CAREER" | "WELLNESS" | "WORKSHOPS" | "TESTIMONIALS" | "CAMPAIGNS" = "GALLERY";
     let dbDescription = "";
-    let mediaGroup: "ASSESSMENT" | "COUNSELLING" | "WELLNESS" | "WORKSHOPS" | "HERO" = "ASSESSMENT";
+    let mediaGroup: "ASSESSMENT" | "COUNSELLING" | "WELLNESS" | "WORKSHOPS" | "HERO" | "INSTITUTIONS" = "ASSESSMENT";
 
     if (section === "HERO") {
       dbSection = "GALLERY";
@@ -108,8 +111,8 @@ export async function POST(req: Request) {
     } else {
       dbSection = section as any;
       dbDescription = title?.startsWith("COVER:") ? title : "";
-      mediaGroup = requestedMediaGroup === "COUNSELLING"
-        ? "COUNSELLING"
+      mediaGroup = requestedMediaGroup === "COUNSELLING" || requestedMediaGroup === "INSTITUTIONS"
+        ? requestedMediaGroup
         : section === "GALLERY" ? "ASSESSMENT" : section as "WELLNESS" | "WORKSHOPS";
     }
 
@@ -119,6 +122,7 @@ export async function POST(req: Request) {
         data: {
           id: crypto.randomUUID(),
           title: title?.trim() || null,
+          showTitle,
           altText: altText?.trim() || null,
           description: dbDescription || null,
           type,

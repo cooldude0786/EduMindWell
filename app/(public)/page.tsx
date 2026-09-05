@@ -1,4 +1,5 @@
 import { HeroSection } from '@/components/landing/HeroSection'
+import { InstitutionLogoSection } from '@/components/landing/InstitutionLogoSection'
 import { AudienceSection } from '@/components/landing/AudienceSection'
 import { WellnessSection } from '@/components/landing/WellnessSection'
 import { StoriesSection } from '@/components/landing/StoriesSection'
@@ -48,6 +49,7 @@ export default async function Home({ searchParams }: HomePageProps) {
   return (
     <div className="bg-background text-on-background font-body-md overflow-x-hidden">
       <HeroSection />
+      <InstitutionLogoSection />
       <AudienceSection />
       <WellnessSection variant={wellnessChoice} />
       <StoriesSection />

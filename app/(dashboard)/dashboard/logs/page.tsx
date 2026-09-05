@@ -1,6 +1,8 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 type EmailLogWithRelations = Prisma.EmailLogGetPayload<{
   include: {
     EmailRecipient: true;

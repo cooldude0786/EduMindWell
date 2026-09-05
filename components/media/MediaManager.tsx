@@ -29,7 +29,7 @@ interface MediaAsset {
 
 interface MediaManagerProps {
   section: "GALLERY" | "WELLNESS" | "WORKSHOPS" | "HERO";
-  mediaGroup?: "ASSESSMENT" | "COUNSELLING" | "WELLNESS" | "WORKSHOPS" | "HERO";
+  mediaGroup?: "ASSESSMENT" | "COUNSELLING" | "WELLNESS" | "WORKSHOPS" | "HERO" | "INSTITUTIONS";
   title: string;
   description: string;
 }
@@ -44,6 +44,8 @@ export function MediaManager({ section, mediaGroup, title, description }: MediaM
   const [editAltText, setEditAltText] = useState("");
   const [editSortOrder, setEditSortOrder] = useState("0");
   const [savingEdit, setSavingEdit] = useState(false);
+  const [showTitles, setShowTitles] = useState(false);
+  const [savingDisplaySetting, setSavingDisplaySetting] = useState(false);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
   // Form states
@@ -51,6 +53,7 @@ export function MediaManager({ section, mediaGroup, title, description }: MediaM
   const [assetTitle, setAssetTitle] = useState("");
   const [altText, setAltText] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const isInstitutionMedia = mediaGroup === "INSTITUTIONS";
 
   const fetchAssets = async () => {
     setLoading(true);
@@ -70,6 +73,15 @@ export function MediaManager({ section, mediaGroup, title, description }: MediaM
   useEffect(() => {
     fetchAssets();
   }, [section, mediaGroup]);
+
+  useEffect(() => {
+    if (!isInstitutionMedia) return;
+
+    fetch("/api/media/settings?mediaGroup=INSTITUTIONS")
+      .then((res) => (res.ok ? res.json() : { showTitles: false }))
+      .then((setting: { showTitles?: boolean }) => setShowTitles(setting.showTitles === true))
+      .catch(() => setShowTitles(false));
+  }, [isInstitutionMedia]);
 
   useEffect(() => {
     return () => {
@@ -132,6 +144,25 @@ export function MediaManager({ section, mediaGroup, title, description }: MediaM
       toast.error(err.message || "Upload failed");
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleShowTitlesChange = async (enabled: boolean) => {
+    setShowTitles(enabled);
+    setSavingDisplaySetting(true);
+    try {
+      const res = await fetch("/api/media/settings", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mediaGroup: "INSTITUTIONS", showTitles: enabled }),
+      });
+      if (!res.ok) throw new Error("Failed to save display setting");
+      toast.success(`Titles ${enabled ? "enabled" : "disabled"} for all institution logos`);
+    } catch (err: unknown) {
+      setShowTitles(!enabled);
+      toast.error(err instanceof Error ? err.message : "Failed to save display setting");
+    } finally {
+      setSavingDisplaySetting(false);
     }
   };
 
@@ -235,6 +266,19 @@ export function MediaManager({ section, mediaGroup, title, description }: MediaM
           </CardHeader>
           <CardContent>
             <form onSubmit={handleUpload} className="space-y-4">
+              {isInstitutionMedia && (
+                <label className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                  <input
+                    type="checkbox"
+                    checked={showTitles}
+                    disabled={savingDisplaySetting}
+                    onChange={(event) => handleShowTitlesChange(event.target.checked)}
+                    className="h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary"
+                  />
+                  Show titles for all institution logos
+                </label>
+              )}
+
               <div className="space-y-2">
                 <Label htmlFor="media-file">Choose File</Label>
                 <div className="flex items-center justify-center border-2 border-dashed border-slate-300 rounded-xl p-4 bg-slate-50 hover:bg-slate-100 transition cursor-pointer relative">

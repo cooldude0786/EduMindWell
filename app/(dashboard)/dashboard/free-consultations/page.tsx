@@ -2,6 +2,8 @@ import { getServerSession } from 'next-auth'
 import { prisma } from '@/lib/prisma'
 import FreeConsultationsList from './ui/FreeConsultationsList'
 
+export const dynamic = 'force-dynamic'
+
 export default async function FreeConsultationsPage() {
   const session = await getServerSession()
 

@@ -79,6 +79,7 @@ model ContactDetails {
 model MediaAsset {
   id          String      @id @default(cuid())
   title       String?
+  showTitle   Boolean     @default(false)
   altText     String?
   description String?
   type        MediaType
@@ -106,6 +107,31 @@ model MediaAsset {
   @@index([uploadedById])
 }
 
+model MediaDisplaySetting {
+  id        String     @id
+  mediaGroup MediaGroup @unique
+  showTitles Boolean    @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model NavigationContent {
+  id              String         @id
+  section         NavigationKey
+  itemKey         String
+  title           String
+  description     String
+  imageUrl        String?
+  imagePath       String?
+  bucket          String?
+  showTitle       Boolean        @default(true)
+  showDescription Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@unique([section, itemKey])
+}
+
 model CampaignMedia {
   id          String     @id @default(cuid())
   campaignId  String
@@ -127,6 +153,12 @@ enum MediaType {
   VIDEO
 }
 
+enum NavigationKey {
+  CAREER
+  MINDSET
+  WELLNESS
+}
+
 enum MediaSection {
   GALLERY
   CAREER
@@ -142,6 +174,7 @@ enum MediaGroup {
   WELLNESS
   WORKSHOPS
   HERO
+  INSTITUTIONS
 }
 
 enum MediaPlacement {

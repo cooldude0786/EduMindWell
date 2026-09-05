@@ -104,7 +104,7 @@ export async function PUT(req: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id, title, altText, isPublished, sortOrder } = await req.json();
+    const { id, title, showTitle, altText, isPublished, sortOrder } = await req.json();
 
     if (!id) {
       return Response.json({ error: "Media ID is required" }, { status: 400 });
@@ -114,6 +114,7 @@ export async function PUT(req: Request) {
       where: { id },
       data: {
         title: title !== undefined ? title : undefined,
+        showTitle: showTitle !== undefined ? Boolean(showTitle) : undefined,
         altText: altText !== undefined ? altText : undefined,
         isPublished: isPublished !== undefined ? isPublished : undefined,
         sortOrder: sortOrder !== undefined ? Number(sortOrder) : undefined,

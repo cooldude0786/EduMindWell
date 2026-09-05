@@ -25,7 +25,7 @@ export function HeroSection() {
           <div className="inline-flex items-center space-x-2 px-3 py-1 bg-secondary-container/30 rounded-full animate-fade-up">
             <CheckCircle2 className="w-4 h-4 text-on-secondary-container" />
             <span className="text-label-bold text-on-secondary-container uppercase">
-              Trusted by 5000+ Students
+              Trusted by 25000+ Students
             </span>
           </div>
 
@@ -33,17 +33,7 @@ export function HeroSection() {
           <h1 className="font-h1 text-h1 text-primary" style={{ maxWidth: '34rem' }}>
             <span className="font-slogan text-primary">{BRAND.tagline}</span>
           </h1>
-
-          {/* Body Text */}
-          <p
-            className="w-full text-body-lg leading-relaxed text-on-surface-variant text-pretty"
-            style={{ maxWidth: '32rem' }}
-          >
-            Empowering students from Class 8 to 12 to build confident careers without
-            sacrificing their mental wellbeing. Structured. Scientific. Personal.
-          </p>
-
-          {/* CTA Buttons */}
+ {/* CTA Buttons */}
           <div className="flex flex-col gap-4 pt-4 sm:flex-row">
             <Button
               asChild
@@ -76,10 +66,37 @@ export function HeroSection() {
                   window.open('https://emw.edumilestones.com/global-career-library/', '_blank', 'noopener,noreferrer')
                 }}
               >
-                See the Career Library
+                Explore Career Library
+              </a>
+            </Button>
+             <Button
+              asChild
+              variant="outline"
+              className="h-auto border border-primary bg-transparent text-primary px-8 py-4 rounded-xl text-button font-button hover:bg-primary/5 transition-colors"
+            >
+              <a
+                href="https://emw.edumilestones.com/global-career-library/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(event) => {
+                  event.preventDefault()
+                  window.open('https://careertest.edumilestones.com/student-dashboard/?channel_id=NDYyMw==', '_blank', 'noopener,noreferrer')
+                }}
+              >
+                View Student Dashboard
               </a>
             </Button>
           </div>
+          {/* Body Text */}
+          <p
+            className="w-full text-body-lg leading-relaxed text-on-surface-variant text-pretty"
+            style={{ maxWidth: '32rem' }}
+          >
+            Empowering students from Class 8 to 12 to build confident careers without
+            sacrificing their mental wellbeing. Structured. Scientific. Personal.
+          </p>
+
+         
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 border-t border-outline-variant pt-8 sm:gap-6">

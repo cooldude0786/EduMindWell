@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+:root {
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-display: Georgia, "Times New Roman", serif;
+}
+
 @theme inline {
   --color-primary: #2563eb;
   --color-on-primary: #ffffff;
@@ -187,6 +192,46 @@
 
   .animate-fade-up {
     animation: fadeInUp 0.6s ease-out;
+  }
+
+  @keyframes institutionLogoQueue {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(var(--logo-distance));
+    }
+  }
+
+  .institution-logo-track {
+    animation-name: institutionLogoQueue;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  .institution-logo-fade {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    height: 100%;
+    width: 2.5rem;
+  }
+
+  .institution-logo-fade-left {
+    left: 0;
+    background: linear-gradient(to right, white, transparent);
+  }
+
+  .institution-logo-fade-right {
+    right: 0;
+    background: linear-gradient(to left, white, transparent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .institution-logo-track {
+      animation-play-state: paused;
+    }
   }
 
   .font-slogan {

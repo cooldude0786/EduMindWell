@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import AddSubscriber from "./ui/AddSubscriber";
 import SubscribersList from "./ui/SubscribersList";
 
+export const dynamic = "force-dynamic";
+
 export default async function SubscribersPage() {
   const subscribers = await prisma.emailRecipient.findMany({
     orderBy: {

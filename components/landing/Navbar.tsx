@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -20,6 +20,8 @@ type DropdownItem = {
   description: string
   image?: string | string[]
   href?: string
+  showTitle?: boolean
+  showDescription?: boolean
 }
 
 type DropdownNavItem = {
@@ -30,6 +32,16 @@ type DropdownNavItem = {
 }
 
 type NavItem = AnchorNavItem | DropdownNavItem
+
+type NavigationContent = {
+  section: 'CAREER' | 'MINDSET' | 'WELLNESS'
+  itemKey: string
+  title: string
+  description: string
+  imageUrl: string | null
+  showTitle: boolean
+  showDescription: boolean
+}
 
 const NAV_ITEMS: NavItem[] = [
   { kind: 'anchor', label: 'Home', href: '#hero', id: 'hero' },
@@ -114,8 +126,42 @@ export function Navbar() {
   const [consultationOpen, setConsultationOpen] = useState(false)
   const [rotationIndex, setRotationIndex] = useState(0)
   const [activeAnchorId, setActiveAnchorId] = useState('hero')
+  const [navigationContent, setNavigationContent] = useState<NavigationContent[]>([])
   const navbarRef = useRef<HTMLElement>(null)
   const closeTimerRef = useRef<number | null>(null)
+
+  const navItems = useMemo(() => {
+    const sectionByLabel: Record<string, NavigationContent['section']> = {
+      Career: 'CAREER',
+      Mindset: 'MINDSET',
+      Wellness: 'WELLNESS',
+    }
+
+    return NAV_ITEMS.map((item) => {
+      if (item.kind !== 'dropdown') return item
+      const section = sectionByLabel[item.label]
+      const records = navigationContent.filter((content) => content.section === section)
+      if (records.length === 0) return item
+
+      return {
+        ...item,
+        items: records.map((content) => ({
+          title: content.title,
+          description: content.description,
+          image: content.imageUrl || undefined,
+          showTitle: content.showTitle,
+          showDescription: content.showDescription,
+          href: item.label === 'Career' && content.itemKey === 'assessment'
+            ? 'https://emw.edumilestones.com/'
+            : item.label === 'Career' && content.itemKey === 'counselling'
+              ? '/career/counselling'
+              : item.label === 'Career' && content.itemKey === 'library'
+                ? 'https://emw.edumilestones.com/global-career-library/'
+                : undefined,
+        })),
+      }
+    })
+  }, [navigationContent])
 
   const getRotatingImage = (
     image: string | string[] | undefined,
@@ -148,7 +194,7 @@ export function Navbar() {
       closeTimerRef.current = null
     }
 
-    const nextMenu = NAV_ITEMS.find(
+    const nextMenu = navItems.find(
       (item): item is DropdownNavItem =>
         item.kind === 'dropdown' && item.label === label,
     )
@@ -158,6 +204,13 @@ export function Navbar() {
       setActiveDropdown(label)
     }
   }
+
+  useEffect(() => {
+    fetch('/api/navigation-content')
+      .then((response) => (response.ok ? response.json() : []))
+      .then((items: NavigationContent[]) => setNavigationContent(items))
+      .catch((error) => console.error('Failed to fetch navigation content:', error))
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -173,7 +226,7 @@ export function Navbar() {
       return
     }
 
-    const sectionIds = NAV_ITEMS.map((item) => item.id)
+    const sectionIds = navItems.map((item) => item.id)
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -199,7 +252,7 @@ export function Navbar() {
     })
 
     return () => observer.disconnect()
-  }, [pathname])
+  }, [navItems, pathname])
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -329,7 +382,7 @@ export function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden items-center gap-2 font-h3 font-medium text-sm md:flex">
-            {NAV_ITEMS.map((item) => {
+            {navItems.map((item) => {
               if (item.kind === 'anchor') {
                 const isActive = isActiveNavItem(item)
 
@@ -377,9 +430,9 @@ export function Navbar() {
 
           {activeDropdown && desktopMenu && (
             <div className="fixed left-0 right-0 top-19.5 z-40 hidden md:block">
-              <div className="w-full border-t border-slate-200/80 bg-white shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
+              <div className="w-full bg-transparent">
                 <div className="mx-auto max-w-7xl px-6 py-6">
-                  <div className="rounded-[28px] border border-slate-200/80 bg-white px-8 py-7 shadow-[0_10px_25px_rgba(15,23,42,0.05)]">
+                  <div className="rounded-[28px] border border-white/60 bg-white/25 px-8 py-7 shadow-[0_18px_45px_rgba(15,23,42,0.12)] backdrop-blur-xl">
                     <div className="flex items-start justify-between gap-4">
                       <p className="text-[10px] uppercase tracking-[0.35em] text-secondary font-label-bold">
                         {desktopMenu.label}
@@ -399,50 +452,41 @@ export function Navbar() {
                     <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                       {desktopMenu.items.map((menuItem, index) => {
                         const currentImage = getRotatingImage(menuItem.image, index)
-                        const cardClass = `group relative min-h-45 overflow-hidden rounded-[22px] border p-6 shadow-[0_6px_16px_rgba(15,23,42,0.03)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_10px_22px_rgba(15,23,42,0.05)] ${
-                          currentImage
-                            ? 'border-slate-100 bg-slate-950/20'
-                            : 'border-slate-100 bg-[#fafafa]'
-                        }`
+                        const showText = Boolean(
+                          (menuItem.showTitle !== false && menuItem.title) ||
+                          (menuItem.showDescription !== false && menuItem.description),
+                        )
+                        const cardClass = `group relative flex h-full flex-col overflow-hidden rounded-[22px] border border-slate-100 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.03)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_10px_22px_rgba(15,23,42,0.08)]`
                         const cardContent = (
                           <>
-                            {currentImage && (
-                              <Image
-                                src={currentImage}
-                                alt=""
-                                fill
-                                className="absolute inset-0 object-cover  duration-200 group-hover:scale-105"
-                                sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
-                                priority={menuItem.title === 'Career Assessments'}
-                              />
-                            )}
                             {currentImage ? (
                               <>
-                                <div className="absolute inset-0 bg-linear-to-br from-slate-950/68 via-slate-900/48 to-slate-800/30" />
-                                <div className="relative z-10">
-                                  <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white backdrop-blur-sm">
-                                    <ChevronDown className="h-4 w-4 -rotate-90" />
-                                  </div>
-                                  <h4 className="mt-10 font-h3 text-[15px] text-white">
-                                    {menuItem.title}
-                                  </h4>
-                                  <p className="mt-3 text-[14px] leading-relaxed text-white/85">
-                                    {menuItem.description}
-                                  </p>
+                                <div className="relative aspect-video overflow-hidden">
+                                  <Image
+                                    src={currentImage}
+                                    alt=""
+                                    fill
+                                    className="object-cover duration-200 group-hover:scale-105"
+                                    sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+                                    priority={menuItem.title === 'Career Assessments'}
+                                  />
                                 </div>
+                                {showText && <div className={`flex-1 border-t px-6 py-5 ${
+                                  index === 1
+                                    ? 'border-secondary/25 bg-secondary/20'
+                                    : index === 2
+                                      ? 'border-tertiary/25 bg-tertiary/20'
+                                      : 'border-primary/25 bg-primary/20'
+                                }`}>
+                                  {menuItem.showTitle !== false && <h4 className="font-h3 text-[15px] text-primary">{menuItem.title}</h4>}
+                                  {menuItem.showDescription !== false && <p className="mt-1 text-[14px] leading-relaxed text-on-surface-variant">{menuItem.description}</p>}
+                                </div>}
                               </>
                             ) : (
-                              <>
-                                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/10 bg-primary/5 text-primary">
-                                  <ChevronDown className="h-4 w-4 -rotate-90" />
-                                </div>
-                                <h4 className="mt-10 font-h3 text-[15px] text-primary">
-                                  {menuItem.title}
-                                </h4>
-                                <p className="mt-3 text-[14px] leading-relaxed text-slate-600">
-                                  {menuItem.description}
-                                </p>
-                              </>
+                              showText && <div className="p-6">
+                                {menuItem.showTitle !== false && <h4 className="mt-10 font-h3 text-[15px] text-primary">{menuItem.title}</h4>}
+                                {menuItem.showDescription !== false && <p className="mt-3 text-[14px] leading-relaxed text-slate-600">{menuItem.description}</p>}
+                              </div>
                             )}
                           </>
                         )
@@ -514,7 +558,7 @@ export function Navbar() {
           </div>
 
           <div className="space-y-2">
-            {NAV_ITEMS.map((item) => {
+            {navItems.map((item) => {
               if (item.kind === 'anchor') {
                 const isActive = isActiveNavItem(item)
 
@@ -556,43 +600,38 @@ export function Navbar() {
                       <div className="space-y-3">
                         {item.items.map((dropdownItem, index) => {
                           const currentImage = getRotatingImage(dropdownItem.image, index)
-                          const cardClass = `relative block overflow-hidden rounded-xl border p-3 ${
+                          const showText = Boolean(
+                            (dropdownItem.showTitle !== false && dropdownItem.title) ||
+                            (dropdownItem.showDescription !== false && dropdownItem.description),
+                          )
+                          const cardClass = `relative block overflow-hidden rounded-xl border ${
                             currentImage
                               ? 'border-slate-200 text-white'
                               : 'border-slate-200 bg-slate-50'
                           }`
                           const cardContent = (
                             <>
-                              {currentImage && (
-                                <Image
-                                  src={currentImage}
-                                  alt=""
-                                  fill
-                                  className="absolute inset-0 object-cover transition-[opacity,transform,filter] duration-700 ease-in-out"
-                                  sizes="100vw"
-                                />
-                              )}
                               {currentImage ? (
                                 <>
-                                  <div className="absolute inset-0 bg-linear-to-br from-slate-950/70 via-slate-900/55 to-slate-800/35" />
-                                  <div className="relative z-10">
-                                    <div className="font-semibold text-white">
-                                      {dropdownItem.title}
-                                    </div>
-                                    <p className="mt-1 text-sm leading-relaxed text-white/85">
-                                      {dropdownItem.description}
-                                    </p>
+                                  <div className="relative aspect-video overflow-hidden">
+                                    <Image
+                                      src={currentImage}
+                                      alt=""
+                                      fill
+                                      className="object-cover transition-transform duration-700 ease-in-out"
+                                      sizes="100vw"
+                                    />
                                   </div>
+                                  {showText && <div className="px-3 py-3">
+                                    {dropdownItem.showTitle !== false && <div className="font-semibold text-black">{dropdownItem.title}</div>}
+                                    {dropdownItem.showDescription !== false && <p className="mt-1 text-sm leading-relaxed text-black">{dropdownItem.description}</p>}
+                                  </div>}
                                 </>
                               ) : (
-                                <>
-                                  <div className="font-semibold text-primary">
-                                    {dropdownItem.title}
-                                  </div>
-                                  <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                                    {dropdownItem.description}
-                                  </p>
-                                </>
+                                showText && <div className="p-3">
+                                  {dropdownItem.showTitle !== false && <div className="font-semibold text-primary">{dropdownItem.title}</div>}
+                                  {dropdownItem.showDescription !== false && <p className="mt-1 text-sm leading-relaxed text-slate-600">{dropdownItem.description}</p>}
+                                </div>
                               )}
                             </>
                           )
