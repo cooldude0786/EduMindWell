@@ -136,7 +136,7 @@ const wellnessVariantMap: Record<WellnessVariant, WellnessVariantConfig> = {
       'We create wellness experiences that are easy to understand and simple to continue. The aim is to help people feel more steady, aware, and supported in real life.',
     cards: [
       {
-        title: 'MiracleX App',
+        title: 'MiraclesX App',
         icon: QrCode,
         description:
           'Wellness support in your pocket with guided tools and daily practices.',
@@ -187,7 +187,7 @@ const wellnessVariantMap: Record<WellnessVariant, WellnessVariantConfig> = {
       'From a marketing point of view, this section should feel like relief and reassurance. It should tell the visitor that support can be personal, practical, and sustainable.',
     cards: [
       {
-        title: 'MiracleX App',
+        title: 'MiraclesX App',
         icon: QrCode,
         description:
           'A daily companion that makes steady wellness feel simple and personal.',
