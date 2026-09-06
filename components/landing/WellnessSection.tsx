@@ -356,7 +356,7 @@ export function WellnessSection({ variant = '1' }: WellnessSectionProps) {
                   rel="noreferrer noopener"
                   className="mt-4 inline-flex items-center rounded-full bg-white px-4 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
                 >
-                  Open MiracleX in Play Store
+                  Open MiraclesX in Play Store
                 </a>
               </div>
             </div>
