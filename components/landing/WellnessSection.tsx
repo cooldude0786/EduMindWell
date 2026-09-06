@@ -69,7 +69,7 @@ const wellnessVariantMap: Record<WellnessVariant, WellnessVariantConfig> = {
         image: '/LearningVideo.jpeg',
       },
     ],
-    sideLabel: 'MiracleX App',
+    sideLabel: 'MiraclesX App',
     sideHeading: 'Your daily wellness companion in your pocket.',
     sideCopy:
       'Scan the QR code to explore guided meditation, gratitude journaling, affirmations, mood tracking, and learning videos.',
@@ -85,7 +85,7 @@ const wellnessVariantMap: Record<WellnessVariant, WellnessVariantConfig> = {
       'Sometimes what people need most is not more pressure, but more peace, presence, and support. This version of Wellness is written to feel warm, human, and easy to connect with.',
     cards: [
       {
-        title: 'MiracleX App',
+        title: 'MiraclesX App',
         icon: QrCode,
         description:
           'Simple daily tools that help wellness feel accessible and easy to return to.',
