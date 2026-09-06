@@ -14,7 +14,7 @@ const defaults = [
   { section: "WELLNESS", itemKey: "therapeutic", title: "Customized Therapeutic Meditation", description: "Personalized support designed around stress, confidence, relationships, health, and clarity.", imageUrl: "/Therapeutic.jpeg" },
   { section: "WELLNESS", itemKey: "coaching", title: "Individual Wellness Coaching", description: "One-on-one coaching that keeps the focus on practical growth and steady support.", imageUrl: "/oneToOne.jpeg" },
   { section: "WELLNESS", itemKey: "groups", title: "Group Meditation Programs", description: "Flexible programs for schools, parents, students, corporates, and community groups.", imageUrl: "/groupMed.jpeg" },
-  { section: "WELLNESS", itemKey: "app", title: "MiracleX App", description: "A daily companion with guided meditation, gratitude, affirmations, goals, and tracking.", imageUrl: "/MiracleX.jpeg" },
+  { section: "WELLNESS", itemKey: "app", title: "MiraclesX App", description: "A daily companion with guided meditation, gratitude, affirmations, goals, and tracking.", imageUrl: "/MiracleX.jpeg" },
   { section: "WELLNESS", itemKey: "videos", title: "Learning Videos", description: "Supportive video content for ongoing wellness habits and low-friction learning.", imageUrl: "/LearningVideo.jpeg" },
 ] as const;
 
