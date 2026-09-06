@@ -34,7 +34,7 @@ const wellnessVariantMap: Record<WellnessVariant, WellnessVariantConfig> = {
       'Wellness is the inner support system that helps people stay grounded, focused, and emotionally steady in daily life. Our programs are designed to bring calm, clarity, and practical support to individuals and groups.',
     cards: [
       {
-        title: 'MiracleX App',
+        title: 'MiraclesX App',
         icon: QrCode,
         description:
           'A daily wellness companion with guided meditation, gratitude, affirmations, and progress tracking.',
