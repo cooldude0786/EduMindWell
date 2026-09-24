@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { ChevronDown, Menu, X } from 'lucide-react'
+import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react'
 import { FreeConsultationDialog } from '@/components/landing/FreeConsultationDialog'
 import { AUDIENCE_CARDS } from '@/lib/landing-constants'
 
@@ -124,10 +124,12 @@ export function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [desktopMenu, setDesktopMenu] = useState<DropdownNavItem | null>(null)
   const [consultationOpen, setConsultationOpen] = useState(false)
+  const [consultationTopic, setConsultationTopic] = useState<string | undefined>()
   const [rotationIndex, setRotationIndex] = useState(0)
   const [activeAnchorId, setActiveAnchorId] = useState('hero')
   const [navigationContent, setNavigationContent] = useState<NavigationContent[]>([])
   const navbarRef = useRef<HTMLElement>(null)
+  const desktopDropdownRef = useRef<HTMLDivElement>(null)
   const closeTimerRef = useRef<number | null>(null)
 
   const navItems = useMemo(() => {
@@ -264,7 +266,10 @@ export function Navbar() {
 
   useEffect(() => {
     const handlePointerDown = (event: MouseEvent) => {
-      if (navbarRef.current && !navbarRef.current.contains(event.target as Node)) {
+      if (
+        desktopDropdownRef.current &&
+        !desktopDropdownRef.current.contains(event.target as Node)
+      ) {
         closeDesktopDropdown()
       }
     }
@@ -332,6 +337,14 @@ export function Navbar() {
   const handleConsultationClick = () => {
     setMobileMenuOpen(false)
     closeDesktopDropdown()
+    setConsultationTopic(undefined)
+    setConsultationOpen(true)
+  }
+
+  const handleServiceConnect = (service: string) => {
+    setMobileMenuOpen(false)
+    closeDesktopDropdown()
+    setConsultationTopic(service)
     setConsultationOpen(true)
   }
 
@@ -428,11 +441,18 @@ export function Navbar() {
             })}
           </div>
 
-          {activeDropdown && desktopMenu && (
-            <div className="fixed left-0 right-0 top-19.5 z-40 hidden md:block">
+          {desktopMenu && (
+            <div
+              className="dropdown-scrollbar fixed left-0 right-0 top-19.5 z-40 hidden max-h-[calc(100vh-5rem)] overflow-y-auto md:block"
+            >
               <div className="w-full bg-transparent">
                 <div className="mx-auto max-w-7xl px-6 py-6">
-                  <div className="rounded-[28px] border border-white/60 bg-white/25 px-8 py-7 shadow-[0_18px_45px_rgba(15,23,42,0.12)] backdrop-blur-xl">
+                  <div
+                    ref={desktopDropdownRef}
+                    className={`glass-dropdown rounded-[28px] px-8 py-7 ${
+                      activeDropdown ? 'dropdown-panel-enter' : 'dropdown-panel-exit'
+                    }`}
+                  >
                     <div className="flex items-start justify-between gap-4">
                       <p className="text-[10px] uppercase tracking-[0.35em] text-secondary font-label-bold">
                         {desktopMenu.label}
@@ -456,7 +476,8 @@ export function Navbar() {
                           (menuItem.showTitle !== false && menuItem.title) ||
                           (menuItem.showDescription !== false && menuItem.description),
                         )
-                        const cardClass = `group relative flex h-full flex-col overflow-hidden rounded-[22px] border border-slate-100 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.03)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_10px_22px_rgba(15,23,42,0.08)]`
+                        const cardClass = `dropdown-item-enter group relative flex h-full flex-col overflow-hidden rounded-[22px] border border-slate-100 bg-white shadow-[0_6px_16px_rgba(15,23,42,0.03)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_10px_22px_rgba(15,23,42,0.08)]`
+                        const itemAnimationStyle = { animationDelay: `${index * 70}ms` }
                         const cardContent = (
                           <>
                             {currentImage ? (
@@ -488,6 +509,16 @@ export function Navbar() {
                                 {menuItem.showDescription !== false && <p className="mt-3 text-[14px] leading-relaxed text-slate-600">{menuItem.description}</p>}
                               </div>
                             )}
+                            {desktopMenu.label !== 'Career' && (
+                              <button
+                                type="button"
+                                onClick={() => handleServiceConnect(menuItem.title)}
+                                className="mt-auto flex w-full items-center justify-between border-t border-slate-100 px-6 py-4 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
+                              >
+                                <span>Connect with us</span>
+                                <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                              </button>
+                            )}
                           </>
                         )
 
@@ -499,11 +530,12 @@ export function Navbar() {
                             rel={menuItem.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                             onClick={(event) => handleExternalLinkClick(event, menuItem.href!)}
                             className={cardClass}
+                            style={itemAnimationStyle}
                           >
                             {cardContent}
                           </a>
                         ) : (
-                          <div key={menuItem.title} className={cardClass}>
+                          <div key={menuItem.title} className={cardClass} style={itemAnimationStyle}>
                             {cardContent}
                           </div>
                         )
@@ -596,7 +628,7 @@ export function Navbar() {
                     />
                   </button>
                   {isOpen && (
-                    <div className="border-t border-slate-200 p-3">
+                    <div className="dropdown-scrollbar max-h-[60vh] overflow-y-auto border-t border-slate-200 p-3">
                       <div className="space-y-3">
                         {item.items.map((dropdownItem, index) => {
                           const currentImage = getRotatingImage(dropdownItem.image, index)
@@ -604,11 +636,12 @@ export function Navbar() {
                             (dropdownItem.showTitle !== false && dropdownItem.title) ||
                             (dropdownItem.showDescription !== false && dropdownItem.description),
                           )
-                          const cardClass = `relative block overflow-hidden rounded-xl border ${
+                          const cardClass = `dropdown-item-enter relative block overflow-hidden rounded-xl border ${
                             currentImage
                               ? 'border-slate-200 text-white'
                               : 'border-slate-200 bg-slate-50'
                           }`
+                          const itemAnimationStyle = { animationDelay: `${index * 70}ms` }
                           const cardContent = (
                             <>
                               {currentImage ? (
@@ -632,8 +665,18 @@ export function Navbar() {
                                   {dropdownItem.showTitle !== false && <div className="font-semibold text-primary">{dropdownItem.title}</div>}
                                   {dropdownItem.showDescription !== false && <p className="mt-1 text-sm leading-relaxed text-slate-600">{dropdownItem.description}</p>}
                                 </div>
-                              )}
-                            </>
+                            )}
+                            {item.label !== 'Career' && (
+                              <button
+                                type="button"
+                                onClick={() => handleServiceConnect(dropdownItem.title)}
+                                className="mt-auto flex w-full items-center justify-between border-t border-slate-100 px-4 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
+                              >
+                                <span>Connect with us</span>
+                                <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                              </button>
+                            )}
+                          </>
                           )
 
                           return dropdownItem.href ? (
@@ -644,11 +687,12 @@ export function Navbar() {
                               rel={dropdownItem.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                               onClick={(event) => handleExternalLinkClick(event, dropdownItem.href!)}
                               className={cardClass}
+                              style={itemAnimationStyle}
                             >
                               {cardContent}
                             </a>
                           ) : (
-                            <div key={dropdownItem.title} className={cardClass}>
+                            <div key={dropdownItem.title} className={cardClass} style={itemAnimationStyle}>
                               {cardContent}
                             </div>
                           )
@@ -672,6 +716,7 @@ export function Navbar() {
       <FreeConsultationDialog
         open={consultationOpen}
         onOpenChange={setConsultationOpen}
+        initialTopic={consultationTopic}
       />
     </nav>
   )

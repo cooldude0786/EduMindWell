@@ -20,6 +20,7 @@ type GalleryMediaItem = {
 }
 
 type GalleryProgram = {
+  slug: string
   title: string
   description: string
   media: GalleryMediaItem[]
@@ -217,7 +218,10 @@ function GalleryProgramCard({ program }: { program: GalleryProgram }) {
   const videoCount = program.media.length - photoCount
 
   return (
-    <article className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.05)]">
+    <article
+      id={program.slug}
+      className="scroll-mt-28 overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-[0_16px_40px_rgba(15,23,42,0.05)] target:ring-2 target:ring-primary target:ring-offset-4"
+    >
       <div className="border-b border-slate-200 bg-slate-50/80 px-5 py-4 md:px-6">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
@@ -440,22 +444,32 @@ export function GalleryCollageSection() {
 
   const galleryPrograms: GalleryProgram[] = [
     {
+      slug: 'career-assessment',
       title: 'Career Assessment',
       description:
         'A public-facing look at discovery sessions, assessment conversations, and outcome-led career clarity moments.',
       media: assessmentMedia,
     },
     {
+      slug: 'counselling',
       title: 'Counselling',
       description:
         'One-on-one guidance moments and reflective planning conversations that shape the next steps students actually take.',
       media: counsellingMedia,
     },
     {
+      slug: 'mindset-workshops',
       title: 'Mindset Workshops',
       description:
         'Workshop energy, participation, and practical exercises from sessions designed to shift confidence and clarity.',
       media: workshopMedia,
+    },
+    {
+      slug: 'wellness',
+      title: 'Wellness',
+      description:
+        'Meditation circles, wellness practices, and guided group experiences that support balance and wellbeing.',
+      media: wellnessMedia,
     },
   ]
 

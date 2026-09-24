@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/carousel'
 
 type GalleryCardProps = {
+  slug: string
   title: string
   subtitle: string
   icon: any
@@ -52,7 +53,10 @@ function GalleryCard({ item }: { item: GalleryCardProps }) {
   const IconComponent = item.icon
 
   return (
-    <div className="group overflow-hidden rounded-[28px] border border-indigo-50 bg-white shadow-[0_16px_36px_rgba(15,23,42,0.05)]">
+    <div
+      className="group cursor-pointer overflow-hidden rounded-[28px] border border-indigo-50 bg-white shadow-[0_16px_36px_rgba(15,23,42,0.05)]"
+      onClick={() => window.location.assign(`/gallery#${item.slug}`)}
+    >
       <div className="relative">
         <Carousel
           opts={{ loop: true, align: 'start' }}
@@ -92,8 +96,14 @@ function GalleryCard({ item }: { item: GalleryCardProps }) {
             ))}
           </CarouselContent>
 
-          <CarouselPrevious className="-left-3 hidden md:flex" />
-          <CarouselNext className="-right-3 hidden md:flex" />
+          <CarouselPrevious
+            className="-left-3 hidden md:flex"
+            onClick={(event) => event.stopPropagation()}
+          />
+          <CarouselNext
+            className="-right-3 hidden md:flex"
+            onClick={(event) => event.stopPropagation()}
+          />
         </Carousel>
       </div>
 
@@ -151,44 +161,48 @@ export function GallerySection() {
 
   const galleryItems: GalleryCardProps[] = [
     {
+      slug: 'career-assessment',
       title: 'Career Assessment',
-      subtitle: 'Photos and clips from assessment sessions',
+      subtitle: 'See the moments when students begin to understand what truly suits them.',
       icon: Sparkles,
       accent: 'from-primary/90 to-primary/60',
       images: assessmentMedia,
       onNearEnd: () => loadGroup('ASSESSMENT', offsets.ASSESSMENT, true),
       statement:
-        'A visual record of discovery sessions, student mapping, and report-led career clarity.',
+        'From the first questions to the final report, these moments capture students finding clarity and confidence in their next step.',
     },
     {
+      slug: 'counselling',
       title: 'Counselling',
-      subtitle: 'Report reviews and one-on-one guidance',
+      subtitle: 'The honest conversations that turn a report into a practical plan.',
       icon: Users,
       accent: 'from-secondary/90 to-secondary/60',
       images: counsellingMedia,
       onNearEnd: () => loadGroup('COUNSELLING', offsets.COUNSELLING, true),
       statement:
-        'A visual archive of personal guidance, report interpretation, and next-step planning.',
+        'A look at the personal guidance, thoughtful questions, and small breakthroughs that make career decisions feel less overwhelming.',
     },
     {
+      slug: 'mindset-workshops',
       title: 'Mindset Workshops',
-      subtitle: 'Interactive learning and experiential sessions',
+      subtitle: 'Shared learning, open conversations, and ideas that stay with you.',
       icon: Camera,
       accent: 'from-tertiary-container/90 to-tertiary-container/60',
       images: workshopMedia,
       onNearEnd: () => loadGroup('WORKSHOPS', offsets.WORKSHOPS, true),
       statement:
-        'A visual look at student, parent, and professional mindset sessions in action.',
+        'These sessions bring students, parents, and professionals together to reflect, participate, and see familiar challenges in a new way.',
     },
     {
+      slug: 'wellness',
       title: 'Wellness',
-      subtitle: 'Meditation circles, app demos, and group programs',
+      subtitle: 'Quiet pauses and shared practices that help people feel more balanced.',
       icon: PlayCircle,
       accent: 'from-surface-tint/90 to-surface-tint/60',
       images: wellnessMedia,
       onNearEnd: () => loadGroup('WELLNESS', offsets.WELLNESS, true),
       statement:
-        'A visual collection of wellness practices, app demos, and guided group experiences.',
+        'A warm collection of guided practices, group experiences, and simple tools that make wellbeing easier to bring into everyday life.',
     },
   ]
 

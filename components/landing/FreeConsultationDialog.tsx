@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   Dialog,
   DialogClose,
@@ -22,11 +22,13 @@ const phoneRegex = /^[0-9+\-()\s]{7,20}$/
 type FreeConsultationDialogProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
+  initialTopic?: string
 }
 
 export function FreeConsultationDialog({
   open,
   onOpenChange,
+  initialTopic,
 }: FreeConsultationDialogProps) {
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
@@ -34,8 +36,24 @@ export function FreeConsultationDialog({
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const topicInputRef = useRef<HTMLTextAreaElement>(null)
   const { contactDetails } = useContactDetails()
   const whatsappUrl = contactDetails ? getWhatsAppUrl(contactDetails, whatToDiscuss) : null
+
+  useEffect(() => {
+    if (open && initialTopic) {
+      setError('')
+      setSuccess('')
+    } else if (open) {
+      setWhatToDiscuss('')
+      setError('')
+      setSuccess('')
+    }
+
+    if (open) {
+      window.setTimeout(() => topicInputRef.current?.focus(), 100)
+    }
+  }, [open, initialTopic])
 
   const resetForm = () => {
     setPhone('')
@@ -205,9 +223,12 @@ export function FreeConsultationDialog({
             </label>
             <Textarea
               id="consult-topic"
+              ref={topicInputRef}
               value={whatToDiscuss}
               onChange={(event) => setWhatToDiscuss(event.target.value)}
-              placeholder="Tell us briefly what you'd like to discuss..."
+              placeholder={initialTopic
+                ? `I’m interested in ${initialTopic}. Please share more details.`
+                : "Tell us briefly what you'd like to discuss..."}
               maxLength={1000}
               className="min-h-24 rounded-2xl border-outline-variant bg-white px-4 py-3 text-sm shadow-sm placeholder:text-slate-400 focus-visible:border-primary focus-visible:ring-primary/20"
             />

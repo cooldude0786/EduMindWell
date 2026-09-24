@@ -179,6 +179,118 @@
     background-clip: padding-box;
   }
 
+  .dropdown-scrollbar {
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: #93c5fd transparent;
+  }
+
+  .dropdown-scrollbar::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  .dropdown-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 12px 0;
+  }
+
+  .dropdown-scrollbar::-webkit-scrollbar-thumb {
+    background: #93c5fd;
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    background-clip: padding-box;
+  }
+
+  .dropdown-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+    background-clip: padding-box;
+  }
+
+  .stories-track {
+    animation: storiesCarousel 36s linear infinite;
+  }
+
+  .stories-ring {
+    animation: storiesRing 28s linear infinite;
+  }
+
+  .stories-track {
+    animation: storiesCarousel 36s linear infinite;
+  }
+
+  .stories-carousel:hover .stories-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes storiesCarousel {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-50% - 1rem)); }
+  }
+
+  .stories-carousel:hover .stories-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes storiesCarousel {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-50% - 1rem));
+    }
+  }
+
+  .dropdown-panel-enter {
+    animation: dropdownPanelEnter 260ms ease-out both;
+  }
+
+  .dropdown-panel-exit {
+    animation: dropdownPanelExit 260ms ease-in both;
+    pointer-events: none;
+  }
+
+  .dropdown-item-enter {
+    animation: dropdownItemEnter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes dropdownItemEnter {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes dropdownPanelEnter {
+    from {
+      transform: translateY(-10px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes dropdownPanelExit {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-8px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dropdown-panel-enter,
+    .dropdown-panel-exit,
+    .dropdown-item-enter {
+      animation-duration: 1ms;
+      animation-delay: 0ms !important;
+    }
+  }
+
   @keyframes fadeInUp {
     from {
       opacity: 0;

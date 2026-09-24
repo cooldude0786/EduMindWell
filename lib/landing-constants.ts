@@ -36,7 +36,7 @@ export const NAV_LINKS: NavigationLink[] = [
 // HERO SECTION
 export const HERO_STATS: Stat[] = [
   {
-    label: '5000+',
+    label: '25000+',
     sublabel: 'Students Guided',
   },
   {
@@ -225,20 +225,16 @@ export const AUDIENCE_CARDS: AudienceCard[] = [
 export const STORIES: Story[] = [
   {
     id: 'rohan',
-    beforeText:
-      'About to choose Science by default because all friends were',
-    afterText:
-      'Discovered Commerce + Law fit. Now preparing for CLAT, top of class',
+    beforeText: 'About to default to Science due to peer pressure',
+    afterText: 'Redirected to Commerce + Law and now preparing for CLAT',
     quote:
       'I had no idea Law was even an option for me. The report changed everything.',
     attribution: '— Rohan V., Class 12',
   },
   {
     id: 'ananya',
-    beforeText:
-      'Loved psychology but thought it wasn\'t a real career option',
-    afterText:
-      'Mapped to 12 psychology career paths. Targeting clinical psychology',
+    beforeText: 'Faced parental doubt about choosing a non-traditional field',
+    afterText: 'Used salary data and real career paths to build family confidence in psychology',
     quote:
       'Seeing salary data and real career paths for psychology made my parents finally say yes.',
     attribution: '— Ananya S., Class 11',
@@ -252,6 +248,77 @@ export const STORIES: Story[] = [
     quote:
       'We were the obstacle. EduMindWell helped us become our daughter\'s support system.',
     attribution: '— Parent, Mumbai',
+  },
+  {
+    id: 'enid-baptista',
+    beforeText: 'Needed clear guidance on stream selection after the board exams',
+    afterText: 'Explored graded options beyond PCM, JEE, and CUET',
+    quote:
+      'Priti Kabra Ma’am and counsellor Reema Raj are an exceptional team. Their counselling session gave us clear guidance on stream selection after 10th Boards and 12th Boards, with graded options to choose besides PCM, JEE, and CUET…',
+    attribution: '— Enid Baptista, Parent',
+  },
+  {
+    id: 'urjit-kasat',
+    beforeText: 'Looking for a career path aligned with personal strengths',
+    afterText: 'Used accurate assessment results and counsellor guidance to choose a career path',
+    quote:
+      'It was an excellent session by the Edumindwell team, they are extremely professional. The assessment is bang on accurate and the counsellor suggestion helped me to choose the career path that I feel aligned to.',
+    attribution: '— Urjit Kasat, Student / Client',
+  },
+  {
+    id: 'anuja-gadhave',
+    beforeText: 'Needed help researching career options for a child',
+    afterText: 'Connected career research with the child\'s personality',
+    quote:
+      'It was a very informative session. Made it easier for us to research about career options based on the child\'s personality. Very helpful.',
+    attribution: '— Anuja Gadhave, Parent / Client',
+  },
+  {
+    id: 'sheena-nagdev',
+    beforeText: 'Wanted a clearer understanding of the assessment report',
+    afterText: 'Had a helpful counselling discussion with an accurate report',
+    quote:
+      'Great counselling experience. The report was so accurate, had a great discussion and the team is extremely helpful and knowledgeable.',
+    attribution: '— Sheena Nagdev, Client',
+  },
+  {
+    id: 'vinita-deshpande',
+    beforeText: 'Wanted to confirm whether the report matched her daughter\'s goal',
+    afterText: 'Found the report aligned with her daughter\'s goal and received counsellor support',
+    quote:
+      'Counselling Test format is perfect as my daughter\'s test report is exactly matching with her set Goal. Counsellors are nice. Thank you for your support.',
+    attribution: '— Dr. Vinita Deshpande, Parent',
+  },
+  {
+    id: 'candy-crasto',
+    beforeText: 'Needed more confidence in making a career choice',
+    afterText: 'Gained useful information and confidence in career decisions',
+    quote:
+      'An amazing experience and was very informative. The whole experience gives more confidence in career choices you want to make.',
+    attribution: '— Candy Crasto, Student / Client',
+  },
+  {
+    id: 'krishna-joshi',
+    beforeText: 'Seeking accurate career-choice options and detailed assessment',
+    afterText: 'Received precise reports and counselling for clearer student outcomes',
+    quote:
+      'Precise & detailed assessments tests & reports + elite counselors = fruitful clear results for students… Highly recommended for students seeking career choice options with accuracy.',
+    attribution: '— Krishna Joshi, Client',
+  },
+  {
+    id: 'suhas-kangane',
+    beforeText: 'Wanted support with his son\'s career direction',
+    afterText: 'Found the guidance truly helpful for his son\'s career',
+    quote: 'Truly helpful for my son\'s career.',
+    attribution: '— Suhas Kangane, Parent',
+  },
+  {
+    id: 'santosh-rawlani',
+    beforeText: 'Needed comprehensive guidance for a child\'s career choice',
+    afterText: 'Received a report to support the child\'s career decision',
+    quote:
+      'Very nice experience. Thank you so much. The comprehensive report will definitely help our child in choosing his career.',
+    attribution: '— Dr. Santosh Rawlani, Parent',
   },
 ]
 

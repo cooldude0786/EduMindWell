@@ -279,7 +279,7 @@ export function CareerGuidance() {
 
         <div className="grid gap-4 rounded-3xl border border-outline/50 bg-surface-container p-4 md:grid-cols-3">
           <div className="rounded-2xl bg-white p-5 text-center shadow-sm">
-            <p className="text-3xl font-bold text-primary">5000+</p>
+            <p className="text-3xl font-bold text-primary">25000+</p>
             <p className="mt-2 text-sm text-slate-600">Students guided</p>
           </div>
           <div className="rounded-2xl bg-white p-5 text-center shadow-sm">
