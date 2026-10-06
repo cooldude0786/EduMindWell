@@ -1,11 +1,14 @@
 import { getToken } from "next-auth/jwt";
 import { prisma } from "@/lib/prisma";
 import { supabase } from "@/lib/supabase";
+import type { NextRequest } from "next/server";
+
+type UploadSection = "GALLERY" | "CAREER" | "WELLNESS" | "WORKSHOPS" | "TESTIMONIALS" | "CAMPAIGNS";
 
 export async function POST(req: Request) {
   try {
     // 1. Auth check
-    const token = await getToken({ req: req as any });
+    const token = await getToken({ req: req as NextRequest });
     if (!token) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -100,20 +103,26 @@ export async function POST(req: Request) {
       ? (await prisma.user.findUnique({ where: { id: token.sub }, select: { id: true } }))?.id ?? null
       : null;
 
-    let dbSection: "GALLERY" | "CAREER" | "WELLNESS" | "WORKSHOPS" | "TESTIMONIALS" | "CAMPAIGNS" = "GALLERY";
+    let dbSection: UploadSection = "GALLERY";
     let dbDescription = "";
-    let mediaGroup: "ASSESSMENT" | "COUNSELLING" | "WELLNESS" | "WORKSHOPS" | "HERO" | "INSTITUTIONS" = "ASSESSMENT";
+    let mediaGroup: "ASSESSMENT" | "COUNSELLING" | "WELLNESS" | "WORKSHOPS" | "HERO" | "INSTITUTIONS" | null = "ASSESSMENT";
 
     if (section === "HERO") {
       dbSection = "GALLERY";
       dbDescription = "HERO";
       mediaGroup = "HERO";
     } else {
-      dbSection = section as any;
+      dbSection = section as UploadSection;
       dbDescription = title?.startsWith("COVER:") ? title : "";
-      mediaGroup = requestedMediaGroup === "COUNSELLING" || requestedMediaGroup === "INSTITUTIONS"
-        ? requestedMediaGroup
-        : section === "GALLERY" ? "ASSESSMENT" : section as "WELLNESS" | "WORKSHOPS";
+      if (requestedMediaGroup === "COUNSELLING" || requestedMediaGroup === "INSTITUTIONS") {
+        mediaGroup = requestedMediaGroup;
+      } else if (section === "GALLERY") {
+        mediaGroup = "ASSESSMENT";
+      } else if (section === "WELLNESS" || section === "WORKSHOPS") {
+        mediaGroup = section;
+      } else {
+        mediaGroup = null;
+      }
     }
 
     let mediaAsset: Awaited<ReturnType<typeof prisma.mediaAsset.create>>;

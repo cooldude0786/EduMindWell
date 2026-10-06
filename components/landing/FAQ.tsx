@@ -12,7 +12,7 @@ export function FAQ() {
   }
 
   return (
-    <section id="faq" className="py-xl px-6 bg-surface">
+    <section id="faq" className="py-[80px] px-6 bg-surface">
       <div className="max-w-3xl mx-auto">
         <h2 className="font-h2 text-h2 text-primary text-center mb-12">
           Questions We Hear Every Day

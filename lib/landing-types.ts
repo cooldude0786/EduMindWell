@@ -47,14 +47,6 @@ export interface AudienceCard {
   image?: string
 }
 
-export interface Story {
-  id: string
-  beforeText: string
-  afterText: string
-  quote: string
-  attribution: string
-}
-
 export interface FAQItem {
   id: string
   question: string

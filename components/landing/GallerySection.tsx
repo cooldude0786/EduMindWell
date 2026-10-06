@@ -207,7 +207,7 @@ export function GallerySection() {
   ]
 
   return (
-    <section id="gallery" className="py-xl px-6 bg-surface-container-lowest">
+    <section id="gallery" className="py-[80px] px-6 bg-surface-container-lowest">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 text-center">
           <p className="mb-3 text-[10px] uppercase tracking-[0.35em] text-secondary font-label-bold">

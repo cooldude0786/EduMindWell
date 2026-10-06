@@ -1,4 +1,4 @@
-  generator client {
+generator client {
   provider = "prisma-client-js"
   // output   = "../app/generated/prisma"
 }
@@ -8,26 +8,26 @@ datasource db {
 }
 
 model BulkEmail {
-  id String @id @default(cuid())
-  title String?
-  subject   String
-  body      String
-  senderName String?
+  id          String      @id @default(cuid())
+  title       String?
+  subject     String
+  body        String
+  senderName  String?
   senderEmail String?
   previewText String?
   scheduledAt DateTime?
-  isDraft Boolean @default(false)
-  status    EmailStatus @default(PENDING)
-  createdAt DateTime    @default(now())
-  sentAt    DateTime?
-  EmailLog  EmailLog[]
+  isDraft     Boolean     @default(false)
+  status      EmailStatus @default(PENDING)
+  createdAt   DateTime    @default(now())
+  sentAt      DateTime?
+  EmailLog    EmailLog[]
 
-  emailQueues EmailQueue[]
+  emailQueues      EmailQueue[]
   mediaAttachments CampaignMedia[]
 }
 
 model EmailLog {
-  id String @id @default(cuid())
+  id             String         @id @default(cuid())
   bulkEmailId    String
   recipientId    String
   status         EmailStatus
@@ -39,7 +39,7 @@ model EmailLog {
 }
 
 model EmailRecipient {
- id String @id @default(cuid())
+  id        String     @id @default(cuid())
   email     String     @unique
   name      String?
   createdAt DateTime   @default(now())
@@ -61,44 +61,44 @@ model User {
 }
 
 model ContactDetails {
-  id             String   @id
-  address        String
-  email          String
-  phone          String
-  secondaryPhone String?
+  id                  String   @id
+  address             String
+  email               String
+  phone               String
+  secondaryPhone      String?
   whatsappCountryCode String?
-  whatsappNumber     String?
-  linkedinUrl    String?
-  instagramUrl   String?
-  youtubeUrl     String?
-  isPublished    Boolean  @default(true)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  whatsappNumber      String?
+  linkedinUrl         String?
+  instagramUrl        String?
+  youtubeUrl          String?
+  isPublished         Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
 model MediaAsset {
-  id          String      @id @default(cuid())
-  title       String?
-  showTitle   Boolean     @default(false)
-  altText     String?
-  description String?
-  type        MediaType
-  bucket      String
-  path        String      @unique
-  publicUrl   String?
-  mimeType    String
-  sizeBytes   Int
-  width       Int?
-  height      Int?
-  durationSec Int?
-  section     MediaSection @default(GALLERY)
-  mediaGroup  MediaGroup?
-  isPublished Boolean     @default(false)
-  sortOrder   Int         @default(0)
+  id           String       @id @default(cuid())
+  title        String?
+  showTitle    Boolean      @default(false)
+  altText      String?
+  description  String?
+  type         MediaType
+  bucket       String
+  path         String       @unique
+  publicUrl    String?
+  mimeType     String
+  sizeBytes    Int
+  width        Int?
+  height       Int?
+  durationSec  Int?
+  section      MediaSection @default(GALLERY)
+  mediaGroup   MediaGroup?
+  isPublished  Boolean      @default(false)
+  sortOrder    Int          @default(0)
   uploadedById String?
-  uploadedBy   User?      @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  uploadedBy   User?        @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
 
   campaignAttachments CampaignMedia[]
 
@@ -108,15 +108,15 @@ model MediaAsset {
 }
 
 model MediaDisplaySetting {
-  id        String     @id
+  id         String     @id
   mediaGroup MediaGroup @unique
   showTitles Boolean    @default(false)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 }
 
 model NavigationContent {
-  id              String         @id
+  id              String        @id
   section         NavigationKey
   itemKey         String
   title           String
@@ -124,21 +124,21 @@ model NavigationContent {
   imageUrl        String?
   imagePath       String?
   bucket          String?
-  showTitle       Boolean        @default(true)
-  showDescription Boolean        @default(true)
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  showTitle       Boolean       @default(true)
+  showDescription Boolean       @default(true)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 
   @@unique([section, itemKey])
 }
 
 model CampaignMedia {
-  id          String     @id @default(cuid())
-  campaignId  String
+  id           String         @id @default(cuid())
+  campaignId   String
   mediaAssetId String
   placement    MediaPlacement @default(BODY)
-  sortOrder    Int        @default(0)
-  createdAt    DateTime   @default(now())
+  sortOrder    Int            @default(0)
+  createdAt    DateTime       @default(now())
 
   campaign   BulkEmail  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
   mediaAsset MediaAsset @relation(fields: [mediaAssetId], references: [id], onDelete: Cascade)
@@ -192,29 +192,67 @@ enum EmailStatus {
 }
 
 model EmailQueue {
-  id            String   @id
-  campaignId    String
-  recipientId   String
-  email         String
-  subject       String
-  body          String
-  status        QueueStatus @default(PENDING)
-  attempts      Int      @default(0)
-  error         String?
-  createdAt     DateTime @default(now())
-  processedAt   DateTime?
+  id          String      @id
+  campaignId  String
+  recipientId String
+  email       String
+  subject     String
+  body        String
+  status      QueueStatus @default(PENDING)
+  attempts    Int         @default(0)
+  error       String?
+  createdAt   DateTime    @default(now())
+  processedAt DateTime?
 
-  BulkEmail     BulkEmail      @relation(fields: [campaignId], references: [id])
+  BulkEmail      BulkEmail      @relation(fields: [campaignId], references: [id])
   EmailRecipient EmailRecipient @relation(fields: [recipientId], references: [id])
 }
 
 model RefundPolicy {
-  id          String              @id @default(cuid())
+  id          String             @id @default(cuid())
   order       Int
   description String
   status      RefundPolicyStatus @default(ACTIVE)
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model Testimonial {
+  id          String                 @id @default(cuid())
+  contentType TestimonialContentType @default(TEXT)
+  placement   TestimonialPlacement   @default(BOTH)
+  title       String?
+  quote       String?
+  beforeText  String?
+  afterText   String?
+  attribution String
+  videoUrl    String?
+  isPublished Boolean                @default(true)
+  sortOrder   Int                    @default(0)
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+
+  @@index([contentType, isPublished, sortOrder])
+  @@index([placement, isPublished, sortOrder])
+}
+
+model TestimonialDisplaySetting {
+  id        String   @id
+  showText  Boolean  @default(true)
+  showVideo Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum TestimonialContentType {
+  TEXT
+  VIDEO
+}
+
+enum TestimonialPlacement {
+  HOME
+  TESTIMONIALS
+  BOTH
 }
 
 enum QueueStatus {
@@ -230,36 +268,36 @@ enum RefundPolicyStatus {
 }
 
 model RefundPolicySection {
-  id         String                     @id @default(cuid())
-  title      String?
-  order      Int
-  status     RefundPolicyStatus        @default(ACTIVE)
-  createdAt  DateTime                   @default(now())
-  updatedAt  DateTime                   @updatedAt
+  id        String             @id @default(cuid())
+  title     String?
+  order     Int
+  status    RefundPolicyStatus @default(ACTIVE)
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
 
   paragraphs RefundPolicyParagraph[]
 }
 
 model RefundPolicyParagraph {
-  id        String                  @id @default(cuid())
+  id        String   @id @default(cuid())
   sectionId String
   order     Int
   text      String
-  createdAt DateTime                @default(now())
-  updatedAt DateTime                @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  section   RefundPolicySection     @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  section RefundPolicySection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
 
   @@index([sectionId, order])
 }
 
 model TermsAndConditionsSection {
-  id         String                         @id @default(cuid())
+  id         String                        @id @default(cuid())
   title      String?
   order      Int
-  status     RefundPolicyStatus             @default(ACTIVE)
-  createdAt  DateTime                       @default(now())
-  updatedAt  DateTime                       @updatedAt
+  status     RefundPolicyStatus            @default(ACTIVE)
+  createdAt  DateTime                      @default(now())
+  updatedAt  DateTime                      @updatedAt
   paragraphs TermsAndConditionsParagraph[]
 }
 
@@ -276,13 +314,13 @@ model TermsAndConditionsParagraph {
 }
 
 model FreeConsultationLead {
-  id        String   @id @default(cuid())
-  phone     String?
-  email     String?
+  id            String             @id @default(cuid())
+  phone         String?
+  email         String?
   whatToDiscuss String
-  status    ConsultationStatus @default(NEW)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  status        ConsultationStatus @default(NEW)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
 
   @@index([status, createdAt])
   @@index([email])

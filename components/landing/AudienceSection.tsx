@@ -45,7 +45,7 @@ export function AudienceSection() {
   }, [])
 
   return (
-    <section id="workshops" className="py-xl px-6 bg-surface-container">
+    <section id="workshops" className="py-[80px] px-6 bg-surface-container">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">

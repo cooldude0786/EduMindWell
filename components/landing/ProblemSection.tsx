@@ -62,7 +62,7 @@ function DialogueBubble({
 
 export function ProblemSection() {
   return (
-    <section id="approach" className="py-xl px-6 bg-surface-container-lowest">
+    <section id="approach" className="py-[80px] px-6 bg-surface-container-lowest">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">

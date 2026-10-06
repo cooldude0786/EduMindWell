@@ -14,7 +14,7 @@ export function CTABanner() {
   const whatsappUrl = contactDetails ? getWhatsAppUrl(contactDetails) : null
 
   return (
-    <section id="cta" className="py-xl px-6 bg-surface-container-lowest">
+    <section id="cta" className="py-[80px] px-6 bg-surface-container-lowest">
       <div className="max-w-4xl mx-auto">
         <div className="bg-primary rounded-[48px] p-12 md:p-24 text-center overflow-hidden relative">
           {/* Radial Gradient Overlay */}

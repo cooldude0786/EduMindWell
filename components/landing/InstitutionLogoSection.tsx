@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { type CSSProperties, useEffect, useState } from 'react'
 
 type InstitutionLogo = {
   id: string
@@ -12,7 +12,6 @@ type InstitutionLogo = {
 export function InstitutionLogoSection() {
   const [logos, setLogos] = useState<InstitutionLogo[]>([])
   const [showTitles, setShowTitles] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
 
   const visibleLogoCount = Math.min(6, logos.length)
   const hasQueue = logos.length > visibleLogoCount
@@ -58,34 +57,26 @@ export function InstitutionLogoSection() {
           className="institution-logo-viewport relative mx-auto mt-8 max-w-4xl overflow-hidden rounded-3xl border border-outline-variant bg-white shadow-[0_16px_36px_rgba(15,23,42,0.06)]"
           role="region"
           aria-label="Institutions that trust EduMindWell"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-          onFocus={() => setIsPaused(true)}
-          onBlur={() => setIsPaused(false)}
         >
           <div aria-hidden="true" className="institution-logo-fade institution-logo-fade-left" />
           <div
             className={`flex min-h-28 items-stretch sm:min-h-32 ${hasQueue ? 'institution-logo-track' : ''}`}
             style={{
               animationDuration: `${logos.length * 1.8}s`,
-              animationPlayState: isPaused ? 'paused' : 'running',
-            }}
+              '--institution-visible-count': visibleLogoCount,
+            } as CSSProperties}
           >
             {displayLogos.map((logo, index) => (
               <div
                 key={`${logo.id}-${index}`}
-                className="flex shrink-0 flex-col items-center justify-center gap-2 border-r border-outline-variant/60 px-5 py-5 sm:px-7 sm:py-6"
-                style={{
-                  flexBasis: `${100 / visibleLogoCount}%`,
-                  width: `${100 / visibleLogoCount}%`,
-                }}
+                className="institution-logo-item flex shrink-0 flex-col items-center justify-center gap-2 border-r border-outline-variant/60 px-5 py-5 sm:px-7 sm:py-6"
               >
                 <img
                   src={logo.publicUrl}
                   alt={logo.altText || logo.title || 'Institution logo'}
                   className="h-14 w-full max-w-45 object-contain sm:h-16"
                 />
-                <span className="h-5 max-w-full truncate text-center text-xs font-medium text-on-surface-variant">
+                <span className="min-h-5 w-full whitespace-normal break-words text-center text-xs font-medium text-on-surface-variant">
                   {showTitles ? logo.title || '' : ''}
                 </span>
               </div>
@@ -95,7 +86,7 @@ export function InstitutionLogoSection() {
         </div>
 
         <p className="mt-4 text-center text-sm font-medium text-on-surface-variant">
-          {logos.length}+ institutions and counting
+          Trusted by {logos.length}+ institutions—and growing
         </p>
       </div>
     </section>

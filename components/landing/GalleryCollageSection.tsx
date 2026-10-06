@@ -474,7 +474,7 @@ export function GalleryCollageSection() {
   ]
 
   return (
-    <section className="mt-10 bg-surface-container-lowest px-6 py-xl">
+    <section className="mt-10 bg-surface-container-lowest px-6 py-[80px]">
       <div className="mx-auto max-w-7xl space-y-6">
         <div className="mb-8 text-center">
           <p className="mb-3 text-[10px] uppercase tracking-[0.35em] text-secondary font-label-bold">
