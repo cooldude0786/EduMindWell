@@ -85,9 +85,9 @@ export function InstitutionLogoSection() {
           <div aria-hidden="true" className="institution-logo-fade institution-logo-fade-right" />
         </div>
 
-        <p className="mt-4 text-center text-sm font-medium text-on-surface-variant">
-          Trusted by {logos.length}+ institutions—and growing
-        </p>
+       {/* <p className="mt-4 text-center text-sm font-medium text-on-surface-variant">
+          Trusted by {logos.length}+ associations and growing
+        </p> */}
       </div>
     </section>
   )
