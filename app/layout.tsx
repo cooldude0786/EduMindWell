@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {children}
         <Toaster position="top-right" richColors />
+        <Analytics />
       </body>
     </html>
   );

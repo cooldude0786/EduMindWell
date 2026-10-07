@@ -8,6 +8,7 @@ import {
   CarouselItem,
   type CarouselApi,
 } from '@/components/ui/carousel'
+import { TestimonialBackground } from '@/components/landing/TestimonialBackground'
 
 type TestimonialRecord = {
   id: string
@@ -92,7 +93,7 @@ function VideoTestimonialSlide({
     <div className="relative h-[300px] overflow-hidden rounded-2xl border border-white/20 bg-slate-900/40 shadow-2xl sm:h-[340px] lg:h-[330px]">
       <video
         ref={videoRef}
-        className="absolute inset-0 h-full w-full bg-black object-contain"
+        className="absolute inset-0 h-full w-full rounded-[inherit] bg-black object-contain"
         autoPlay={active}
         muted={muted}
         loop
@@ -100,7 +101,7 @@ function VideoTestimonialSlide({
         preload={active ? 'auto' : 'metadata'}
         src={story.videoUrl ?? undefined}
       />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/10" />
+      <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-t from-black/75 via-transparent to-black/10" />
       <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-3">
         <div className="min-w-0">
           <p className="truncate text-sm font-bold">{story.title || story.attribution}</p>
@@ -210,7 +211,8 @@ export function StoriesSection() {
   }
 
   return (
-    <section id="stories" className="relative isolate overflow-hidden bg-gradient-to-br from-[#1e56d7] via-[#1548bb] to-[#0c348e] px-4 py-10 text-white sm:px-6 sm:py-12 lg:py-14">
+    <section id="stories" className="relative isolate overflow-visible bg-gradient-to-br from-[#1e56d7] via-[#1548bb] to-[#0c348e] px-4 py-10 pb-24 text-white sm:px-6 sm:py-12 sm:pb-28 lg:py-14 lg:pb-32">
+      <TestimonialBackground />
       <div className="relative z-10 mx-auto max-w-6xl">
         <div className="mx-auto max-w-5xl text-center">
           <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-cyan-300">Student stories</p>
@@ -300,7 +302,7 @@ export function StoriesSection() {
                 <div
                   className={`testimonial-text-track flex ${textStories.length > 1 ? 'testimonial-text-track--animated' : ''}`}
                   style={{
-                    animationDuration: `${Math.max(textStories.length, 4)}s`,
+                    animationDuration: `${Math.max(textStories.length * 2, 8)}s`,
                     animationDirection: textMarqueeDirection,
                   }}
                 >
@@ -326,7 +328,9 @@ export function StoriesSection() {
       </div>
 
       <div aria-hidden="true" className="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-blue-400/20 blur-2xl" />
-      <div aria-hidden="true" className="absolute -left-20 bottom-0 h-40 w-80 rounded-[50%] bg-slate-200/80 blur-[1px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -bottom-px z-20 h-16 overflow-hidden sm:h-20">
+        <div className="absolute -inset-x-[8%] bottom-0 h-full rounded-[50%_50%_0_0/100%_100%_0_0] bg-white" />
+      </div>
     </section>
   )
 }

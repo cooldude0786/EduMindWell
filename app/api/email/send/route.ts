@@ -48,54 +48,82 @@ export async function POST(req: Request) {
       },
     });
 
-    await prisma.emailLog.create({
-      data: {
-        id: crypto.randomUUID(),
-        bulkEmailId: job.campaignId,
-        recipientId: job.recipientId,
-        status: "SENT",
-        messageId: info.messageId,
-      },
-    });
+    if (job.campaignId && job.recipientId) {
+      await prisma.emailLog.create({
+        data: {
+          id: crypto.randomUUID(),
+          bulkEmailId: job.campaignId,
+          recipientId: job.recipientId,
+          status: "SENT",
+          messageId: info.messageId,
+        },
+      });
+    } else {
+      await prisma.emailLog.create({
+        data: {
+          type: "CONSULTATION",
+          recipientEmail: job.email,
+          subject: job.subject,
+          status: "SENT",
+          messageId: info.messageId,
+        },
+      });
+    }
 
-    const remaining = await prisma.emailQueue.count({
-      where: {
-        campaignId: job.campaignId,
-        status: "PENDING",
-      },
-    });
+    if (job.campaignId) {
+      const remaining = await prisma.emailQueue.count({
+        where: {
+          campaignId: job.campaignId,
+          status: "PENDING",
+        },
+      });
 
-    await prisma.bulkEmail.update({
-      where: { id: job.campaignId },
-      data: {
-        status: remaining === 0 ? "SENT" : "PROCESSING",
-        sentAt: remaining === 0 ? new Date() : undefined,
-      },
-    });
+      await prisma.bulkEmail.update({
+        where: { id: job.campaignId },
+        data: {
+          status: remaining === 0 ? "SENT" : "PROCESSING",
+          sentAt: remaining === 0 ? new Date() : undefined,
+        },
+      });
+    }
 
     return Response.json({ ok: true });
-  } catch (err: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+
     await prisma.emailQueue.update({
       where: { id: job.id },
       data: {
         status: "FAILED",
-        error: err.message,
+        error: errorMessage,
         attempts: { increment: 1 },
       },
     });
 
-    await prisma.emailLog.create({
-      data: {
-        id: crypto.randomUUID(),
-        bulkEmailId: job.campaignId,
-        recipientId: job.recipientId,
-        status: "FAILED",
-        error: err.message,
-      },
-    });
+    if (job.campaignId && job.recipientId) {
+      await prisma.emailLog.create({
+        data: {
+          id: crypto.randomUUID(),
+          bulkEmailId: job.campaignId,
+          recipientId: job.recipientId,
+          status: "FAILED",
+          error: errorMessage,
+        },
+      });
+    } else {
+      await prisma.emailLog.create({
+        data: {
+          type: "CONSULTATION",
+          recipientEmail: job.email,
+          subject: job.subject,
+          status: "FAILED",
+          error: errorMessage,
+        },
+      });
+    }
 
     return Response.json(
-      { ok: false, error: err.message },
+      { ok: false, error: errorMessage },
       { status: 500 }
     );
   }

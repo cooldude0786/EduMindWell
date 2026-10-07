@@ -27,15 +27,24 @@ model BulkEmail {
 }
 
 model EmailLog {
-  id             String         @id @default(cuid())
-  bulkEmailId    String
-  recipientId    String
+  id             String       @id @default(cuid())
+  bulkEmailId    String?
+  recipientId    String?
+  recipientEmail String?
+  subject        String?
+  type           EmailLogType @default(CAMPAIGN)
   status         EmailStatus
   messageId      String?
   error          String?
-  createdAt      DateTime       @default(now())
-  BulkEmail      BulkEmail      @relation(fields: [bulkEmailId], references: [id])
-  EmailRecipient EmailRecipient @relation(fields: [recipientId], references: [id])
+  createdAt      DateTime     @default(now())
+  BulkEmail      BulkEmail?   @relation(fields: [bulkEmailId], references: [id])
+  EmailRecipient EmailRecipient? @relation(fields: [recipientId], references: [id])
+
+  @@index([createdAt])
+  @@index([status, createdAt])
+  @@index([type, createdAt])
+  @@index([bulkEmailId])
+  @@index([recipientId])
 }
 
 model EmailRecipient {
@@ -191,10 +200,15 @@ enum EmailStatus {
   FAILED
 }
 
+enum EmailLogType {
+  CAMPAIGN
+  CONSULTATION
+}
+
 model EmailQueue {
   id          String      @id
-  campaignId  String
-  recipientId String
+  campaignId  String?
+  recipientId String?
   email       String
   subject     String
   body        String
@@ -204,8 +218,8 @@ model EmailQueue {
   createdAt   DateTime    @default(now())
   processedAt DateTime?
 
-  BulkEmail      BulkEmail      @relation(fields: [campaignId], references: [id])
-  EmailRecipient EmailRecipient @relation(fields: [recipientId], references: [id])
+  BulkEmail      BulkEmail?      @relation(fields: [campaignId], references: [id])
+  EmailRecipient EmailRecipient? @relation(fields: [recipientId], references: [id])
 }
 
 model RefundPolicy {

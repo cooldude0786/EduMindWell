@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { qstash } from '@/lib/qstash'
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const phoneRegex = /^[0-9+\-()\s]{7,20}$/
@@ -59,6 +60,77 @@ export async function POST(req: Request) {
         whatToDiscuss: trimmedWhatToDiscuss,
       },
     })
+
+    try {
+      const admins = await prisma.user.findMany({
+        where: { isActive: true },
+        select: { email: true },
+      })
+      const adminEmails = admins.map((admin) => admin.email)
+
+      if (adminEmails.length > 0) {
+        const publishUrl = process.env.NEXT_PUBLIC_BASE_URL ?? process.env.BASE_URL
+
+        if (!publishUrl) {
+          throw new Error('Missing publish base URL for QStash')
+        }
+
+        const parsedPublishUrl = new URL(publishUrl)
+        if (
+          parsedPublishUrl.protocol !== 'https:' ||
+          parsedPublishUrl.hostname === 'localhost' ||
+          parsedPublishUrl.hostname === '127.0.0.1' ||
+          parsedPublishUrl.hostname === '::1'
+        ) {
+          throw new Error('QStash requires a public HTTPS callback URL')
+        }
+
+        const subject = 'New free consultation request'
+        const body = [
+          'New free consultation request',
+          `Email: ${lead.email || 'Not provided'}`,
+          `Phone: ${lead.phone || 'Not provided'}`,
+          `What they would like to discuss: ${lead.whatToDiscuss || 'Not provided'}`,
+          `Received: ${lead.createdAt.toLocaleString()}`,
+        ].join('\n')
+        const jobs = adminEmails.map((adminEmail) => ({
+            id: crypto.randomUUID(),
+            email: adminEmail,
+            subject,
+            body,
+          }))
+        await prisma.emailQueue.createMany({ data: jobs })
+
+        for (const job of jobs) {
+          try {
+            await qstash.publishJSON({
+              url: new URL('/api/email/send', parsedPublishUrl).toString(),
+              body: { jobId: job.id },
+            })
+          } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : String(error)
+            await prisma.emailQueue.update({
+              where: { id: job.id },
+              data: { status: 'FAILED', error: errorMessage, attempts: { increment: 1 } },
+            })
+            await prisma.emailLog.create({
+              data: {
+                type: 'CONSULTATION',
+                recipientEmail: job.email,
+                subject: job.subject,
+                status: 'FAILED',
+                error: errorMessage,
+              },
+            })
+            console.error('Failed to queue consultation notification:', error)
+          }
+        }
+      } else {
+        console.warn('Free consultation notification skipped: no active admin users found')
+      }
+    } catch (error: unknown) {
+      console.error('Free consultation notification email failed:', error)
+    }
 
     return Response.json(lead, { status: 201 })
   } catch (error: unknown) {

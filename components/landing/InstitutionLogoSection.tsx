@@ -42,14 +42,14 @@ export function InstitutionLogoSection() {
     >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-label-bold uppercase tracking-[0.28em] text-secondary">
+          {/* <p className="text-label-bold uppercase tracking-[0.28em] text-secondary">
             Proof of work
-          </p>
-          <h2 id="institution-logos-heading" className="mt-3 font-h2 text-h2 text-primary">
+          </p> */}
+          <h2 id="institution-logos-heading" className="font-h2 text-h2 text-primary">
             Trusted by institutions
           </h2>
           <p className="mt-4 text-body-md leading-relaxed text-on-surface-variant">
-            Our career, counselling, assessment, and wellbeing work is trusted by institutions.
+            Our Career Assessment and counselling along with wellbeing workshops are being used by These schools.
           </p>
         </div>
 

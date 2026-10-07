@@ -153,8 +153,9 @@
     top: 0;
     z-index: 50;
     width: 100%;
-    background: #f2f3f9;
-    border-bottom: 1px solid #dbeafe;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     transition: box-shadow 300ms;
   }
 
@@ -263,7 +264,9 @@
   }
 
   .testimonial-text-track--animated {
+    width: max-content;
     animation: testimonialTextMarquee linear infinite;
+    will-change: transform;
   }
 
   .testimonial-text-viewport:hover .testimonial-text-track--animated,
