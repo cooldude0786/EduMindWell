@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
+import { SiteAnalytics } from "@/components/analytics";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -34,15 +34,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {children}
         <Toaster position="top-right" richColors />
-        <Analytics
-          beforeSend={(event) => {
-            const pathname = new URL(event.url, "https://analytics-filter.invalid").pathname;
-            const isLoginPage = pathname === "/login";
-            const isDashboardPage = pathname === "/dashboard" || pathname.startsWith("/dashboard/");
-
-            return isLoginPage || isDashboardPage ? null : event;
-          }}
-        />
+        <SiteAnalytics />
       </body>
     </html>
   );

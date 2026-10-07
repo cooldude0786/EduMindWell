@@ -128,7 +128,7 @@ export function Navbar() {
   const [rotationIndex, setRotationIndex] = useState(0)
   const [activeAnchorId, setActiveAnchorId] = useState('hero')
   const [navigationContent, setNavigationContent] = useState<NavigationContent[]>([])
-  const navbarRef = useRef<HTMLElement>(null)
+  const desktopNavRef = useRef<HTMLDivElement>(null)
   const desktopDropdownRef = useRef<HTMLDivElement>(null)
   const closeTimerRef = useRef<number | null>(null)
 
@@ -266,9 +266,10 @@ export function Navbar() {
 
   useEffect(() => {
     const handlePointerDown = (event: MouseEvent) => {
+      const target = event.target as Node
       if (
-        desktopDropdownRef.current &&
-        !desktopDropdownRef.current.contains(event.target as Node)
+        !desktopNavRef.current?.contains(target) &&
+        !desktopDropdownRef.current?.contains(target)
       ) {
         closeDesktopDropdown()
       }
@@ -365,7 +366,6 @@ export function Navbar() {
 
   return (
     <nav
-      ref={navbarRef}
       className={`glass-navbar ${
         hasScroll ? 'shadow-md' : ''
       }`}
@@ -394,7 +394,10 @@ export function Navbar() {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden items-center gap-2 font-h3 font-medium text-sm md:flex">
+          <div
+            ref={desktopNavRef}
+            className="hidden items-center gap-2 font-h3 font-medium text-sm md:flex"
+          >
             {navItems.map((item) => {
               if (item.kind === 'anchor') {
                 const isActive = isActiveNavItem(item)
